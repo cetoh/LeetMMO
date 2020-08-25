@@ -18,4 +18,8 @@ public class SkillPointPool {
     public void setNumPoints(int numPoints) {
         this.numPoints = numPoints;
     }
+
+    public void addNumPoints(int points) { this.numPoints += points; }
+
+    public void subtractNumPoints(int points) { this.numPoints -= points; }
 }

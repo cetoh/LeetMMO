@@ -5,6 +5,8 @@ public class ExperiencePool {
     private double points = 0;
     private double poolCap = 0;
 
+    private double carry = 0;
+
     public ExperiencePool() {}
 
     public ExperiencePool(double points, double poolCap) {
@@ -22,6 +24,10 @@ public class ExperiencePool {
 
     public void addPoints(double points) {
         this.points += points;
+
+        if (getPoints() >= getPoolCap()) {
+            setCarry(getPoints() - getPoolCap());
+        }
     }
 
     public double getPoolCap() {
@@ -32,8 +38,11 @@ public class ExperiencePool {
         this.poolCap = poolCap;
     }
 
+    public double getCarry() {
+        return carry;
+    }
 
-
-
-
+    public void setCarry(double carry) {
+        this.carry = carry;
+    }
 }
