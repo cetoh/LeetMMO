@@ -1,0 +1,6 @@
+name: LeetMMO
+version: ${project.version}
+main: us.toh.leetmmo.LeetMMO
+api-version: 1.16
+authors: [ ctoh, atoh ]
+description: This is some Leet Code for Leet MMO
