@@ -1,4 +1,4 @@
-package us.toh.leetmmo.datatypes;
+package us.toh.leetmmo.datatypes.experience;
 
 public class ClassExperiencePool extends ExperiencePool {
 

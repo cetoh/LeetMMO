@@ -1,4 +1,4 @@
-package us.toh.leetmmo.datatypes;
+package us.toh.leetmmo.datatypes.skillpoint;
 
 public class SkillPointPool {
     private int numPoints = 0;
