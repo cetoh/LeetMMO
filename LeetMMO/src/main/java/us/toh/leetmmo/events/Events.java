@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -124,11 +126,45 @@ public class Events implements Listener {
             expGain = 0.1;
         }
 
+        //Give player normal experience
         player.addExperience(expGain, PlayerProfile.expType.NORMAL);
+
+        //Give player class experience
+        player.addExperience(Math.floor(expGain * 0.1), PlayerProfile.expType.CLASS );
 
         globalPlayers.put(player.getUuid(), player);
 
         event.getPlayer().sendMessage(player.displayLevels());
 
+    }
+
+    @EventHandler
+    public void onPlayerTakeDamage(EntityDamageEvent event) {
+        if (event.getEntity() instanceof Player) {
+            PlayerProfile p = globalPlayers.get(event.getEntity().getUniqueId());
+
+            //Give player normal experience
+            p.addExperience(0.5, PlayerProfile.expType.NORMAL);
+
+            //Give player class experience
+            p.addExperience(0.5, PlayerProfile.expType.CLASS );
+
+            globalPlayers.put(p.getUuid(), p);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDealDamage(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player) {
+            PlayerProfile p = globalPlayers.get(event.getDamager().getUniqueId());
+
+            //Give player normal experience
+            p.addExperience(0.5, PlayerProfile.expType.NORMAL);
+
+            //Give player class experience
+            p.addExperience(0.5, PlayerProfile.expType.CLASS );
+
+            globalPlayers.put(p.getUuid(), p);
+        }
     }
 }
