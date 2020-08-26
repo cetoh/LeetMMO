@@ -25,7 +25,7 @@ public final class LeetMMO extends JavaPlugin {
         plugin = this;
         String path = this.getDataFolder().getAbsolutePath();
         getServer().getPluginManager().registerEvents(e, this);
-        db.createNewDatabase("test.db");
+        db.createNewDatabase("LeetMMO-players.db");
         System.out.println("LeetMMO Enabled");
 
     }

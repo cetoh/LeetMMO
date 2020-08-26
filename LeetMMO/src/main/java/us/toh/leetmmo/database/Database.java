@@ -19,7 +19,9 @@ public class Database {
     public void createNewDatabase(String fileName) {
 
         File file = new File(plugin.getDataFolder().getAbsolutePath());
-        file.mkdir();
+        if (!file.exists()) {
+            file.mkdir();
+        }
 
         String url = "jdbc:sqlite:" + plugin.getDataFolder().getAbsolutePath() + "\\" + fileName;
 
@@ -27,7 +29,7 @@ public class Database {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
                 System.out.println("The driver name is " + meta.getDriverName());
-                System.out.println("A new database has been created.");
+                System.out.println("A database connection has been made.");
             }
 
         } catch (SQLException e) {
