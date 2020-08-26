@@ -121,7 +121,7 @@ public class Events implements Listener {
         }
 
         //Calculate final exp gain
-        double expGain = 0.25 * Math.abs(Math.floor(expGainBase / expGainModifier) / 0.25);
+        double expGain = 0.25 * Math.abs((expGainBase / expGainModifier) / 0.25);
         if (event.getBlock().getType().equals(Material.STONE)){
             expGain = 0.1;
         }
