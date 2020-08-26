@@ -24,9 +24,15 @@ public final class LeetMMO extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
+
+        //Start-up database
+        db.createNewDatabase("LeetMMO-players.db");
+
+        //Set-up Events
+        evt.setDb(db);
         evt.setGlobalPlayers(globalPlayers);
         getServer().getPluginManager().registerEvents(evt, plugin);
-        db.createNewDatabase("LeetMMO-players.db");
+
         CommandLeetStats cmdLeetStats =  new CommandLeetStats();
         cmdLeetStats.setGlobalPlayers(globalPlayers);
         plugin.getCommand("leetstats").setExecutor(cmdLeetStats);
