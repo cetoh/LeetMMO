@@ -3,6 +3,7 @@ package us.toh.leetmmo;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.events.Events;
 import us.toh.leetmmo.database.Database;
 

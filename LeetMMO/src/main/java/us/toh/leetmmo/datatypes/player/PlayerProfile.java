@@ -52,9 +52,9 @@ public class PlayerProfile {
         switch(t) {
             case NORMAL:
                 nEXPPool.addPoints(exp);
-                if (nEXPPool.getCarry() > 0) {
+                if (nEXPPool.getPoints() >= nEXPPool.getPoolCap()) {
                     nLvl.increaseLevel();
-                    nEXPPool.setPoolCap(nLvl.getCurrentLevel()*100);
+                    nEXPPool.setPoolCap(nEXPPool.getPoolCap() * 1.1);
                     nSPPool.addNumPoints(1);
                     nEXPPool.setPoints(nEXPPool.getCarry());
                     nEXPPool.setCarry(0);
@@ -62,9 +62,9 @@ public class PlayerProfile {
                 break;
             case CLASS:
                 cEXPPool.addPoints(exp);
-                if (cEXPPool.getCarry() > 0) {
+                if (cEXPPool.getPoints() >= cEXPPool.getPoolCap()) {
                     cLvl.increaseLevel();
-                    cEXPPool.setPoolCap(cLvl.getCurrentLevel()*100);
+                    cEXPPool.setPoolCap(cEXPPool.getPoolCap() * 1.1);
                     cSPPool.addNumPoints(1);
                     cEXPPool.setPoints(cEXPPool.getCarry());
                     cEXPPool.setCarry(0);
@@ -73,7 +73,12 @@ public class PlayerProfile {
         }
     }
 
-
+    public String displayLevels () {
+        return "nLevel: " + nLvl.getCurrentLevel() + " nEXP: " + nEXPPool.getPoints() + "/" + nEXPPool.getPoolCap() + "\n"
+                + "nSkill Points: " + nSPPool.getNumPoints() + "\n"
+                + "cLevel: " + cLvl.getCurrentLevel() + " cEXP: " + cEXPPool.getPoints() + "/" + cEXPPool.getPoolCap() + "\n"
+                + "cSkill Points: " + cSPPool.getNumPoints() + "\n";
+    }
 
 
 }
