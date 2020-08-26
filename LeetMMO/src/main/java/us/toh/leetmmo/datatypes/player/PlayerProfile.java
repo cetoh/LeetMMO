@@ -48,6 +48,54 @@ public class PlayerProfile {
         this.uuid = uuid;
     }
 
+    public NormalExperiencePool getnEXPPool() {
+        return nEXPPool;
+    }
+
+    public void setnEXPPool(NormalExperiencePool nEXPPool) {
+        this.nEXPPool = nEXPPool;
+    }
+
+    public ClassExperiencePool getcEXPPool() {
+        return cEXPPool;
+    }
+
+    public void setcEXPPool(ClassExperiencePool cEXPPool) {
+        this.cEXPPool = cEXPPool;
+    }
+
+    public NormalSkillPointPool getnSPPool() {
+        return nSPPool;
+    }
+
+    public void setnSPPool(NormalSkillPointPool nSPPool) {
+        this.nSPPool = nSPPool;
+    }
+
+    public ClassSkillPointPool getcSPPool() {
+        return cSPPool;
+    }
+
+    public void setcSPPool(ClassSkillPointPool cSPPool) {
+        this.cSPPool = cSPPool;
+    }
+
+    public NormalLevel getnLvl() {
+        return nLvl;
+    }
+
+    public void setnLvl(NormalLevel nLvl) {
+        this.nLvl = nLvl;
+    }
+
+    public ClassLevel getcLvl() {
+        return cLvl;
+    }
+
+    public void setcLvl(ClassLevel cLvl) {
+        this.cLvl = cLvl;
+    }
+
     public void addExperience (double exp, PlayerProfile.expType t ) {
         switch(t) {
             case NORMAL:
