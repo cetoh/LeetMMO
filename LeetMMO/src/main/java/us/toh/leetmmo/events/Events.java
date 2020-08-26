@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import us.toh.leetmmo.LeetMMO;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 
 import java.util.HashMap;
@@ -18,7 +19,8 @@ import java.util.UUID;
 
 public class Events implements Listener {
 
-    private Map<UUID,PlayerProfile> globalPlayers = new HashMap<UUID, PlayerProfile>();
+
+    private Map<UUID,PlayerProfile> globalPlayers;
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -26,66 +28,58 @@ public class Events implements Listener {
     }
 
     @EventHandler
-    public void onLeaveBed(PlayerBedLeaveEvent event) {
-        Player player  = event.getPlayer();
-        player.sendMessage("Hi boi");
-    }
-
-    @EventHandler
     public void onHarvestBlock(BlockBreakEvent event) {
+        PlayerProfile profile = globalPlayers.get(event.getPlayer().getUniqueId());
 
-        PlayerProfile player = globalPlayers.get(event.getPlayer().getUniqueId());
-
-        double expGainBase = 100;
-        double expGainModifier = 0;
+        double expGainBase = 0.1;
+        double expGainModifier = 1;
         switch(event.getBlock().getType()) {
 
             //Mining
-            case STONE:
-                expGainModifier = 11520;
-                break;
             case CLAY:
-                expGainModifier = 150;
+                expGainModifier = 5;
                 break;
             case COAL_ORE:
-                expGainModifier = 124;
-                break;
-            case REDSTONE_ORE:
-                expGainModifier = 25;
-                break;
-            case IRON_ORE:
-                expGainModifier = 72;
-                break;
-            case GOLD_ORE:
                 expGainModifier = 7.5;
                 break;
+            case REDSTONE_ORE:
+                expGainModifier = 40;
+                break;
+            case IRON_ORE:
+                expGainModifier = 12.5;
+                break;
+            case GOLD_ORE:
+                expGainModifier = 132.5;
+                break;
             case LAPIS_ORE:
-                expGainModifier = 3.43;
+                expGainModifier = 302.5;
                 break;
             case EMERALD_ORE:
-                expGainModifier = 11;
+                expGainModifier = 90;
                 break;
             case DIAMOND_ORE:
-                expGainModifier = 3;
+                expGainModifier = 332.5;
                 break;
             case NETHER_QUARTZ_ORE:
-                expGainModifier = 16;
+                expGainModifier = 62.5;
                 break;
             case NETHER_GOLD_ORE:
-                expGainModifier = 10;
+                expGainModifier = 100;
                 break;
             case ANCIENT_DEBRIS:
-                expGainModifier = 1.7;
+                expGainModifier = 587.5;
                 break;
 
             //Woodcutting
-            case ACACIA_WOOD:
-            case BIRCH_WOOD:
-            case DARK_OAK_WOOD:
-            case JUNGLE_WOOD:
-            case OAK_WOOD:
-            case SPRUCE_WOOD:
-                expGainModifier = 400;
+            case BROWN_MUSHROOM_BLOCK:
+            case RED_MUSHROOM_BLOCK:
+            case ACACIA_LOG:
+            case BIRCH_LOG:
+            case DARK_OAK_LOG:
+            case JUNGLE_LOG:
+            case OAK_LOG:
+            case SPRUCE_LOG:
+                expGainModifier = 2.5;
                 break;
 
             //Farming
@@ -95,46 +89,45 @@ public class Events implements Listener {
             case BEETROOT:
             case POTATO:
             case POTATOES:
-                expGainModifier = 67;
+                expGainModifier = 15;
                 break;
             case MELON:
             case PUMPKIN:
-                expGainModifier = 200;
+                expGainModifier = 50;
                 break;
 
             case SUGAR_CANE:
-                expGainModifier = 400;
+                expGainModifier = 25;
                 break;
             case COCOA_BEANS:
-                expGainModifier = 20;
+                expGainModifier = 50;
                 break;
             case BROWN_MUSHROOM:
             case RED_MUSHROOM:
-                expGainModifier = 50;
+                expGainModifier = 20;
                 break;
             case NETHER_WART:
-                expGainModifier = 40;
+                expGainModifier = 25;
                 break;
             case CHORUS_FRUIT:
-                expGainModifier = 6.7;
+                expGainModifier = 150;
                 break;
+            default:
+                expGainBase = 0;
         }
 
         //Calculate final exp gain
-        double expGain = 0.25 * Math.abs((expGainBase / expGainModifier) / 0.25);
-        if (event.getBlock().getType().equals(Material.STONE)){
-            expGain = 0.1;
-        }
+        double expGain = expGainBase * expGainModifier;
 
         //Give player normal experience
-        player.addExperience(expGain, PlayerProfile.expType.NORMAL);
+        profile.addExperience(expGain, PlayerProfile.expType.NORMAL);
 
         //Give player class experience
-        player.addExperience(Math.floor(expGain * 0.1), PlayerProfile.expType.CLASS );
+        profile.addExperience(Math.floor(expGain * 0.1), PlayerProfile.expType.CLASS );
 
-        globalPlayers.put(player.getUuid(), player);
+        globalPlayers.put(profile.getUuid(), profile);
 
-        event.getPlayer().sendMessage(player.displayLevels());
+        event.getPlayer().sendMessage(profile.displayLevels());
 
     }
 
@@ -162,9 +155,18 @@ public class Events implements Listener {
             p.addExperience(0.5, PlayerProfile.expType.NORMAL);
 
             //Give player class experience
-            p.addExperience(0.5, PlayerProfile.expType.CLASS );
+            p.addExperience(0.5, PlayerProfile.expType.CLASS);
 
             globalPlayers.put(p.getUuid(), p);
         }
+    }
+
+    public Map<UUID, PlayerProfile> getGlobalPlayers() {
+        return globalPlayers;
+    }
+
+    public void setGlobalPlayers(Map<UUID,PlayerProfile> gp) {
+        this.globalPlayers = gp;
+
     }
 }
