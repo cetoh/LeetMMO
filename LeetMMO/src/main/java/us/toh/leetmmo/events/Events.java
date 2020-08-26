@@ -1,5 +1,6 @@
 package us.toh.leetmmo.events;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,7 +34,97 @@ public class Events implements Listener {
 
         PlayerProfile player = globalPlayers.get(event.getPlayer().getUniqueId());
 
-        player.addExperience(10, PlayerProfile.expType.NORMAL);
+        double expGainBase = 100;
+        double expGainModifier = 0;
+        switch(event.getBlock().getType()) {
+
+            //Mining
+            case STONE:
+                expGainModifier = 11520;
+                break;
+            case CLAY:
+                expGainModifier = 150;
+                break;
+            case COAL_ORE:
+                expGainModifier = 124;
+                break;
+            case REDSTONE_ORE:
+                expGainModifier = 25;
+                break;
+            case IRON_ORE:
+                expGainModifier = 72;
+                break;
+            case GOLD_ORE:
+                expGainModifier = 7.5;
+                break;
+            case LAPIS_ORE:
+                expGainModifier = 3.43;
+                break;
+            case EMERALD_ORE:
+                expGainModifier = 11;
+                break;
+            case DIAMOND_ORE:
+                expGainModifier = 3;
+                break;
+            case NETHER_QUARTZ_ORE:
+                expGainModifier = 16;
+                break;
+            case NETHER_GOLD_ORE:
+                expGainModifier = 10;
+                break;
+            case ANCIENT_DEBRIS:
+                expGainModifier = 1.7;
+                break;
+
+            //Woodcutting
+            case ACACIA_WOOD:
+            case BIRCH_WOOD:
+            case DARK_OAK_WOOD:
+            case JUNGLE_WOOD:
+            case OAK_WOOD:
+            case SPRUCE_WOOD:
+                expGainModifier = 400;
+                break;
+
+            //Farming
+            case WHEAT:
+            case CARROT:
+            case CARROTS:
+            case BEETROOT:
+            case POTATO:
+            case POTATOES:
+                expGainModifier = 67;
+                break;
+            case MELON:
+            case PUMPKIN:
+                expGainModifier = 200;
+                break;
+
+            case SUGAR_CANE:
+                expGainModifier = 400;
+                break;
+            case COCOA_BEANS:
+                expGainModifier = 20;
+                break;
+            case BROWN_MUSHROOM:
+            case RED_MUSHROOM:
+                expGainModifier = 50;
+                break;
+            case NETHER_WART:
+                expGainModifier = 40;
+                break;
+            case CHORUS_FRUIT:
+                expGainModifier = 6.7;
+                break;
+        }
+
+        //Calculate final exp gain
+        double expGain = 0.25 * Math.abs(Math.floor(expGainBase / expGainModifier) / 0.25);
+        if (event.getBlock().getType().equals(Material.STONE)){
+            expGain = 0.1;
+        }
+
+        player.addExperience(expGain, PlayerProfile.expType.NORMAL);
 
         globalPlayers.put(player.getUuid(), player);
 
