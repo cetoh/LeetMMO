@@ -152,8 +152,6 @@ public class Events implements Listener {
 
         globalPlayers.put(profile.getUuid(), profile);
 
-        event.getPlayer().sendMessage(profile.displayLevels());
-
     }
 
     @EventHandler
