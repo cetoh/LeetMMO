@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import us.toh.leetmmo.LeetMMO;
+import us.toh.leetmmo.configuration.ExperienceConfigManager;
 import us.toh.leetmmo.database.Database;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 
@@ -24,6 +25,29 @@ public class Events implements Listener {
     private Map<UUID,PlayerProfile> globalPlayers;
 
     private Database db;
+
+    private ExperienceConfigManager expConfigManager;
+
+    public Map<UUID, PlayerProfile> getGlobalPlayers() {
+        return globalPlayers;
+    }
+
+    public void setGlobalPlayers(Map<UUID,PlayerProfile> gp) {
+        this.globalPlayers = gp;
+
+    }
+
+    public Database getDb() {
+        return db;
+    }
+
+    public void setDb(Database db) {
+        this.db = db;
+    }
+
+    public void setExpConfigManager(ExperienceConfigManager expConfigManager) {
+        this.expConfigManager = expConfigManager;
+    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -56,7 +80,7 @@ public class Events implements Listener {
     public void onHarvestBlock(BlockBreakEvent event) {
         PlayerProfile profile = globalPlayers.get(event.getPlayer().getUniqueId());
 
-        double expGainBase = 0.1;
+        double expGainBase = expConfigManager.getCustomConfig().getDouble("expBaseGain");
         double expGainModifier = 1;
         switch(event.getBlock().getType()) {
 
@@ -148,7 +172,7 @@ public class Events implements Listener {
         profile.addExperience(expGain, PlayerProfile.expType.NORMAL);
 
         //Give player class experience
-        profile.addExperience(Math.floor(expGain * 0.1), PlayerProfile.expType.CLASS );
+        profile.addExperience(Math.floor(expGain * expConfigManager.getCustomConfig().getDouble("classExpGainModifier")), PlayerProfile.expType.CLASS );
 
         globalPlayers.put(profile.getUuid(), profile);
 
@@ -184,20 +208,5 @@ public class Events implements Listener {
         }
     }
 
-    public Map<UUID, PlayerProfile> getGlobalPlayers() {
-        return globalPlayers;
-    }
 
-    public void setGlobalPlayers(Map<UUID,PlayerProfile> gp) {
-        this.globalPlayers = gp;
-
-    }
-
-    public Database getDb() {
-        return db;
-    }
-
-    public void setDb(Database db) {
-        this.db = db;
-    }
 }

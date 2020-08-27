@@ -1,0 +1,6 @@
+#############################################
+# This is the experience configuration File #
+#############################################
+
+expBaseGain: 0.1
+classExpGainModifier: 0.1

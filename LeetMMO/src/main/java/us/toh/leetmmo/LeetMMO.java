@@ -3,6 +3,8 @@ package us.toh.leetmmo;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.toh.leetmmo.commands.CommandLeetInfo;
 import us.toh.leetmmo.commands.CommandLeetStats;
+import us.toh.leetmmo.configuration.ExperienceConfigManager;
+import us.toh.leetmmo.configuration.SkillConfigManager;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.events.Events;
 import us.toh.leetmmo.database.Database;
@@ -29,13 +31,18 @@ public final class LeetMMO extends JavaPlugin {
         //Start-up database
         db.createNewDatabase("LeetMMO-players.db");
 
+        //Enable Player Commands
+        setupPlayerCommands();
+
+        //Load Configurations
+        ExperienceConfigManager expConfigManager = new ExperienceConfigManager(this);
+        SkillConfigManager skillConfigManager = new SkillConfigManager(this);
+
         //Set-up Events
         evt.setDb(db);
         evt.setGlobalPlayers(globalPlayers);
+        evt.setExpConfigManager(expConfigManager);
         getServer().getPluginManager().registerEvents(evt, plugin);
-
-        //Enable Player Commands
-        setupPlayerCommands();
 
         System.out.println("LeetMMO Enabled");
 
