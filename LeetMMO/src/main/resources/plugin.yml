@@ -5,6 +5,9 @@ api-version: 1.16
 authors: [ ctoh, atoh ]
 description: This is some Leet Code for Leet MMO
 commands:
+  leetinfo:
+    description: Get plugin information
+    usage: /<command>
   leetstats:
-    description: Your description
+    description: See current level
     usage: /<command>

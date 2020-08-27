@@ -1,6 +1,7 @@
 package us.toh.leetmmo;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import us.toh.leetmmo.commands.CommandLeetInfo;
 import us.toh.leetmmo.commands.CommandLeetStats;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.events.Events;
@@ -33,9 +34,9 @@ public final class LeetMMO extends JavaPlugin {
         evt.setGlobalPlayers(globalPlayers);
         getServer().getPluginManager().registerEvents(evt, plugin);
 
-        CommandLeetStats cmdLeetStats =  new CommandLeetStats();
-        cmdLeetStats.setGlobalPlayers(globalPlayers);
-        plugin.getCommand("leetstats").setExecutor(cmdLeetStats);
+        //Enable Player Commands
+        setupPlayerCommands();
+
         System.out.println("LeetMMO Enabled");
 
     }
@@ -44,6 +45,17 @@ public final class LeetMMO extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         System.out.println("LeetMMO Disabled");
+    }
+
+    private void setupPlayerCommands() {
+        //LeetInfo Command
+        CommandLeetInfo cmdLeetInfo = new CommandLeetInfo();
+        plugin.getCommand("leetinfo").setExecutor(cmdLeetInfo);
+
+        //LeetStats Command
+        CommandLeetStats cmdLeetStats =  new CommandLeetStats();
+        cmdLeetStats.setGlobalPlayers(globalPlayers);
+        plugin.getCommand("leetstats").setExecutor(cmdLeetStats);
     }
 
     public Map<UUID, PlayerProfile> getGlobalPlayers() {

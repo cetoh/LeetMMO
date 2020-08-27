@@ -1,5 +1,6 @@
 package us.toh.leetmmo.datatypes.player;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import us.toh.leetmmo.datatypes.experience.*;
 import us.toh.leetmmo.datatypes.level.*;
@@ -122,10 +123,10 @@ public class PlayerProfile {
     }
 
     public String displayLevels () {
-        return "nLevel: " + nLvl.getCurrentLevel() + " nEXP: " + nEXPPool.getPoints() + "/" + nEXPPool.getPoolCap() + "\n"
-                + "nSkill Points: " + nSPPool.getNumPoints() + "\n"
-                + "cLevel: " + cLvl.getCurrentLevel() + " cEXP: " + cEXPPool.getPoints() + "/" + cEXPPool.getPoolCap() + "\n"
-                + "cSkill Points: " + cSPPool.getNumPoints() + "\n";
+        return ChatColor.BLUE + "Normal Level: " + nLvl.getCurrentLevel() + ChatColor.BLUE + " Normal EXP: " + nEXPPool.getPoints() + "/" + nEXPPool.getPoolCap() + "\n"
+                + ChatColor.AQUA + "Normal Skill Points: " + nSPPool.getNumPoints() + "\n"
+                + ChatColor.BLUE + "Class Level: " + cLvl.getCurrentLevel() + ChatColor.BLUE + " Class EXP: " + cEXPPool.getPoints() + "/" + cEXPPool.getPoolCap() + "\n"
+                + ChatColor.AQUA + "Class Skill Points: " + cSPPool.getNumPoints() + "\n";
     }
 
 
