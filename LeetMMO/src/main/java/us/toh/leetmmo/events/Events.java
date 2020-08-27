@@ -1,22 +1,17 @@
 package us.toh.leetmmo.events;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerBedLeaveEvent;
-import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import us.toh.leetmmo.LeetMMO;
-import us.toh.leetmmo.configuration.ExperienceConfigManager;
+import us.toh.leetmmo.configuration.ExperienceConfigLoader;
 import us.toh.leetmmo.database.Database;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -26,7 +21,7 @@ public class Events implements Listener {
 
     private Database db;
 
-    private ExperienceConfigManager expConfigManager;
+    private ExperienceConfigLoader expConfigManager;
 
     public Map<UUID, PlayerProfile> getGlobalPlayers() {
         return globalPlayers;
@@ -45,7 +40,7 @@ public class Events implements Listener {
         this.db = db;
     }
 
-    public void setExpConfigManager(ExperienceConfigManager expConfigManager) {
+    public void setExpConfigManager(ExperienceConfigLoader expConfigManager) {
         this.expConfigManager = expConfigManager;
     }
 

@@ -1,22 +1,20 @@
 package us.toh.leetmmo.configuration;
 
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import us.toh.leetmmo.LeetMMO;
 
 import java.io.File;
-import java.io.IOException;
 
-public class SkillConfigManager {
-
+public class ConfigLoader {
     private static LeetMMO plugin;
     private File customConfigFile;
     private FileConfiguration customConfig;
-    private static String fileName = "skills.yml";
+    private String fileName = null;
 
-    public SkillConfigManager(LeetMMO plugin) {
+    public ConfigLoader(LeetMMO plugin, String fileName) {
         this.plugin = plugin;
+        this.fileName = fileName;
         createCustomConfig();
     }
 
