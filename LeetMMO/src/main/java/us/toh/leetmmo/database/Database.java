@@ -44,6 +44,26 @@ public class Database {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        // TODO Figure out what datatypes to set the columns of the table
+        String playerTableCheck = "CREATE TABLE IF NOT EXISTS player(\n"
+                                + "      name varchar(40),\n"
+                                + "      uuid varchar(36),\n"
+                                + "      nexp int,\n"
+                                + "      cexp int, \n"
+                                + "      nexpcap int,\n"
+                                + "      cexpcap int, \n"
+                                + "      nlvl int, \n"
+                                + "      clvl int, \n"
+                                + "      nsp int, \n"
+                                + "      csp int);";
+
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute(playerTableCheck);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -138,6 +158,7 @@ public class Database {
     }
 
     public PlayerProfile getPlayerProfileFromDatabase(PlayerProfile playerProfile) {
+
         if (checkIfPlayerExists(playerProfile)) {
             String sql = "SELECT * FROM player WHERE name = ? AND uuid = ?";
 
