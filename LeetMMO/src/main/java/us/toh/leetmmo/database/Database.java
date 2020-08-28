@@ -8,9 +8,14 @@ import us.toh.leetmmo.datatypes.level.NormalLevel;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.datatypes.skillpoint.ClassSkillPointPool;
 import us.toh.leetmmo.datatypes.skillpoint.NormalSkillPointPool;
+import us.toh.leetmmo.skills.Skill;
+import us.toh.leetmmo.skills.normal.farming.skilltree.FarmingSkillTree;
 
 import java.io.File;
 import java.sql.*;
+import java.util.HashMap;
+
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.*;
 
 public class Database {
 
@@ -64,6 +69,8 @@ public class Database {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        createSkillTables(conn);
     }
 
     /**
@@ -160,6 +167,7 @@ public class Database {
     public PlayerProfile getPlayerProfileFromDatabase(PlayerProfile playerProfile) {
 
         if (checkIfPlayerExists(playerProfile)) {
+            //Load basic information
             String sql = "SELECT * FROM player WHERE name = ? AND uuid = ?";
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -190,6 +198,22 @@ public class Database {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
+
+            //Load Farming Skill Tree
+            String farming = "SELECT * FROM farming WHERE name = ? AND uuid = ?";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
+                pstmt.setString(1, playerProfile.getPlayerName());
+                pstmt.setString(2, playerProfile.getUuid().toString());
+                ResultSet rs = pstmt.executeQuery();
+
+                //Get updates
+                HashMap<Enum, Skill> farmingSkillTree = playerProfile.getFarmingSkillTree().getTree();
+
+                farmingSkillTree.get(BASIC_AGRICULTURE).setSkillPoints(rs.getInt("basicAgriculture"));
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         return playerProfile;
@@ -216,4 +240,39 @@ public class Database {
         return doesExist;
     }
 
+    private void createSkillTables(Connection conn) {
+
+        String farming = "CREATE TABLE IF NOT EXISTS farming(\n"
+                + "      name varchar(40),\n"
+                + "      uuid varchar(36),\n"
+                + "      basicAgriculture int,\n"
+                + "      fertilizer int,\n"
+                + "      weedRemoval int,\n"
+                + "      daucusCultivation int, \n"
+                + "      cucurbitaCultivaiton int,\n"
+                + "      mechanizedHarvesting int, \n"
+                + "      tuberosemCultivation int, \n"
+                + "      saccharumCultivation int, \n"
+                + "      fungalFarming int, \n"
+                + "      ianutusCultivation int, \n"
+                + "      vulgarisCultivation int, \n"
+                + "      cacaoCultivation int, \n"
+                + "      plantations int, \n"
+                + "      indoorFungiculture int, \n"
+                + "      trellisGourdTechniques int, \n"
+                + "      cropRotation int, \n"
+                + "      blightProtection int, \n"
+                + "      hybridization int, \n"
+                + "      chemicalPesticides int, \n"
+                + "      gmoCrops int, \n"
+                + "      transenvironmentalCultivation int, \n"
+                + "      improvedPhosynthesis int, \n"
+                + "      farmingMastery int);";
+
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute(farming);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
