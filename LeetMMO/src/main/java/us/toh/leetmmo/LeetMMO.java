@@ -3,6 +3,7 @@ package us.toh.leetmmo;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.toh.leetmmo.commands.CommandLeetInfo;
+import us.toh.leetmmo.commands.CommandLeetNormalSkills;
 import us.toh.leetmmo.commands.CommandLeetStats;
 import us.toh.leetmmo.configuration.ExperienceConfigLoader;
 import us.toh.leetmmo.configuration.SkillConfigLoader;
@@ -10,6 +11,7 @@ import us.toh.leetmmo.datatypes.experience.ExperienceEvents;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.events.Events;
 import us.toh.leetmmo.database.Database;
+import us.toh.leetmmo.gui.advancements.NormalSkillTreeGUI;
 import us.toh.leetmmo.skills.normal.farming.FarmingEvents;
 
 import java.util.HashMap;
@@ -26,6 +28,9 @@ public final class LeetMMO extends JavaPlugin {
     private Events evt = new Events();
     private ExperienceEvents experienceEvents = new ExperienceEvents();
     private FarmingEvents farmingEvents = new FarmingEvents();
+
+    private NormalSkillTreeGUI normalSkillTreeGUI = new NormalSkillTreeGUI();
+
     private Database db = new Database(this);
 
     @Override
@@ -55,8 +60,11 @@ public final class LeetMMO extends JavaPlugin {
         experienceEvents.setExpConfigManager(expConfigLoader);
         getServer().getPluginManager().registerEvents(experienceEvents, plugin);
 
+        //Farming Events
         farmingEvents.setGlobalPlayers(globalPlayers);
         getServer().getPluginManager().registerEvents(farmingEvents, plugin);
+
+        getServer().getPluginManager().registerEvents(normalSkillTreeGUI, plugin);
 
         System.out.println("LeetMMO Enabled");
 
@@ -78,6 +86,11 @@ public final class LeetMMO extends JavaPlugin {
         CommandLeetStats cmdLeetStats =  new CommandLeetStats();
         cmdLeetStats.setGlobalPlayers(globalPlayers);
         plugin.getCommand("leetstats").setExecutor(cmdLeetStats);
+
+        //LeetNormalSkills Command
+        CommandLeetNormalSkills cmdNormalSkills =  new CommandLeetNormalSkills();
+        cmdNormalSkills.setGlobalPlayers(globalPlayers);
+        plugin.getCommand("leetnskills").setExecutor(cmdNormalSkills);
     }
 
     public Map<UUID, PlayerProfile> getGlobalPlayers() {

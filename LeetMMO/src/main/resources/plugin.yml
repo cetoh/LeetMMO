@@ -11,3 +11,6 @@ commands:
   leetstats:
     description: See current level
     usage: /<command>
+  leetnskills:
+    description: Open Normal Skill Tree GUI
+    usage: /<command>
