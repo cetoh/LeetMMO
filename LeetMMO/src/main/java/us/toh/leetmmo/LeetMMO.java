@@ -1,5 +1,6 @@
 package us.toh.leetmmo;
 
+import org.bukkit.advancement.Advancement;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.toh.leetmmo.commands.CommandLeetInfo;
 import us.toh.leetmmo.commands.CommandLeetStats;
@@ -58,6 +59,7 @@ public final class LeetMMO extends JavaPlugin {
         getServer().getPluginManager().registerEvents(farmingEvents, plugin);
 
         System.out.println("LeetMMO Enabled");
+
 
     }
 
