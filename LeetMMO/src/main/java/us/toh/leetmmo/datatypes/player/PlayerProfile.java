@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import us.toh.leetmmo.datatypes.experience.*;
 import us.toh.leetmmo.datatypes.level.*;
 import us.toh.leetmmo.datatypes.skillpoint.*;
+import us.toh.leetmmo.skills.normal.farming.skilltree.FarmingSkillTree;
 
 
 import java.util.UUID;
@@ -20,6 +21,8 @@ public class PlayerProfile {
     private ClassSkillPointPool cSPPool;
     private NormalLevel nLvl;
     private ClassLevel cLvl;
+
+    private FarmingSkillTree farmingSkillTree;
 
     public enum expType {NORMAL, CLASS};
 
@@ -95,6 +98,15 @@ public class PlayerProfile {
 
     public void setcLvl(ClassLevel cLvl) {
         this.cLvl = cLvl;
+    }
+
+
+    public FarmingSkillTree getFarmingSkillTree() {
+        return farmingSkillTree;
+    }
+
+    public void setFarmingSkillTree(FarmingSkillTree farmingSkillTree) {
+        this.farmingSkillTree = farmingSkillTree;
     }
 
     public void addExperience (double exp, PlayerProfile.expType t ) {
