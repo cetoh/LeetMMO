@@ -5,13 +5,16 @@ import java.util.HashMap;
 public class Skill {
 
     private String skillName;
+    private String description;
+
     private int skillPointRequirement = 0;
     private boolean hasPrerequesite = false;
 
-    private HashMap<String, Skill> prerequesiteSkills = new HashMap<String, Skill>();
+    private HashMap<Skill, Integer> prerequesiteSkills = new HashMap<Skill, Integer>();
 
-    public Skill(String skillName, int skillPointRequirement) {
+    public Skill(String skillName, String description, int skillPointRequirement) {
         this.skillName = skillName;
+        this.description = description;
         this.skillPointRequirement = skillPointRequirement;
     }
 
@@ -21,6 +24,14 @@ public class Skill {
 
     public void setSkillName(String skillName) {
         this.skillName = skillName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getSkillPointRequirement() {
@@ -37,6 +48,14 @@ public class Skill {
 
     public void setHasPrerequesite(boolean hasPrerequesite) {
         this.hasPrerequesite = hasPrerequesite;
+    }
+
+    public HashMap<Skill, Integer> getPrerequesiteSkills() {
+        return prerequesiteSkills;
+    }
+
+    public void setPrerequesiteSkills(HashMap<Skill, Integer> prerequesiteSkills) {
+        this.prerequesiteSkills = prerequesiteSkills;
     }
 
 }
