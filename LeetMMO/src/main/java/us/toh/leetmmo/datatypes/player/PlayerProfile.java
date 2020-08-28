@@ -22,7 +22,7 @@ public class PlayerProfile {
     private NormalLevel nLvl;
     private ClassLevel cLvl;
 
-    private FarmingSkillTree farmingSkillTree;
+    private FarmingSkillTree farmingSkillTree = new FarmingSkillTree();
 
     public enum expType {NORMAL, CLASS};
 

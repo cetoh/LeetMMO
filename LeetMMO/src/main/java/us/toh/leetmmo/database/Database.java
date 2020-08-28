@@ -55,12 +55,12 @@ public class Database {
                                 + "      name varchar(40),\n"
                                 + "      uuid varchar(36),\n"
                                 + "      nexp int,\n"
-                                + "      cexp int, \n"
+                                + "      cexp int,\n"
                                 + "      nexpcap int,\n"
-                                + "      cexpcap int, \n"
-                                + "      nlvl int, \n"
-                                + "      clvl int, \n"
-                                + "      nsp int, \n"
+                                + "      cexpcap int,\n"
+                                + "      nlvl int,\n"
+                                + "      clvl int,\n"
+                                + "      nsp int,\n"
                                 + "      csp int);";
 
         try (Statement stmt = conn.createStatement()) {
@@ -109,7 +109,7 @@ public class Database {
      * @param playerProfile
      */
     public void insertNewPlayerProfile(PlayerProfile playerProfile) {
-        if (!checkIfPlayerExists(playerProfile)) {
+        if (!checkIfPlayerExists(playerProfile,"player")) {
             String sql = "INSERT INTO player(name,uuid,nexp,cexp,nexpcap,cexpcap,nlvl,clvl,nsp,csp) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -128,10 +128,46 @@ public class Database {
                 System.out.println(e.getMessage());
             }
         }
+
+        if(!checkIfPlayerExists(playerProfile, "farming")) {
+            String farming = "INSERT INTO farming(name,uuid," +
+                    "basicAgriculture," +
+                    "fertilizer," +
+                    "weedRemoval," +
+                    "daucusCultivation,"+
+                    "cucurbitaCultivation," +
+                    "mechanizedHarvesting," +
+                    "tuberosemCultivation," +
+                    "saccharumCultivation," +
+                    "fungalFarming," +
+                    "ianatusCultivation," +
+                    "vulgarisCultivation," +
+                    "cacaoCultivation," +
+                    "plantations," +
+                    "indoorFungiculture," +
+                    "trellisGourdTechniques," +
+                    "cropRotation," +
+                    "blightProtection," +
+                    "hybridization," +
+                    "chemicalPesticides," +
+                    "gmoCrops," +
+                    "transenvironmentalCultivation," +
+                    "improvedPhotosynthesis," +
+                    "farmingMastery)" +
+                    " VALUES(?,?,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
+                pstmt.setString(1, playerProfile.getPlayerName());
+                pstmt.setString(2, playerProfile.getUuid().toString());
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public void updatePlayerProfile(PlayerProfile playerProfile) {
-        if (checkIfPlayerExists(playerProfile)) {
+        if (checkIfPlayerExists(playerProfile, "player")) {
             String sql = "UPDATE player SET name = ?, " +
                     "uuid = ?, " +
                     "nexp = ?, " +
@@ -161,12 +197,76 @@ public class Database {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
+
+        }
+
+        if (checkIfPlayerExists(playerProfile, "farming")) {
+            String farming = "UPDATE SET name = ?, uuid = ?, " +
+                    "basicAgriculture = ?," +
+                    "fertilizer = ?," +
+                    "weedRemoval = ?," +
+                    "daucusCultivation = ?,"+
+                    "cucurbitaCultivation = ?," +
+                    "mechanizedHarvesting = ?," +
+                    "tuberosemCultivation = ?," +
+                    "saccharumCultivation = ?," +
+                    "fungalFarming = ?," +
+                    "ianatusCultivation = ?," +
+                    "vulgarisCultivation = ?," +
+                    "cacaoCultivation = ?," +
+                    "plantations = ?," +
+                    "indoorFungiculture = ?," +
+                    "trellisGourdTechniques = ?," +
+                    "cropRotation = ?," +
+                    "blightProtection = ?," +
+                    "hybridization = ?," +
+                    "chemicalPesticides = ?," +
+                    "gmoCrops = ?," +
+                    "transenvironmentalCultivation = ?," +
+                    "improvedPhotosynthesis = ?," +
+                    "farmingMastery = ?" +
+                    " WHERE name = ? AND uuid = ?";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
+                HashMap<Enum, Skill> farmingSkillTree = playerProfile.getFarmingSkillTree().getTree();
+                pstmt.setString(1, playerProfile.getPlayerName());
+                pstmt.setString(2, playerProfile.getUuid().toString());
+                pstmt.setInt(3, farmingSkillTree.get(BASIC_AGRICULTURE).getSkillPoints());
+                pstmt.setInt(4, farmingSkillTree.get(FERTILIZER).getSkillPoints());
+                pstmt.setInt(5, farmingSkillTree.get(WEED_REMOVAL).getSkillPoints());
+                pstmt.setInt(6, farmingSkillTree.get(DAUCUS_CULTIVATION).getSkillPoints());
+                pstmt.setInt(7, farmingSkillTree.get(CUCURBITA_CULTIVATION).getSkillPoints());
+                pstmt.setInt(8, farmingSkillTree.get(MECHANIZED_HARVESTING).getSkillPoints());
+                pstmt.setInt(9, farmingSkillTree.get(TUBEROSEM_CULTIVATION).getSkillPoints());
+                pstmt.setInt(10, farmingSkillTree.get(SACCHARUM_CULTIVATION).getSkillPoints());
+                pstmt.setInt(11, farmingSkillTree.get(FUNGAL_FARMING).getSkillPoints());
+                pstmt.setInt(12, farmingSkillTree.get(IANATUS_CULTIVATION).getSkillPoints());
+                pstmt.setInt(13, farmingSkillTree.get(VULGARUS_CULTIVATION).getSkillPoints());
+                pstmt.setInt(14, farmingSkillTree.get(CACAO_CULTIVATION).getSkillPoints());
+                pstmt.setInt(15, farmingSkillTree.get(PLANTATIONS).getSkillPoints());
+                pstmt.setInt(16, farmingSkillTree.get(INDOOR_FUNGICULTURE).getSkillPoints());
+                pstmt.setInt(17, farmingSkillTree.get(TRELLIS_GOURD_TECHNIQUES).getSkillPoints());
+                pstmt.setInt(18, farmingSkillTree.get(CROP_ROTATION).getSkillPoints());
+                pstmt.setInt(19, farmingSkillTree.get(BLIGHT_PROTECTION).getSkillPoints());
+                pstmt.setInt(20, farmingSkillTree.get(HYBRIDIZATION).getSkillPoints());
+                pstmt.setInt(21, farmingSkillTree.get(CHEMICAL_PESTICIDES).getSkillPoints());
+                pstmt.setInt(22, farmingSkillTree.get(GMO_CROPS).getSkillPoints());
+                pstmt.setInt(23, farmingSkillTree.get(TRANSENVIRONMENTAL_CULTIVATION).getSkillPoints());
+                pstmt.setInt(24, farmingSkillTree.get(IMPROVED_PHOTOSYNTHESIS).getSkillPoints());
+                pstmt.setInt(25, farmingSkillTree.get(FARMING_MASTERY).getSkillPoints());
+                pstmt.setString(26, playerProfile.getPlayerName());
+                pstmt.setString(27, playerProfile.getUuid().toString());
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
     public PlayerProfile getPlayerProfileFromDatabase(PlayerProfile playerProfile) {
 
-        if (checkIfPlayerExists(playerProfile)) {
+        if (checkIfPlayerExists(playerProfile, "player")) {
             //Load basic information
             String sql = "SELECT * FROM player WHERE name = ? AND uuid = ?";
 
@@ -211,6 +311,28 @@ public class Database {
                 HashMap<Enum, Skill> farmingSkillTree = playerProfile.getFarmingSkillTree().getTree();
 
                 farmingSkillTree.get(BASIC_AGRICULTURE).setSkillPoints(rs.getInt("basicAgriculture"));
+                farmingSkillTree.get(TRITICUM_CULTIVATION).setSkillPoints(rs.getInt("triticumCultivation"));
+                farmingSkillTree.get(FERTILIZER).setSkillPoints(rs.getInt("fertilizer"));
+                farmingSkillTree.get(DAUCUS_CULTIVATION).setSkillPoints(rs.getInt("daucusCultivation"));
+                farmingSkillTree.get(WEED_REMOVAL).setSkillPoints(rs.getInt("weedRemoval"));
+                farmingSkillTree.get(MECHANIZED_HARVESTING).setSkillPoints(rs.getInt("mechanizedHarvesting"));
+                farmingSkillTree.get(CUCURBITA_CULTIVATION).setSkillPoints(rs.getInt("cucurbitaCultivation"));
+                farmingSkillTree.get(TUBEROSEM_CULTIVATION).setSkillPoints(rs.getInt("tuberosemCultivation"));
+                farmingSkillTree.get(SACCHARUM_CULTIVATION).setSkillPoints(rs.getInt("saccharumCultivation"));
+                farmingSkillTree.get(IANATUS_CULTIVATION).setSkillPoints(rs.getInt("ianatusCultivation"));
+                farmingSkillTree.get(INDOOR_FUNGICULTURE).setSkillPoints(rs.getInt("indoorFungiculture"));
+                farmingSkillTree.get(TRELLIS_GOURD_TECHNIQUES).setSkillPoints(rs.getInt("trellisGourdTechniques"));
+                farmingSkillTree.get(PLANTATIONS).setSkillPoints(rs.getInt("plantations"));
+                farmingSkillTree.get(CACAO_CULTIVATION).setSkillPoints(rs.getInt("cacaoCultivation"));
+                farmingSkillTree.get(VULGARUS_CULTIVATION).setSkillPoints(rs.getInt("vulagarusCultivation"));
+                farmingSkillTree.get(CROP_ROTATION).setSkillPoints(rs.getInt("cropRotation"));
+                farmingSkillTree.get(BLIGHT_PROTECTION).setSkillPoints(rs.getInt("blightProtection"));
+                farmingSkillTree.get(HYBRIDIZATION).setSkillPoints(rs.getInt("hybridization"));
+                farmingSkillTree.get(GMO_CROPS).setSkillPoints(rs.getInt("gmoCrops"));
+                farmingSkillTree.get(CHEMICAL_PESTICIDES).setSkillPoints(rs.getInt("chemicalPesticides"));
+                farmingSkillTree.get(FARMING_MASTERY).setSkillPoints(rs.getInt("farmingMastery"));
+                farmingSkillTree.get(TRANSENVIRONMENTAL_CULTIVATION).setSkillPoints(rs.getInt("transenvironmentalCultivation"));
+                farmingSkillTree.get(IMPROVED_PHOTOSYNTHESIS).setSkillPoints(rs.getInt("improvedPhotosynthesis"));
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -219,10 +341,10 @@ public class Database {
         return playerProfile;
     }
 
-    public boolean checkIfPlayerExists(PlayerProfile playerProfile) {
+    public boolean checkIfPlayerExists(PlayerProfile playerProfile, String table) {
         boolean doesExist = false;
 
-        String sql = "SELECT (count(*) > 0) as found FROM player WHERE name = ? AND uuid = ?";
+        String sql = "SELECT (count(*) > 0) as found FROM " + table +" WHERE name = ? AND uuid = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, playerProfile.getPlayerName());
@@ -248,25 +370,25 @@ public class Database {
                 + "      basicAgriculture int,\n"
                 + "      fertilizer int,\n"
                 + "      weedRemoval int,\n"
-                + "      daucusCultivation int, \n"
-                + "      cucurbitaCultivaiton int,\n"
-                + "      mechanizedHarvesting int, \n"
-                + "      tuberosemCultivation int, \n"
-                + "      saccharumCultivation int, \n"
-                + "      fungalFarming int, \n"
-                + "      ianutusCultivation int, \n"
-                + "      vulgarisCultivation int, \n"
-                + "      cacaoCultivation int, \n"
-                + "      plantations int, \n"
-                + "      indoorFungiculture int, \n"
-                + "      trellisGourdTechniques int, \n"
-                + "      cropRotation int, \n"
-                + "      blightProtection int, \n"
-                + "      hybridization int, \n"
-                + "      chemicalPesticides int, \n"
-                + "      gmoCrops int, \n"
-                + "      transenvironmentalCultivation int, \n"
-                + "      improvedPhosynthesis int, \n"
+                + "      daucusCultivation int,\n"
+                + "      cucurbitaCultivation int,\n"
+                + "      mechanizedHarvesting int,\n"
+                + "      tuberosemCultivation int,\n"
+                + "      saccharumCultivation int,\n"
+                + "      fungalFarming int,\n"
+                + "      ianatusCultivation int,\n"
+                + "      vulgarisCultivation int,\n"
+                + "      cacaoCultivation int,\n"
+                + "      plantations int,\n"
+                + "      indoorFungiculture int,\n"
+                + "      trellisGourdTechniques int,\n"
+                + "      cropRotation int,\n"
+                + "      blightProtection int,\n"
+                + "      hybridization int,\n"
+                + "      chemicalPesticides int,\n"
+                + "      gmoCrops int,\n"
+                + "      transenvironmentalCultivation int,\n"
+                + "      improvedPhotosynthesis int,\n"
                 + "      farmingMastery int);";
 
         try (Statement stmt = conn.createStatement()) {

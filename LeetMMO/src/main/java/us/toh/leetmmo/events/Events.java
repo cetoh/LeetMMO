@@ -40,7 +40,7 @@ public class Events implements Listener {
         PlayerProfile pp = new PlayerProfile(event.getPlayer());
 
         //See if player exists in database. If player exists load profile.
-        if (db.checkIfPlayerExists(pp)) {
+        if (db.checkIfPlayerExists(pp, "player")) {
             pp = db.getPlayerProfileFromDatabase(pp);
         }
 
@@ -53,10 +53,12 @@ public class Events implements Listener {
         PlayerProfile pp = globalPlayers.get(event.getPlayer().getUniqueId());
 
         //See if player exists in database. If player exists update profile. Else insert new profile
-        if (db.checkIfPlayerExists(pp)) {
+        if (db.checkIfPlayerExists(pp, "player")
+                && db.checkIfPlayerExists(pp, "farming")) {
             db.updatePlayerProfile(pp);
         } else {
             db.insertNewPlayerProfile(pp);
+            db.updatePlayerProfile(pp);
         }
 
     }
