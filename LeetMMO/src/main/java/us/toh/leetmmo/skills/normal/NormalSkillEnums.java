@@ -78,8 +78,7 @@ public class NormalSkillEnums {
         THERMOLUMINESCENCE_DATING,
         TUNNEL_DWELLER,
         WURTZITE_BORON_NITIRDE_DRILL,
-        XRAY_FLOURESCENCE,
-
+        XRAY_FLOURESCENCE
 
     }
 
