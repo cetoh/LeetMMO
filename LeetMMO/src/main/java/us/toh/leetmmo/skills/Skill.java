@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Skill {
 
-    private String skillName;
+    private Enum skillName;
     private String description;
 
 
@@ -14,17 +14,17 @@ public class Skill {
 
     private HashMap<Skill, Integer> prerequesiteSkills = new HashMap<Skill, Integer>();
 
-    public Skill(String skillName, String description, int skillPointRequirement) {
+    public Skill(Enum skillName, String description, int skillPointRequirement) {
         this.skillName = skillName;
         this.description = description;
         this.skillPointRequirement = skillPointRequirement;
     }
 
-    public String getSkillName() {
+    public Enum getSkillName() {
         return skillName;
     }
 
-    public void setSkillName(String skillName) {
+    public void setSkillName(Enum skillName) {
         this.skillName = skillName;
     }
 
