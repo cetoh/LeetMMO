@@ -5,9 +5,11 @@ import us.toh.leetmmo.commands.CommandLeetInfo;
 import us.toh.leetmmo.commands.CommandLeetStats;
 import us.toh.leetmmo.configuration.ExperienceConfigLoader;
 import us.toh.leetmmo.configuration.SkillConfigLoader;
+import us.toh.leetmmo.datatypes.experience.ExperienceEvents;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.events.Events;
 import us.toh.leetmmo.database.Database;
+import us.toh.leetmmo.skills.normal.farming.FarmingEvents;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +23,8 @@ public final class LeetMMO extends JavaPlugin {
     private Map<UUID,PlayerProfile> globalPlayers = new HashMap<UUID,PlayerProfile>();
 
     private Events evt = new Events();
+    private ExperienceEvents experienceEvents = new ExperienceEvents();
+    private FarmingEvents farmingEvents = new FarmingEvents();
     private Database db = new Database(this);
 
     @Override
@@ -39,10 +43,19 @@ public final class LeetMMO extends JavaPlugin {
         SkillConfigLoader skillConfigLoader = new SkillConfigLoader(this);
 
         //Set-up Events
+
+        //Core Startup Events
         evt.setDb(db);
         evt.setGlobalPlayers(globalPlayers);
-        evt.setExpConfigManager(expConfigLoader);
         getServer().getPluginManager().registerEvents(evt, plugin);
+
+        //Experience Events
+        experienceEvents.setGlobalPlayers(globalPlayers);
+        experienceEvents.setExpConfigManager(expConfigLoader);
+        getServer().getPluginManager().registerEvents(experienceEvents, plugin);
+
+        farmingEvents.setGlobalPlayers(globalPlayers);
+        getServer().getPluginManager().registerEvents(farmingEvents, plugin);
 
         System.out.println("LeetMMO Enabled");
 
