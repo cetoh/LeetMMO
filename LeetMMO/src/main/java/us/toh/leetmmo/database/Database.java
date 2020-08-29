@@ -9,7 +9,6 @@ import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.datatypes.skillpoint.ClassSkillPointPool;
 import us.toh.leetmmo.datatypes.skillpoint.NormalSkillPointPool;
 import us.toh.leetmmo.skills.Skill;
-import us.toh.leetmmo.skills.normal.farming.skilltree.FarmingSkillTree;
 
 import java.io.File;
 import java.sql.*;
@@ -154,7 +153,7 @@ public class Database {
                     "transenvironmentalCultivation," +
                     "improvedPhotosynthesis," +
                     "farmingMastery)" +
-                    " VALUES(?,?,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+                    " VALUES(?,?,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
 
             try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
                 pstmt.setString(1, playerProfile.getPlayerName());

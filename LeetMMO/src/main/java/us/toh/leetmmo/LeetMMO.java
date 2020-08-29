@@ -1,12 +1,10 @@
 package us.toh.leetmmo;
 
-import org.bukkit.advancement.Advancement;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.toh.leetmmo.commands.CommandLeetInfo;
 import us.toh.leetmmo.commands.CommandLeetNormalSkills;
 import us.toh.leetmmo.commands.CommandLeetStats;
 import us.toh.leetmmo.configuration.ExperienceConfigLoader;
-import us.toh.leetmmo.configuration.SkillConfigLoader;
 import us.toh.leetmmo.datatypes.experience.ExperienceEvents;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.events.Events;
@@ -46,7 +44,6 @@ public final class LeetMMO extends JavaPlugin {
 
         //Load Configurations
         ExperienceConfigLoader expConfigLoader = new ExperienceConfigLoader(this);
-        SkillConfigLoader skillConfigLoader = new SkillConfigLoader(this);
 
         //Set-up Events
 

@@ -8,8 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,7 +20,7 @@ public class NormalSkillTreeGUI implements Listener {
 
     public NormalSkillTreeGUI() {
         // Create a new inventory, with no owner (as this isn't a real inventory), a size of nine, called example
-        inv = Bukkit.createInventory(null, 9, "Normal Skill Tree");
+        inv = Bukkit.createInventory(null, 18, "Normal Skill Tree");
 
         // Put the items into the inventory
         initializeItems();
@@ -30,8 +28,9 @@ public class NormalSkillTreeGUI implements Listener {
 
     // You can call this whenever you want to put the items in
     public void initializeItems() {
-        inv.addItem(createGuiItem(Material.DIAMOND_SWORD, "Example Sword", "§aFirst line of the lore", "§bSecond line of the lore"));
-        inv.addItem(createGuiItem(Material.IRON_HELMET, "§bExample Helmet", "§aFirst line of the lore", "§bSecond line of the lore"));
+        inv.addItem(createGuiItem(Material.WOODEN_HOE, "Farming", "§aFarming Skill Tree", "§bSecond line of the lore"));
+        inv.addItem(createGuiItem(Material.FISHING_ROD, "Fishing", ""));
+        inv.addItem(createGuiItem(Material.WOODEN_PICKAXE, "§bMining", "§aFirst line of the lore", "§bSecond line of the lore"));
     }
 
     // Nice little method to create a gui item with a custom name, and description
