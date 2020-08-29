@@ -200,30 +200,30 @@ public class Database {
         }
 
         if (checkIfPlayerExists(playerProfile, "farming")) {
-            String farming = "UPDATE SET name = ?, uuid = ?, " +
-                    "basicAgriculture = ?," +
-                    "fertilizer = ?," +
-                    "weedRemoval = ?," +
-                    "daucusCultivation = ?,"+
-                    "cucurbitaCultivation = ?," +
-                    "mechanizedHarvesting = ?," +
-                    "tuberosemCultivation = ?," +
-                    "saccharumCultivation = ?," +
-                    "fungalFarming = ?," +
-                    "ianatusCultivation = ?," +
-                    "vulgarisCultivation = ?," +
-                    "cacaoCultivation = ?," +
-                    "plantations = ?," +
-                    "indoorFungiculture = ?," +
-                    "trellisGourdTechniques = ?," +
-                    "cropRotation = ?," +
-                    "blightProtection = ?," +
-                    "hybridization = ?," +
-                    "chemicalPesticides = ?," +
-                    "gmoCrops = ?," +
-                    "transenvironmentalCultivation = ?," +
-                    "improvedPhotosynthesis = ?," +
-                    "farmingMastery = ?" +
+            String farming = "UPDATE farming SET name = ?, uuid = ?, " +
+                    "basicAgriculture = ?, " +
+                    "fertilizer = ?, " +
+                    "weedRemoval = ?, " +
+                    "daucusCultivation = ?, "+
+                    "cucurbitaCultivation = ?, " +
+                    "mechanizedHarvesting = ?, " +
+                    "tuberosemCultivation = ?, " +
+                    "saccharumCultivation = ?, " +
+                    "fungalFarming = ?, " +
+                    "ianatusCultivation = ?, " +
+                    "vulgarisCultivation = ?, " +
+                    "cacaoCultivation = ?, " +
+                    "plantations = ?, " +
+                    "indoorFungiculture = ?, " +
+                    "trellisGourdTechniques = ?, " +
+                    "cropRotation = ?, " +
+                    "blightProtection = ?, " +
+                    "hybridization = ?, " +
+                    "chemicalPesticides = ?, " +
+                    "gmoCrops = ?, " +
+                    "transenvironmentalCultivation = ?, " +
+                    "improvedPhotosynthesis = ?, " +
+                    "farmingMastery = ? " +
                     " WHERE name = ? AND uuid = ?";
 
             try (PreparedStatement pstmt = conn.prepareStatement(farming)) {

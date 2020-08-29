@@ -20,7 +20,7 @@ public class NormalSkillTreeGUI implements Listener {
 
     public NormalSkillTreeGUI() {
         // Create a new inventory, with no owner (as this isn't a real inventory), a size of nine, called example
-        inv = Bukkit.createInventory(null, 18, "Normal Skill Tree");
+        inv = Bukkit.createInventory(null, 9, "Normal Skill Tree");
 
         // Put the items into the inventory
         initializeItems();
@@ -31,6 +31,12 @@ public class NormalSkillTreeGUI implements Listener {
         inv.addItem(createGuiItem(Material.WOODEN_HOE, "Farming", "§aFarming Skill Tree", "§bSecond line of the lore"));
         inv.addItem(createGuiItem(Material.FISHING_ROD, "Fishing", ""));
         inv.addItem(createGuiItem(Material.WOODEN_PICKAXE, "§bMining", "§aFirst line of the lore", "§bSecond line of the lore"));
+        inv.addItem(createGuiItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, "", ""));
+        inv.addItem(createGuiItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, "", ""));
+        inv.addItem(createGuiItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, "", ""));
+        inv.addItem(createGuiItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, "", ""));
+        inv.addItem(createGuiItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, "", ""));
+        inv.addItem(createGuiItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, "", ""));
     }
 
     // Nice little method to create a gui item with a custom name, and description
