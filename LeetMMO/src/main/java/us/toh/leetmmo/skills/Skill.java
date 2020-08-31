@@ -11,8 +11,10 @@ public class Skill {
     private int skillPoints = 0;
     private int skillPointRequirement = 0;
     private boolean hasPrerequesite = false;
+    private boolean hasChild = false;
 
     private HashMap<Skill, Integer> prerequesiteSkills = new HashMap<Skill, Integer>();
+    private HashMap<Skill, Integer> childSkills = new HashMap<Skill, Integer>();
 
     public Skill(Enum skillName, String description, int skillPointRequirement) {
         this.skillName = skillName;
@@ -72,12 +74,20 @@ public class Skill {
         this.skillPointRequirement = skillPointRequirement;
     }
 
-    public boolean isHasPrerequesite() {
+    public boolean hasPrerequesite() {
         return hasPrerequesite;
     }
 
     public void setHasPrerequesite(boolean hasPrerequesite) {
         this.hasPrerequesite = hasPrerequesite;
+    }
+
+    public boolean hasChild() {
+        return hasChild;
+    }
+
+    public void setHasChild(boolean hasChild) {
+        this.hasChild = hasChild;
     }
 
     public HashMap<Skill, Integer> getPrerequesiteSkills() {
@@ -86,6 +96,14 @@ public class Skill {
 
     public void setPrerequesiteSkills(HashMap<Skill, Integer> prerequesiteSkills) {
         this.prerequesiteSkills = prerequesiteSkills;
+    }
+
+    public HashMap<Skill, Integer> getChildSkills() {
+        return childSkills;
+    }
+
+    public void setChildSkills(HashMap<Skill, Integer> childSkills) {
+        this.childSkills = childSkills;
     }
 
 }
