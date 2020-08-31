@@ -10,6 +10,7 @@ import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.skills.Skill;
 import us.toh.leetmmo.skills.normal.farming.skilltree.FarmingSkillTree;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -29,12 +30,7 @@ public class CommandLeetFarming implements CommandExecutor {
         //Display available skill points
         player.sendMessage("Available Normal Skill Points: " + ChatColor.GOLD + profile.getnSPPool().getNumPoints() + ChatColor.GOLD + " pts");
 
-        FarmingSkillTree skillTree = profile.getFarmingSkillTree();
-        Skill rootSkill = skillTree.getTree().get(BASIC_AGRICULTURE);
-
-        sendSkillMessage(player, rootSkill);
-
-
+        displayWholeTree(player, profile);
 
         return true;
     }
@@ -54,6 +50,48 @@ public class CommandLeetFarming implements CommandExecutor {
 
         String msg = cc + name.toString() + cc + ": " + cc + description + "\n" +
                 cc + numPoints + cc + "/" + cc + numPointsReq;
+
+        player.sendMessage(msg);
+    }
+
+    private void displayWholeTree(Player player, PlayerProfile playerProfile) {
+        HashMap<Enum, Skill> skill = playerProfile.getFarmingSkillTree().getTree();
+
+        String msg = "";
+        for (Map.Entry<Enum, Skill> entry : skill.entrySet()) {
+
+            Skill curSkill = entry.getValue();
+            Enum name = curSkill.getSkillName();
+            String description = curSkill.getDescription();
+            int numPoints = curSkill.getSkillPoints();
+            int numPointsReq = curSkill.getSkillPointRequirement();
+            ChatColor cc = null;
+
+            if (numPoints == numPointsReq) {
+                cc = ChatColor.BLUE;
+            } else if (numPoints < numPointsReq) {
+                cc = ChatColor.GREEN;
+            }
+
+            msg = cc + name.toString() + cc + ": " + cc + description + "\n" +
+                    cc + numPoints + cc + "/" + cc + numPointsReq + "\n";
+
+            //Check if prereqs exist
+            if (!curSkill.getPrerequesiteSkills().isEmpty()) {
+                for (Map.Entry<Skill, Integer> prereq : curSkill.getPrerequesiteSkills().entrySet()) {
+                    msg += ChatColor.AQUA + prereq.getKey().getSkillName().toString() + " | ";
+                }
+                msg += "\n";
+            }
+
+            //Check if children exist
+            if (!curSkill.getChildSkills().isEmpty()) {
+                for (Map.Entry<Skill, Integer> child : curSkill.getPrerequesiteSkills().entrySet()) {
+                    msg += "->" + ChatColor.AQUA + child.getKey().getSkillName().toString() + "\n";
+                }
+            }
+
+        }
 
         player.sendMessage(msg);
     }

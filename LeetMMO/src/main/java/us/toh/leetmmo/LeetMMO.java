@@ -1,6 +1,7 @@
 package us.toh.leetmmo;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import us.toh.leetmmo.commands.CommandLeetFarming;
 import us.toh.leetmmo.commands.CommandLeetInfo;
 import us.toh.leetmmo.commands.CommandLeetNormalSkills;
 import us.toh.leetmmo.commands.CommandLeetStats;
@@ -88,6 +89,11 @@ public final class LeetMMO extends JavaPlugin {
         CommandLeetNormalSkills cmdNormalSkills =  new CommandLeetNormalSkills();
         cmdNormalSkills.setGlobalPlayers(globalPlayers);
         plugin.getCommand("leetnskills").setExecutor(cmdNormalSkills);
+
+        //LeetNormalSkills Command
+        CommandLeetFarming cmdFarming =  new CommandLeetFarming();
+        cmdFarming.setGlobalPlayers(globalPlayers);
+        plugin.getCommand("leetfarming").setExecutor(cmdFarming);
     }
 
     public Map<UUID, PlayerProfile> getGlobalPlayers() {
