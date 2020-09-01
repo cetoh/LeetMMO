@@ -54,7 +54,7 @@ public class FarmingSkillTree {
 
         Skill indoorFungiculture = new Skill(INDOOR_FUNGICULTURE, "Each point in this skill increases mushroom double drop chance by 25%", 4);
         indoorFungiculture.getPrerequesiteSkills().put(fungalFarming, fungalFarming.getSkillPointRequirement());
-        tree.put(fungalFarming.getSkillName(), fungalFarming);
+        tree.put(indoorFungiculture.getSkillName(), indoorFungiculture);
 
         Skill ianatusCultivation = new Skill(IANATUS_CULTIVATION, "Gain ability to plant melon", 2);
         ianatusCultivation.getPrerequesiteSkills().put(cucurbitaCultivation, cucurbitaCultivation.getSkillPointRequirement());
