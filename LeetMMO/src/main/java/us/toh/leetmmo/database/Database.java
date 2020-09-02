@@ -326,7 +326,7 @@ public class Database {
                 farmingSkillTree.get(TRELLIS_GOURD_TECHNIQUES).setSkillPoints(rs.getInt("trellisGourdTechniques"));
                 farmingSkillTree.get(PLANTATIONS).setSkillPoints(rs.getInt("plantations"));
                 farmingSkillTree.get(CACAO_CULTIVATION).setSkillPoints(rs.getInt("cacaoCultivation"));
-                farmingSkillTree.get(VULGARUS_CULTIVATION).setSkillPoints(rs.getInt("vulagarusCultivation"));
+                farmingSkillTree.get(VULGARUS_CULTIVATION).setSkillPoints(rs.getInt("vulgarusCultivation"));
                 farmingSkillTree.get(CROP_ROTATION).setSkillPoints(rs.getInt("cropRotation"));
                 farmingSkillTree.get(BLIGHT_PROTECTION).setSkillPoints(rs.getInt("blightProtection"));
                 farmingSkillTree.get(HYBRIDIZATION).setSkillPoints(rs.getInt("hybridization"));
