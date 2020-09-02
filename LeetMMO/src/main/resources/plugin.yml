@@ -14,3 +14,6 @@ commands:
   leetnskills:
     description: Open Normal Skill Tree GUI
     usage: /<command>
+  leetfarming:
+    description: Farming skills
+    usage: /<command>

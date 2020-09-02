@@ -28,10 +28,13 @@ public class CommandLeetFarming implements CommandExecutor {
         PlayerProfile profile = globalPlayers.get(player.getUniqueId());
 
         //Display available skill points
-        player.sendMessage("Available Normal Skill Points: " + ChatColor.GOLD + profile.getnSPPool().getNumPoints() + ChatColor.GOLD + " pts");
+        if (args.length == 0) {
+            player.sendMessage("Available Normal Skill Points: " + ChatColor.GOLD + profile.getnSPPool().getNumPoints() + ChatColor.GOLD + " pts");
 
-        displayWholeTree(player, profile);
+            displayWholeTree(player, profile);
+        } else {
 
+        }
         return true;
     }
 

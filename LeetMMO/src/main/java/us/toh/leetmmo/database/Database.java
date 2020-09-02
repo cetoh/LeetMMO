@@ -131,6 +131,7 @@ public class Database {
         if(!checkIfPlayerExists(playerProfile, "farming")) {
             String farming = "INSERT INTO farming(name,uuid," +
                     "basicAgriculture," +
+                    "triticumCultivation," +
                     "fertilizer," +
                     "weedRemoval," +
                     "daucusCultivation,"+
@@ -153,7 +154,7 @@ public class Database {
                     "transenvironmentalCultivation," +
                     "improvedPhotosynthesis," +
                     "farmingMastery)" +
-                    " VALUES(?,?,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+                    " VALUES(?,?,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
 
             try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
                 pstmt.setString(1, playerProfile.getPlayerName());
@@ -202,6 +203,7 @@ public class Database {
         if (checkIfPlayerExists(playerProfile, "farming")) {
             String farming = "UPDATE farming SET name = ?, uuid = ?, " +
                     "basicAgriculture = ?, " +
+                    "triticumCultivation = ?, " +
                     "fertilizer = ?, " +
                     "weedRemoval = ?, " +
                     "daucusCultivation = ?, "+
@@ -231,30 +233,31 @@ public class Database {
                 pstmt.setString(1, playerProfile.getPlayerName());
                 pstmt.setString(2, playerProfile.getUuid().toString());
                 pstmt.setInt(3, farmingSkillTree.get(BASIC_AGRICULTURE).getSkillPoints());
-                pstmt.setInt(4, farmingSkillTree.get(FERTILIZER).getSkillPoints());
-                pstmt.setInt(5, farmingSkillTree.get(WEED_REMOVAL).getSkillPoints());
-                pstmt.setInt(6, farmingSkillTree.get(DAUCUS_CULTIVATION).getSkillPoints());
-                pstmt.setInt(7, farmingSkillTree.get(CUCURBITA_CULTIVATION).getSkillPoints());
-                pstmt.setInt(8, farmingSkillTree.get(MECHANIZED_HARVESTING).getSkillPoints());
-                pstmt.setInt(9, farmingSkillTree.get(TUBEROSEM_CULTIVATION).getSkillPoints());
-                pstmt.setInt(10, farmingSkillTree.get(SACCHARUM_CULTIVATION).getSkillPoints());
-                pstmt.setInt(11, farmingSkillTree.get(FUNGAL_FARMING).getSkillPoints());
-                pstmt.setInt(12, farmingSkillTree.get(IANATUS_CULTIVATION).getSkillPoints());
-                pstmt.setInt(13, farmingSkillTree.get(VULGARUS_CULTIVATION).getSkillPoints());
-                pstmt.setInt(14, farmingSkillTree.get(CACAO_CULTIVATION).getSkillPoints());
-                pstmt.setInt(15, farmingSkillTree.get(PLANTATIONS).getSkillPoints());
-                pstmt.setInt(16, farmingSkillTree.get(INDOOR_FUNGICULTURE).getSkillPoints());
-                pstmt.setInt(17, farmingSkillTree.get(TRELLIS_GOURD_TECHNIQUES).getSkillPoints());
-                pstmt.setInt(18, farmingSkillTree.get(CROP_ROTATION).getSkillPoints());
-                pstmt.setInt(19, farmingSkillTree.get(BLIGHT_PROTECTION).getSkillPoints());
-                pstmt.setInt(20, farmingSkillTree.get(HYBRIDIZATION).getSkillPoints());
-                pstmt.setInt(21, farmingSkillTree.get(CHEMICAL_PESTICIDES).getSkillPoints());
-                pstmt.setInt(22, farmingSkillTree.get(GMO_CROPS).getSkillPoints());
-                pstmt.setInt(23, farmingSkillTree.get(TRANSENVIRONMENTAL_CULTIVATION).getSkillPoints());
-                pstmt.setInt(24, farmingSkillTree.get(IMPROVED_PHOTOSYNTHESIS).getSkillPoints());
-                pstmt.setInt(25, farmingSkillTree.get(FARMING_MASTERY).getSkillPoints());
-                pstmt.setString(26, playerProfile.getPlayerName());
-                pstmt.setString(27, playerProfile.getUuid().toString());
+                pstmt.setInt(4, farmingSkillTree.get(TRITICUM_CULTIVATION).getSkillPoints());
+                pstmt.setInt(5, farmingSkillTree.get(FERTILIZER).getSkillPoints());
+                pstmt.setInt(6, farmingSkillTree.get(WEED_REMOVAL).getSkillPoints());
+                pstmt.setInt(7, farmingSkillTree.get(DAUCUS_CULTIVATION).getSkillPoints());
+                pstmt.setInt(8, farmingSkillTree.get(CUCURBITA_CULTIVATION).getSkillPoints());
+                pstmt.setInt(9, farmingSkillTree.get(MECHANIZED_HARVESTING).getSkillPoints());
+                pstmt.setInt(10, farmingSkillTree.get(TUBEROSEM_CULTIVATION).getSkillPoints());
+                pstmt.setInt(11, farmingSkillTree.get(SACCHARUM_CULTIVATION).getSkillPoints());
+                pstmt.setInt(12, farmingSkillTree.get(FUNGAL_FARMING).getSkillPoints());
+                pstmt.setInt(13, farmingSkillTree.get(IANATUS_CULTIVATION).getSkillPoints());
+                pstmt.setInt(14, farmingSkillTree.get(VULGARUS_CULTIVATION).getSkillPoints());
+                pstmt.setInt(15, farmingSkillTree.get(CACAO_CULTIVATION).getSkillPoints());
+                pstmt.setInt(16, farmingSkillTree.get(PLANTATIONS).getSkillPoints());
+                pstmt.setInt(17, farmingSkillTree.get(INDOOR_FUNGICULTURE).getSkillPoints());
+                pstmt.setInt(18, farmingSkillTree.get(TRELLIS_GOURD_TECHNIQUES).getSkillPoints());
+                pstmt.setInt(19, farmingSkillTree.get(CROP_ROTATION).getSkillPoints());
+                pstmt.setInt(20, farmingSkillTree.get(BLIGHT_PROTECTION).getSkillPoints());
+                pstmt.setInt(21, farmingSkillTree.get(HYBRIDIZATION).getSkillPoints());
+                pstmt.setInt(22, farmingSkillTree.get(CHEMICAL_PESTICIDES).getSkillPoints());
+                pstmt.setInt(23, farmingSkillTree.get(GMO_CROPS).getSkillPoints());
+                pstmt.setInt(24, farmingSkillTree.get(TRANSENVIRONMENTAL_CULTIVATION).getSkillPoints());
+                pstmt.setInt(25, farmingSkillTree.get(IMPROVED_PHOTOSYNTHESIS).getSkillPoints());
+                pstmt.setInt(26, farmingSkillTree.get(FARMING_MASTERY).getSkillPoints());
+                pstmt.setString(27, playerProfile.getPlayerName());
+                pstmt.setString(28, playerProfile.getUuid().toString());
 
                 pstmt.executeUpdate();
             } catch (SQLException e) {
@@ -367,6 +370,7 @@ public class Database {
                 + "      name varchar(40),\n"
                 + "      uuid varchar(36),\n"
                 + "      basicAgriculture int,\n"
+                + "      triticumCultivation int,\n"
                 + "      fertilizer int,\n"
                 + "      weedRemoval int,\n"
                 + "      daucusCultivation int,\n"
