@@ -141,7 +141,7 @@ public class Database {
                     "saccharumCultivation," +
                     "fungalFarming," +
                     "ianatusCultivation," +
-                    "vulgarisCultivation," +
+                    "vulgarusCultivation," +
                     "cacaoCultivation," +
                     "plantations," +
                     "indoorFungiculture," +
@@ -213,7 +213,7 @@ public class Database {
                     "saccharumCultivation = ?, " +
                     "fungalFarming = ?, " +
                     "ianatusCultivation = ?, " +
-                    "vulgarisCultivation = ?, " +
+                    "vulgarusCultivation = ?, " +
                     "cacaoCultivation = ?, " +
                     "plantations = ?, " +
                     "indoorFungiculture = ?, " +
@@ -380,7 +380,7 @@ public class Database {
                 + "      saccharumCultivation int,\n"
                 + "      fungalFarming int,\n"
                 + "      ianatusCultivation int,\n"
-                + "      vulgarisCultivation int,\n"
+                + "      vulgarusCultivation int,\n"
                 + "      cacaoCultivation int,\n"
                 + "      plantations int,\n"
                 + "      indoorFungiculture int,\n"
