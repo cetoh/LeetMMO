@@ -36,8 +36,7 @@ public class CommandLeetMining implements CommandExecutor {
             CommandUtils.displayWholeTree(player, profile, skillTree);
         } else {
             //Check if first argument is a valid Mining skill. If it is display the skill info if no other command follows.
-            if (!args[0].isEmpty() && args[0] != null && !args[0].equals("")
-                    && (args[1].isEmpty() || args[1] == null)) {
+            if (args.length == 1 && args[0] != null && !args[0].equals("")) {
                 if (EnumUtilities.isInEnum(args[0], NormalSkillEnums.MiningSkillNames.class)) {
                     CommandUtils.sendSkillMessage(player,
                             profile.getMiningSkillTree()
@@ -49,7 +48,7 @@ public class CommandLeetMining implements CommandExecutor {
             }
 
             //Check if add skill point command was initiated
-            else if (!args[0].isEmpty() && args[0] != null && !args[0].equals("")
+            else if (args.length == 3 && args[0] != null && !args[0].equals("")
                     && !args[1].isEmpty() && args[1] != null
                     && !args[2].isEmpty() && args[2] != null) {
 
@@ -61,8 +60,8 @@ public class CommandLeetMining implements CommandExecutor {
                             //Add point to skill
                             CommandUtils.addSkillPointToSkill(player,
                                     profile,
-                                    NormalSkillEnums.MiningSkillNames.valueOf(args[0]),
-                                    Integer.getInteger(args[2]),
+                                    NormalSkillEnums.isMiningSkillEnum(args[0].toUpperCase().replace(' ', '_')),
+                                    Integer.parseInt(args[2]),
                                     skillTree);
                         }
                         else {

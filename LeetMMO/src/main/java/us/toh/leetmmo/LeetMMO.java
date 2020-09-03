@@ -9,6 +9,7 @@ import us.toh.leetmmo.events.Events;
 import us.toh.leetmmo.database.Database;
 import us.toh.leetmmo.gui.advancements.NormalSkillTreeGUI;
 import us.toh.leetmmo.skills.normal.farming.FarmingEvents;
+import us.toh.leetmmo.skills.normal.mining.MiningEvents;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,7 @@ public final class LeetMMO extends JavaPlugin {
     private Events evt = new Events();
     private ExperienceEvents experienceEvents = new ExperienceEvents();
     private FarmingEvents farmingEvents = new FarmingEvents();
+    private MiningEvents miningEvents = new MiningEvents();
 
     private NormalSkillTreeGUI normalSkillTreeGUI = new NormalSkillTreeGUI();
 
@@ -57,7 +59,12 @@ public final class LeetMMO extends JavaPlugin {
 
         //Farming Events
         farmingEvents.setGlobalPlayers(globalPlayers);
+        farmingEvents.setPlugin(this);
         getServer().getPluginManager().registerEvents(farmingEvents, plugin);
+
+        //Farming Events
+        miningEvents.setGlobalPlayers(globalPlayers);
+        getServer().getPluginManager().registerEvents(miningEvents, plugin);
 
         getServer().getPluginManager().registerEvents(normalSkillTreeGUI, plugin);
 
@@ -69,6 +76,20 @@ public final class LeetMMO extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        // Save player data
+        for (Map.Entry<UUID, PlayerProfile> profile : globalPlayers.entrySet()) {
+            PlayerProfile pp = profile.getValue();
+
+            //See if player exists in database. If player exists update profile. Else insert new profile
+            if (!db.checkIfPlayerExists(pp, "player")
+                    || !db.checkIfPlayerExists(pp, "farming")
+                    || !db.checkIfPlayerExists(pp, "mining")) {
+                db.insertNewPlayerProfile(pp);
+            }
+            db.updatePlayerProfile(pp);
+        }
+
+
         System.out.println("LeetMMO Disabled");
     }
 
