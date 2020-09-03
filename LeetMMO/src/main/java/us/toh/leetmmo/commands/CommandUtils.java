@@ -10,11 +10,10 @@ import java.util.Map;
 
 public class CommandUtils {
 
-    public static void addSkillPointToSkill(Player player, PlayerProfile playerProfile, Enum skillEnum, int ptsToAdd) {
+    public static void addSkillPointToSkill(Player player, PlayerProfile playerProfile, Enum skillEnum, int ptsToAdd, HashMap<Enum, Skill> tree) {
 
         //Check that player has skill points available
         if (playerProfile.getnSPPool().getNumPoints() >= ptsToAdd) {
-            HashMap<Enum, Skill> tree = playerProfile.getMiningSkillTree().getTree();
 
             Skill skill = tree.get(skillEnum);
 
@@ -58,8 +57,8 @@ public class CommandUtils {
             cc = ChatColor.GREEN;
         }
 
-        String msg = main + name.toString() + main + ": " + main + description +
-                cc + numPoints + cc + "/" + cc + numPointsReq + "\n";
+        String msg = main + name.toString() + ": " + description +
+                cc + " || " + numPoints + "/" + numPointsReq + "\n";
 
         //Check if prereqs exist
         if (!skill.getPrerequesiteSkills().isEmpty()) {
@@ -81,8 +80,7 @@ public class CommandUtils {
         player.sendMessage(msg);
     }
 
-    public static void displayWholeTree(Player player, PlayerProfile playerProfile) {
-        HashMap<Enum, Skill> skill = playerProfile.getFarmingSkillTree().getTree();
+    public static void displayWholeTree(Player player, PlayerProfile playerProfile, HashMap<Enum, Skill> skill) {
 
         String msg = "";
         for (Map.Entry<Enum, Skill> entry : skill.entrySet()) {
@@ -101,8 +99,8 @@ public class CommandUtils {
                 cc = ChatColor.GREEN;
             }
 
-            msg += main + name.toString() + main + ": " + main + description +
-                    cc + numPoints + cc + "/" + cc + numPointsReq + "\n";
+            msg += main + name.toString() + ": " + description +
+                    cc + " || " + numPoints + "/" + numPointsReq + "\n";
 
         }
 

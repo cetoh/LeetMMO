@@ -15,6 +15,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.MiningSkillNames.*;
 
 public class Database {
 
@@ -102,12 +103,22 @@ public class Database {
 
     }
 
+    /*******************************************/
+    /***** Insert New Player Into Database *****/
+    /*******************************************/
+
     /**
      * Insert a new row into the warehouses table
      *
      * @param playerProfile
      */
     public void insertNewPlayerProfile(PlayerProfile playerProfile) {
+        insertBasicInformation(playerProfile);
+        insertFarmingSkillInformation(playerProfile);
+        insertMiningSkillInformation(playerProfile);
+    }
+
+    private void insertBasicInformation(PlayerProfile playerProfile) {
         if (!checkIfPlayerExists(playerProfile,"player")) {
             String sql = "INSERT INTO player(name,uuid,nexp,cexp,nexpcap,cexpcap,nlvl,clvl,nsp,csp) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
@@ -127,7 +138,9 @@ public class Database {
                 System.out.println(e.getMessage());
             }
         }
+    }
 
+    private void insertFarmingSkillInformation(PlayerProfile playerProfile) {
         if(!checkIfPlayerExists(playerProfile, "farming")) {
             String farming = "INSERT INTO farming(name,uuid," +
                     "basicAgriculture," +
@@ -166,7 +179,60 @@ public class Database {
         }
     }
 
+    private void insertMiningSkillInformation(PlayerProfile playerProfile) {
+        if(!checkIfPlayerExists(playerProfile, "mining")) {
+            String farming = "INSERT INTO mining(name,uuid," +
+                    "basicMining," +
+                    "miningExpertise," +
+                    "hewer," +
+                    "ligniteExtraction," +
+                    "thermoluminescenceDating,"+
+                    "siliconeExtraction," +
+                    "foolsGold," +
+                    "tunnelDweller," +
+                    "templeDesecrator," +
+                    "blastMining," +
+                    "prospector," +
+                    "bituminousExtraction," +
+                    "comminution," +
+                    "lazuriteExtractionEfficiency," +
+                    "powerMining," +
+                    "xrayFlourescence," +
+                    "postlapidaryOiling," +
+                    "geoengineer," +
+                    "anthraciteExtraction," +
+                    "gravitySeparation," +
+                    "hydraulicMining," +
+                    "electromagneticRadiation," +
+                    "cuttingEfficiency," +
+                    "wurtziteBoronNitrideDrill," +
+                    "mantleDrilling," +
+                    "magnetiteFrothFlotation," +
+                    "leaching," +
+                    "miningMastery)" +
+                    " VALUES(?,?,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
+                pstmt.setString(1, playerProfile.getPlayerName());
+                pstmt.setString(2, playerProfile.getUuid().toString());
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    /**********************************************/
+    /***** Update Existing Player in Database *****/
+    /**********************************************/
+
     public void updatePlayerProfile(PlayerProfile playerProfile) {
+        updateBasicInformation(playerProfile);
+        updatePlayerFarmingSkillInformation(playerProfile);
+        updatePlayerMiningSkillInformation(playerProfile);
+    }
+
+    private void updateBasicInformation(PlayerProfile playerProfile) {
         if (checkIfPlayerExists(playerProfile, "player")) {
             String sql = "UPDATE player SET name = ?, " +
                     "uuid = ?, " +
@@ -199,7 +265,9 @@ public class Database {
             }
 
         }
+    }
 
+    private void updatePlayerFarmingSkillInformation(PlayerProfile playerProfile) {
         if (checkIfPlayerExists(playerProfile, "farming")) {
             String farming = "UPDATE farming SET name = ?, uuid = ?, " +
                     "basicAgriculture = ?, " +
@@ -266,8 +334,95 @@ public class Database {
         }
     }
 
+    private void updatePlayerMiningSkillInformation(PlayerProfile playerProfile) {
+        if (checkIfPlayerExists(playerProfile, "mining")) {
+            String farming = "UPDATE mining SET name = ?, uuid = ?, " +
+                    "basicMining = ?, " +
+                    "miningExpertise = ?, " +
+                    "hewer = ?, " +
+                    "ligniteExtraction = ?, " +
+                    "thermoluminescenceDating = ?, "+
+                    "siliconeExtraction = ?, " +
+                    "foolsGold = ?, " +
+                    "tunnelDweller = ?, " +
+                    "templeDesecrator = ?, " +
+                    "blastMining = ?, " +
+                    "prospector = ?, " +
+                    "bituminousExtraction = ?, " +
+                    "comminution = ?, " +
+                    "lazuriteExtractionEfficiency = ?, " +
+                    "powerMining = ?, " +
+                    "xrayFlourescence = ?, " +
+                    "postlapidaryOiling = ?, " +
+                    "geoengineer = ?, " +
+                    "anthraciteExtraction = ?, " +
+                    "gravitySeparation = ?, " +
+                    "hydraulicMining = ?, " +
+                    "electromagneticRadiation = ?, " +
+                    "cuttingEfficiency = ?, " +
+                    "wurtziteBoronNitrideDrill = ?, " +
+                    "mantleDrilling = ?, " +
+                    "magnetiteFrothFlotation = ?, " +
+                    "leaching = ?, " +
+                    "miningMastery = ? " +
+                    " WHERE name = ? AND uuid = ?";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
+                HashMap<Enum, Skill> miningSkillTree = playerProfile.getMiningSkillTree().getTree();
+                pstmt.setString(1, playerProfile.getPlayerName());
+                pstmt.setString(2, playerProfile.getUuid().toString());
+                pstmt.setInt(3, miningSkillTree.get(BASIC_MINING).getSkillPoints());
+                pstmt.setInt(4, miningSkillTree.get(MINING_EXPERTISE).getSkillPoints());
+                pstmt.setInt(5, miningSkillTree.get(HEWER).getSkillPoints());
+                pstmt.setInt(6, miningSkillTree.get(LIGNITE_EXTRACTION).getSkillPoints());
+                pstmt.setInt(7, miningSkillTree.get(THERMOLUMINESCENCE_DATING).getSkillPoints());
+                pstmt.setInt(8, miningSkillTree.get(SILICONE_EXTRACTION).getSkillPoints());
+                pstmt.setInt(9, miningSkillTree.get(FOOLS_GOLD).getSkillPoints());
+                pstmt.setInt(10, miningSkillTree.get(TUNNEL_DWELLER).getSkillPoints());
+                pstmt.setInt(11, miningSkillTree.get(TEMPLE_DESECRATOR).getSkillPoints());
+                pstmt.setInt(12, miningSkillTree.get(BLAST_MINING).getSkillPoints());
+                pstmt.setInt(13, miningSkillTree.get(PROSPECTOR).getSkillPoints());
+                pstmt.setInt(14, miningSkillTree.get(BITUMINOUS_EXTRACTION).getSkillPoints());
+                pstmt.setInt(15, miningSkillTree.get(COMMINUTION).getSkillPoints());
+                pstmt.setInt(16, miningSkillTree.get(LAZURITE_EXTRACTION_EFFICIENCY).getSkillPoints());
+                pstmt.setInt(17, miningSkillTree.get(POWER_MINING).getSkillPoints());
+                pstmt.setInt(18, miningSkillTree.get(XRAY_FLOURESCENCE).getSkillPoints());
+                pstmt.setInt(19, miningSkillTree.get(POSTLAPIDARY_OILING).getSkillPoints());
+                pstmt.setInt(20, miningSkillTree.get(GEOENGINEER).getSkillPoints());
+                pstmt.setInt(21, miningSkillTree.get(ANTHRACITE_EXTRACTION).getSkillPoints());
+                pstmt.setInt(22, miningSkillTree.get(GRAVITY_SEPARATION).getSkillPoints());
+                pstmt.setInt(23, miningSkillTree.get(HYDRAULIC_MINING).getSkillPoints());
+                pstmt.setInt(24, miningSkillTree.get(ELECROMAGNETIC_RADIATION).getSkillPoints());
+                pstmt.setInt(25, miningSkillTree.get(CUTTING_EFFICIENCY).getSkillPoints());
+                pstmt.setInt(26, miningSkillTree.get(WURTZITE_BORON_NITRIDE_DRILL).getSkillPoints());
+                pstmt.setInt(27, miningSkillTree.get(MANTLE_DRILLING).getSkillPoints());
+                pstmt.setInt(28, miningSkillTree.get(MAGNETITE_FROTH_FLOTATION).getSkillPoints());
+                pstmt.setInt(29, miningSkillTree.get(LEACHING).getSkillPoints());
+                pstmt.setInt(30, miningSkillTree.get(MINING_MASTERY).getSkillPoints());
+                pstmt.setString(31, playerProfile.getPlayerName());
+                pstmt.setString(32, playerProfile.getUuid().toString());
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    /***********************************/
+    /***** Get Player Profile Data *****/
+    /***********************************/
+
     public PlayerProfile getPlayerProfileFromDatabase(PlayerProfile playerProfile) {
 
+        getBasicInformation(playerProfile);
+        getFarmingSkillInformation(playerProfile);
+        getMiningSkillInformation(playerProfile);
+
+        return playerProfile;
+    }
+
+    private void getBasicInformation(PlayerProfile playerProfile) {
         if (checkIfPlayerExists(playerProfile, "player")) {
             //Load basic information
             String sql = "SELECT * FROM player WHERE name = ? AND uuid = ?";
@@ -300,7 +455,11 @@ public class Database {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
+        }
+    }
 
+    private void getFarmingSkillInformation(PlayerProfile playerProfile) {
+        if (checkIfPlayerExists(playerProfile, "farming")) {
             //Load Farming Skill Tree
             String farming = "SELECT * FROM farming WHERE name = ? AND uuid = ?";
 
@@ -339,33 +498,67 @@ public class Database {
                 System.out.println(e.getMessage());
             }
         }
-
-        return playerProfile;
     }
 
-    public boolean checkIfPlayerExists(PlayerProfile playerProfile, String table) {
-        boolean doesExist = false;
+    private void getMiningSkillInformation(PlayerProfile playerProfile) {
+        if (checkIfPlayerExists(playerProfile, "mining")) {
+            //Load Farming Skill Tree
+            String farming = "SELECT * FROM mining WHERE name = ? AND uuid = ?";
 
-        String sql = "SELECT (count(*) > 0) as found FROM " + table +" WHERE name = ? AND uuid = ?";
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, playerProfile.getPlayerName());
-            pstmt.setString(2, playerProfile.getUuid().toString());
-            try (ResultSet rs = pstmt.executeQuery()) {
-                // Only expecting a single result
-                if (rs.next()) {
-                    doesExist = rs.getBoolean(1); // "found" column
-                }
+            try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
+                pstmt.setString(1, playerProfile.getPlayerName());
+                pstmt.setString(2, playerProfile.getUuid().toString());
+                ResultSet rs = pstmt.executeQuery();
+
+                //Get updates
+                HashMap<Enum, Skill> miningSkillTree = playerProfile.getMiningSkillTree().getTree();
+
+                miningSkillTree.get(BASIC_MINING).setSkillPoints(rs.getInt("basicMining"));
+                miningSkillTree.get(MINING_EXPERTISE).setSkillPoints(rs.getInt("miningExpertise"));
+                miningSkillTree.get(HEWER).setSkillPoints(rs.getInt("hewer"));
+                miningSkillTree.get(LIGNITE_EXTRACTION).setSkillPoints(rs.getInt("ligniteExtraction"));
+                miningSkillTree.get(THERMOLUMINESCENCE_DATING).setSkillPoints(rs.getInt("thermoluminescenceDating"));
+                miningSkillTree.get(SILICONE_EXTRACTION).setSkillPoints(rs.getInt("siliconeExtraction"));
+                miningSkillTree.get(FOOLS_GOLD).setSkillPoints(rs.getInt("foolsGold"));
+                miningSkillTree.get(TUNNEL_DWELLER).setSkillPoints(rs.getInt("tunnelDweller"));
+                miningSkillTree.get(TEMPLE_DESECRATOR).setSkillPoints(rs.getInt("templeDesecrator"));
+                miningSkillTree.get(BLAST_MINING).setSkillPoints(rs.getInt("blastMining"));
+                miningSkillTree.get(PROSPECTOR).setSkillPoints(rs.getInt("prospector"));
+                miningSkillTree.get(BITUMINOUS_EXTRACTION).setSkillPoints(rs.getInt("bituminousExtraction"));
+                miningSkillTree.get(COMMINUTION).setSkillPoints(rs.getInt("comminution"));
+                miningSkillTree.get(LAZURITE_EXTRACTION_EFFICIENCY).setSkillPoints(rs.getInt("lazuriteExtractionEfficiency"));
+                miningSkillTree.get(POWER_MINING).setSkillPoints(rs.getInt("powerMining"));
+                miningSkillTree.get(XRAY_FLOURESCENCE).setSkillPoints(rs.getInt("xrayFlourescence"));
+                miningSkillTree.get(POSTLAPIDARY_OILING).setSkillPoints(rs.getInt("postlapidaryOiling"));
+                miningSkillTree.get(GEOENGINEER).setSkillPoints(rs.getInt("geoengineer"));
+                miningSkillTree.get(ANTHRACITE_EXTRACTION).setSkillPoints(rs.getInt("anthraciteExtraction"));
+                miningSkillTree.get(GRAVITY_SEPARATION).setSkillPoints(rs.getInt("gravitySeparation"));
+                miningSkillTree.get(HYDRAULIC_MINING).setSkillPoints(rs.getInt("hydraulicMining"));
+                miningSkillTree.get(ELECROMAGNETIC_RADIATION).setSkillPoints(rs.getInt("electromagneticRadiation"));
+                miningSkillTree.get(CUTTING_EFFICIENCY).setSkillPoints(rs.getInt("cuttingEfficiency"));
+                miningSkillTree.get(WURTZITE_BORON_NITRIDE_DRILL).setSkillPoints(rs.getInt("wurtziteBoronNitrideDrill"));
+                miningSkillTree.get(MANTLE_DRILLING).setSkillPoints(rs.getInt("mantleDrilling"));
+                miningSkillTree.get(MAGNETITE_FROTH_FLOTATION).setSkillPoints(rs.getInt("magnetiteFrothFlotation"));
+                miningSkillTree.get(LEACHING).setSkillPoints(rs.getInt("leaching"));
+                miningSkillTree.get(MINING_MASTERY).setSkillPoints(rs.getInt("miningMastery"));
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
         }
-
-        return doesExist;
     }
+
+    /*******************************/
+    /***** Create Skill Tables *****/
+    /*******************************/
 
     private void createSkillTables(Connection conn) {
 
+        createFarmingTable(conn);
+        createMiningTable(conn);
+
+    }
+
+    private void createFarmingTable(Connection conn) {
         String farming = "CREATE TABLE IF NOT EXISTS farming(\n"
                 + "      name varchar(40),\n"
                 + "      uuid varchar(36),\n"
@@ -399,5 +592,67 @@ public class Database {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void createMiningTable(Connection conn) {
+        String mining = "CREATE TABLE IF NOT EXISTS mining(\n"
+                + "      name varchar(40),\n"
+                + "      uuid varchar(36),\n"
+                + "      basicMining int,\n"
+                + "      miningExpertise int,\n"
+                + "      hewer int,\n"
+                + "      ligniteExtraction int,\n"
+                + "      thermoluminescenceDating int,\n"
+                + "      siliconeExtraction int,\n"
+                + "      foolsGold int,\n"
+                + "      tunnelDweller int,\n"
+                + "      templeDesecrator int,\n"
+                + "      blastMining int,\n"
+                + "      prospector int,\n"
+                + "      bituminousExtraction int,\n"
+                + "      comminution int,\n"
+                + "      lazuriteExtractionEfficiency int,\n"
+                + "      powerMining int,\n"
+                + "      xrayFlourescence int,\n"
+                + "      postlapidaryOiling int,\n"
+                + "      geoengineer int,\n"
+                + "      anthraciteExtraction int,\n"
+                + "      gravitySeparation int,\n"
+                + "      hydraulicMining int,\n"
+                + "      electromagneticRadiation int,\n"
+                + "      cuttingEfficiency int,\n"
+                + "      wurtziteBoronNitrideDrill int,\n"
+                + "      mantleDrilling int,\n"
+                + "      magnetiteFrothFlotation int,\n"
+                + "      leaching int,\n"
+                + "      miningMastery int);";
+
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute(mining);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    public boolean checkIfPlayerExists(PlayerProfile playerProfile, String table) {
+        boolean doesExist = false;
+
+        String sql = "SELECT (count(*) > 0) as found FROM " + table +" WHERE name = ? AND uuid = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, playerProfile.getPlayerName());
+            pstmt.setString(2, playerProfile.getUuid().toString());
+            try (ResultSet rs = pstmt.executeQuery()) {
+                // Only expecting a single result
+                if (rs.next()) {
+                    doesExist = rs.getBoolean(1); // "found" column
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return doesExist;
     }
 }

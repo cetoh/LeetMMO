@@ -7,15 +7,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
+import us.toh.leetmmo.skills.Skill;
 import us.toh.leetmmo.skills.normal.NormalSkillEnums;
 import us.toh.leetmmo.utils.EnumUtilities;
 import us.toh.leetmmo.utils.StringUtilities;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.*;
 
 public class CommandLeetFarming implements CommandExecutor {
 
@@ -27,12 +27,13 @@ public class CommandLeetFarming implements CommandExecutor {
         player = (Player) sender;
 
         PlayerProfile profile = globalPlayers.get(player.getUniqueId());
+        HashMap<Enum, Skill> skillTree = profile.getFarmingSkillTree().getTree();
 
         //If only base command sent, display available skill points
         if (args.length == 0) {
             player.sendMessage("Available Normal Skill Points: " + ChatColor.GOLD + profile.getnSPPool().getNumPoints() + ChatColor.GOLD + " pts");
 
-            CommandUtils.displayWholeTree(player, profile);
+            CommandUtils.displayWholeTree(player, profile, skillTree);
         } else {
             //Check if first argument is a valid Farming skill. If it is display the skill info if no other command follows.
             if (!args[0].isEmpty() && args[0] != null && !args[0].equals("")
@@ -61,7 +62,8 @@ public class CommandLeetFarming implements CommandExecutor {
                             CommandUtils.addSkillPointToSkill(player,
                                     profile,
                                     NormalSkillEnums.FarmingSkillNames.valueOf(args[0]),
-                                    Integer.getInteger(args[2]));
+                                    Integer.getInteger(args[2]),
+                                    skillTree);
                         }
                         else {
                             player.sendMessage(ChatColor.RED + "Must be a valid integer. (e.g. leet[skilltreename] [skillName] add INTEGER)");

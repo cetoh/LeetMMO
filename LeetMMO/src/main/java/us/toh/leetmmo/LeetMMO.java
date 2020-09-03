@@ -1,10 +1,7 @@
 package us.toh.leetmmo;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import us.toh.leetmmo.commands.CommandLeetFarming;
-import us.toh.leetmmo.commands.CommandLeetInfo;
-import us.toh.leetmmo.commands.CommandLeetNormalSkills;
-import us.toh.leetmmo.commands.CommandLeetStats;
+import us.toh.leetmmo.commands.*;
 import us.toh.leetmmo.configuration.ExperienceConfigLoader;
 import us.toh.leetmmo.datatypes.experience.ExperienceEvents;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
@@ -95,7 +92,7 @@ public final class LeetMMO extends JavaPlugin {
         cmdFarming.setGlobalPlayers(globalPlayers);
         plugin.getCommand("leetfarming").setExecutor(cmdFarming);
 
-        CommandLeetFarming cmdMining =  new CommandLeetFarming();
+        CommandLeetMining cmdMining =  new CommandLeetMining();
         cmdMining.setGlobalPlayers(globalPlayers);
         plugin.getCommand("leetmining").setExecutor(cmdMining);
     }

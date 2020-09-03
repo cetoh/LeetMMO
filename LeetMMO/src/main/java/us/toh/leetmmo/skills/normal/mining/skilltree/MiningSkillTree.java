@@ -119,7 +119,7 @@ public class MiningSkillTree {
         cuttingEfficiency.getPrerequesiteSkills().put(xrayFlourescence, xrayFlourescence.getSkillPointRequirement());
         tree.put(cuttingEfficiency.getSkillName(), cuttingEfficiency);
 
-        Skill wurtziteBoronNitrideDrill = new Skill(WURTZITE_BORON_NITIRDE_DRILL, "Inceases obsidian mining speed by 100%",3);
+        Skill wurtziteBoronNitrideDrill = new Skill(WURTZITE_BORON_NITRIDE_DRILL, "Inceases obsidian mining speed by 100%",3);
         wurtziteBoronNitrideDrill.getPrerequesiteSkills().put(geoengineer, geoengineer.getSkillPointRequirement());
         tree.put(wurtziteBoronNitrideDrill.getSkillName(), wurtziteBoronNitrideDrill);
 
