@@ -6,6 +6,7 @@ import us.toh.leetmmo.datatypes.experience.*;
 import us.toh.leetmmo.datatypes.level.*;
 import us.toh.leetmmo.datatypes.skillpoint.*;
 import us.toh.leetmmo.skills.normal.farming.skilltree.FarmingSkillTree;
+import us.toh.leetmmo.skills.normal.mining.skilltree.MiningSkillTree;
 
 
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class PlayerProfile {
     private ClassLevel cLvl;
 
     private FarmingSkillTree farmingSkillTree = new FarmingSkillTree();
+    private MiningSkillTree miningSkillTree = new MiningSkillTree();
 
     public enum expType {NORMAL, CLASS};
 
@@ -107,6 +109,14 @@ public class PlayerProfile {
 
     public void setFarmingSkillTree(FarmingSkillTree farmingSkillTree) {
         this.farmingSkillTree = farmingSkillTree;
+    }
+
+    public MiningSkillTree getMiningSkillTree() {
+        return miningSkillTree;
+    }
+
+    public void setMiningSkillTree(MiningSkillTree miningSkillTree) {
+        this.miningSkillTree = miningSkillTree;
     }
 
     public void addExperience (double exp, PlayerProfile.expType t ) {

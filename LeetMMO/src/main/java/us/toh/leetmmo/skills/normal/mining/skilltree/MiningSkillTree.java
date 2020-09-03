@@ -141,6 +141,7 @@ public class MiningSkillTree {
         miningMastery.getPrerequesiteSkills().put(geoengineer, geoengineer.getSkillPointRequirement());
         tree.put(miningMastery.getSkillName(), miningMastery);
 
+        //Add Children to skills
     }
 
     public HashMap<Enum, Skill> getTree() {

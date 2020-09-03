@@ -17,9 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.*;
-
-public class CommandLeetFarming implements CommandExecutor {
+public class CommandLeetMining implements CommandExecutor {
 
     private Player player;
     private Map<UUID, PlayerProfile> globalPlayers;
@@ -38,11 +36,11 @@ public class CommandLeetFarming implements CommandExecutor {
         } else {
             //Check if first argument is a valid Farming skill. If it is display the skill info if no other command follows.
             if (!args[0].isEmpty() && args[0] != null && !args[0].equals("")
-                && (args[1].isEmpty() || args[1] == null)) {
-                if (EnumUtilities.isInEnum(args[0], NormalSkillEnums.FarmingSkillNames.class)) {
+                    && (args[1].isEmpty() || args[1] == null)) {
+                if (EnumUtilities.isInEnum(args[0], NormalSkillEnums.MiningSkillNames.class)) {
                     sendSkillMessage(profile.getFarmingSkillTree()
-                                    .getTree()
-                                    .get(NormalSkillEnums.FarmingSkillNames.valueOf(args[0])));
+                            .getTree()
+                            .get(NormalSkillEnums.MiningSkillNames.valueOf(args[0])));
                 } else {
                     player.sendMessage(ChatColor.RED + "Unrecognized Skill");
                 }
@@ -54,13 +52,13 @@ public class CommandLeetFarming implements CommandExecutor {
                     && !args[2].isEmpty() && args[2] != null) {
 
                 if (args[1].equals("add")) {
-                    if (!EnumUtilities.isInEnum(args[0], NormalSkillEnums.FarmingSkillNames.class)) {
+                    if (!EnumUtilities.isInEnum(args[0], NormalSkillEnums.MiningSkillNames.class)) {
                         player.sendMessage(ChatColor.RED + "Unrecognized Skill");
                     } else {
                         if (StringUtilities.isInteger(args[2])) {
                             //Add point to skill
                             addSkillPointToSkill(profile,
-                                    NormalSkillEnums.FarmingSkillNames.valueOf(args[0]),
+                                    NormalSkillEnums.MiningSkillNames.valueOf(args[0]),
                                     Integer.getInteger(args[2]));
                         }
                         else {
@@ -80,7 +78,7 @@ public class CommandLeetFarming implements CommandExecutor {
 
         //Check that player has skill points available
         if (playerProfile.getnSPPool().getNumPoints() >= ptsToAdd) {
-            HashMap<Enum, Skill> tree = playerProfile.getFarmingSkillTree().getTree();
+            HashMap<Enum, Skill> tree = playerProfile.getMiningSkillTree().getTree();
 
             Skill skill = tree.get(skillEnum);
 

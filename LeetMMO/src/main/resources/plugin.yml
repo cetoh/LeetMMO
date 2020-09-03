@@ -17,3 +17,6 @@ commands:
   leetfarming:
     description: Farming skills
     usage: /<command>
+  leetmining:
+    description: Mining skills
+    usage: /<command>
