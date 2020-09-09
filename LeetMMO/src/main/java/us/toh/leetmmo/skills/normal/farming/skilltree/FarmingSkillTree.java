@@ -54,7 +54,7 @@ public class FarmingSkillTree {
 
         Skill indoorFungiculture = new Skill(INDOOR_FUNGICULTURE, "Each point in this skill increases mushroom double drop chance by 25%", 4);
         indoorFungiculture.getPrerequesiteSkills().put(fungalFarming, fungalFarming.getSkillPointRequirement());
-        tree.put(fungalFarming.getSkillName(), fungalFarming);
+        tree.put(indoorFungiculture.getSkillName(), indoorFungiculture);
 
         Skill ianatusCultivation = new Skill(IANATUS_CULTIVATION, "Gain ability to plant melon", 2);
         ianatusCultivation.getPrerequesiteSkills().put(cucurbitaCultivation, cucurbitaCultivation.getSkillPointRequirement());
@@ -122,6 +122,66 @@ public class FarmingSkillTree {
         Skill improvedPhotosynthesis = new Skill(IMPROVED_PHOTOSYNTHESIS, "Each point in this ability increases the double drop chance of nether wart and chorus fruit by 5%", 5);
         improvedPhotosynthesis.getPrerequesiteSkills().put(transenvironmentalCultivation, transenvironmentalCultivation.getSkillPointRequirement());
         tree.put(improvedPhotosynthesis.getSkillName(), improvedPhotosynthesis);
+
+        //Add Children to skills
+        basicAgriculture.getChildSkills().put(triticumCultivation, 1);
+
+        triticumCultivation.getChildSkills().put(fertilizer, 3);
+        triticumCultivation.getChildSkills().put(daucusCultivation, 2);
+        triticumCultivation.getChildSkills().put(weedRemoval, 5);
+
+        fertilizer.getChildSkills().put(fungalFarming, 1);
+        fertilizer.getChildSkills().put(cucurbitaCultivation, 2);
+
+        daucusCultivation.getChildSkills().put(cucurbitaCultivation, 2);
+        daucusCultivation.getChildSkills().put(tuberosemCultivation, 2);
+
+        weedRemoval.getChildSkills().put(mechanizedHarvesting, 5);
+
+        cucurbitaCultivation.getChildSkills().put(fungalFarming, 1);
+        cucurbitaCultivation.getChildSkills().put(ianatusCultivation, 2);
+        cucurbitaCultivation.getChildSkills().put(saccharumCultivation, 2);
+
+        fungalFarming.getChildSkills().put(indoorFungiculture, 4);
+        fungalFarming.getChildSkills().put(trellisGourdTechniques, 5);
+
+        ianatusCultivation.getChildSkills().put(trellisGourdTechniques, 5);
+
+        tuberosemCultivation.getChildSkills().put(saccharumCultivation, 2);
+        tuberosemCultivation.getChildSkills().put(vulgarisCultivation, 2);
+
+        saccharumCultivation.getChildSkills().put(plantations, 2);
+        saccharumCultivation.getChildSkills().put(cacaoCultivation, 2);
+
+        vulgarisCultivation.getChildSkills().put(cacaoCultivation, 2);
+        vulgarisCultivation.getChildSkills().put(cropRotation, 5);
+        vulgarisCultivation.getChildSkills().put(blightProtection, 5);
+
+        cacaoCultivation.getChildSkills().put(plantations, 2);
+        cacaoCultivation.getChildSkills().put(blightProtection, 2);
+
+        mechanizedHarvesting.getChildSkills().put(cropRotation, 5);
+
+        cropRotation.getChildSkills().put(blightProtection, 5);
+        cropRotation.getChildSkills().put(hybridization, 5);
+
+        indoorFungiculture.getChildSkills().put(hybridization, 2);
+
+        trellisGourdTechniques.getChildSkills().put(hybridization, 2);
+
+        plantations.getChildSkills().put(hybridization, 2);
+
+        blightProtection.getChildSkills().put(hybridization, 2);
+
+        hybridization.getChildSkills().put(gmoCrops, 2);
+        hybridization.getChildSkills().put(chemicalPesticides, 5);
+
+        gmoCrops.getChildSkills().put(chemicalPesticides, 5);
+        gmoCrops.getChildSkills().put(farmingMastery, 1);
+
+        chemicalPesticides.getChildSkills().put(transenvironmentalCultivation, 5);
+
+        transenvironmentalCultivation.getChildSkills().put(improvedPhotosynthesis, 5);
     }
 
     public HashMap<Enum, Skill> getTree() {

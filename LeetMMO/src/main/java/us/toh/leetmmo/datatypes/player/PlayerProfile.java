@@ -6,6 +6,7 @@ import us.toh.leetmmo.datatypes.experience.*;
 import us.toh.leetmmo.datatypes.level.*;
 import us.toh.leetmmo.datatypes.skillpoint.*;
 import us.toh.leetmmo.skills.normal.farming.skilltree.FarmingSkillTree;
+import us.toh.leetmmo.skills.normal.mining.skilltree.MiningSkillTree;
 
 
 import java.util.UUID;
@@ -22,7 +23,8 @@ public class PlayerProfile {
     private NormalLevel nLvl;
     private ClassLevel cLvl;
 
-    private FarmingSkillTree farmingSkillTree;
+    private FarmingSkillTree farmingSkillTree = new FarmingSkillTree();
+    private MiningSkillTree miningSkillTree = new MiningSkillTree();
 
     public enum expType {NORMAL, CLASS};
 
@@ -109,6 +111,14 @@ public class PlayerProfile {
         this.farmingSkillTree = farmingSkillTree;
     }
 
+    public MiningSkillTree getMiningSkillTree() {
+        return miningSkillTree;
+    }
+
+    public void setMiningSkillTree(MiningSkillTree miningSkillTree) {
+        this.miningSkillTree = miningSkillTree;
+    }
+
     public void addExperience (double exp, PlayerProfile.expType t ) {
         switch(t) {
             case NORMAL:
@@ -135,10 +145,10 @@ public class PlayerProfile {
     }
 
     public String displayLevels () {
-        return ChatColor.BLUE + "Normal Level: " + nLvl.getCurrentLevel() + ChatColor.BLUE + " Normal EXP: " + nEXPPool.getPoints() + "/" + nEXPPool.getPoolCap() + "\n"
-                + ChatColor.AQUA + "Normal Skill Points: " + nSPPool.getNumPoints() + "\n"
-                + ChatColor.BLUE + "Class Level: " + cLvl.getCurrentLevel() + ChatColor.BLUE + " Class EXP: " + cEXPPool.getPoints() + "/" + cEXPPool.getPoolCap() + "\n"
-                + ChatColor.AQUA + "Class Skill Points: " + cSPPool.getNumPoints() + "\n";
+        return ChatColor.BLUE + "Normal Level: " + ChatColor.GOLD + nLvl.getCurrentLevel() + ChatColor.BLUE + " Normal EXP: " + nEXPPool.getPoints() + "/" + nEXPPool.getPoolCap() + "\n"
+                + ChatColor.AQUA + "Normal Skill Points: " + ChatColor.YELLOW + nSPPool.getNumPoints() + "\n"
+                + ChatColor.BLUE + "Class Level: " + ChatColor.GOLD + cLvl.getCurrentLevel() + ChatColor.BLUE + " Class EXP: " + cEXPPool.getPoints() + "/" + cEXPPool.getPoolCap() + "\n"
+                + ChatColor.AQUA + "Class Skill Points: " + ChatColor.YELLOW + cSPPool.getNumPoints() + "\n";
     }
 
 

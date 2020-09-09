@@ -6,11 +6,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import us.toh.leetmmo.configuration.ExperienceConfigLoader;
 import us.toh.leetmmo.database.Database;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
+import us.toh.leetmmo.gui.advancements.NormalSkillTreeGUI;
 
 import java.util.Map;
 import java.util.UUID;
@@ -40,7 +42,7 @@ public class Events implements Listener {
         PlayerProfile pp = new PlayerProfile(event.getPlayer());
 
         //See if player exists in database. If player exists load profile.
-        if (db.checkIfPlayerExists(pp)) {
+        if (db.checkIfPlayerExists(pp, "player")) {
             pp = db.getPlayerProfileFromDatabase(pp);
         }
 
@@ -53,10 +55,12 @@ public class Events implements Listener {
         PlayerProfile pp = globalPlayers.get(event.getPlayer().getUniqueId());
 
         //See if player exists in database. If player exists update profile. Else insert new profile
-        if (db.checkIfPlayerExists(pp)) {
+        if (db.checkIfPlayerExists(pp, "player")
+                && db.checkIfPlayerExists(pp, "farming")) {
             db.updatePlayerProfile(pp);
         } else {
             db.insertNewPlayerProfile(pp);
+            db.updatePlayerProfile(pp);
         }
 
     }

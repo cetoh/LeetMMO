@@ -11,3 +11,12 @@ commands:
   leetstats:
     description: See current level
     usage: /<command>
+  leetnskills:
+    description: Open Normal Skill Tree GUI
+    usage: /<command>
+  leetfarming:
+    description: Farming skills
+    usage: /<command>
+  leetmining:
+    description: Mining skills
+    usage: /<command>

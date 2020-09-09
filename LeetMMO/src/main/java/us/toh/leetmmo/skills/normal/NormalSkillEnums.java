@@ -77,7 +77,7 @@ public class NormalSkillEnums {
         TEMPLE_DESECRATOR,
         THERMOLUMINESCENCE_DATING,
         TUNNEL_DWELLER,
-        WURTZITE_BORON_NITIRDE_DRILL,
+        WURTZITE_BORON_NITRIDE_DRILL,
         XRAY_FLOURESCENCE
 
     }
@@ -92,5 +92,21 @@ public class NormalSkillEnums {
 
     public enum SmithingSkillNames {
 
+    }
+
+    public static NormalSkillEnums.FarmingSkillNames isFarmingSkillEnum(String str) {
+        for (FarmingSkillNames me : FarmingSkillNames.values()) {
+            if (me.name().equalsIgnoreCase(str))
+                return me;
+        }
+        return null;
+    }
+
+    public static NormalSkillEnums.MiningSkillNames isMiningSkillEnum(String str) {
+        for (MiningSkillNames me : MiningSkillNames.values()) {
+            if (me.name().equalsIgnoreCase(str))
+                return me;
+        }
+        return null;
     }
 }
