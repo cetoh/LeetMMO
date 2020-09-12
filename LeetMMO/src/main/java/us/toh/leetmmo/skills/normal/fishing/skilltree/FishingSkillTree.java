@@ -75,6 +75,42 @@ public class FishingSkillTree {
         Skill pirateMaps = new Skill(PIRATE_MAPS, "Increase to 20% chance of iron bar. Get 5% chance of emerald per catch", 1);
         tree.put(pirateMaps.getSkillName(), pirateMaps);
 
+        Skill sonar = new Skill(SONAR, "Decrease fishing wait time by 25%", 1);
+        tree.put(sonar.getSkillName(), sonar);
+
+        Skill freshwaterBaits = new Skill(FRESHWATER_BAITS, "Each point in this skill increases double drop chance of raw cod and raw salmon by 10%", 5);
+        tree.put(freshwaterBaits.getSkillName(), freshwaterBaits);
+
+        Skill oceanBaits = new Skill(OCEAN_BAITS, "Each point in this skill increases double drop chance of tropical fish and pufferfish by 10%", 5);
+        tree.put(oceanBaits.getSkillName(), oceanBaits);
+
+        Skill masterAngler = new Skill(MASTER_ANGLER, "Increases to 25% chance of gold nugget per catch. Get a 5% chance of a diamond per catch", 1);
+        tree.put(masterAngler.getSkillName(), masterAngler);
+
+        Skill pirateLegends = new Skill(PIRATE_LEGENDS, "Increases to 50% chance of iron bar. Increases to 25% chance of gold bar. Get a 10% chance of emerald per catch", 1);
+        tree.put(pirateLegends.getSkillName(), pirateLegends);
+
+        Skill seafarerWisdom = new Skill(SEAFARER_WISDOM, "Increases EXP gained from fishing by 20%", 1);
+        tree.put(seafarerWisdom.getSkillName(), seafarerWisdom);
+
+        Skill aquaticInsight = new Skill(AQUATIC_INSIGHT, "Get EXP per fish caught", 1);
+        tree.put(aquaticInsight.getSkillName(), aquaticInsight);
+
+        Skill shipwreckDiving = new Skill(SHIPWRECK_DIVING, "Increases to 25% chance of emerald per catch. Increases to 10% chance of diamond per catch", 1);
+        tree.put(shipwreckDiving.getSkillName(), shipwreckDiving);
+
+        Skill bottomTrawling = new Skill(BOTTOM_TRAWLING, "Increases double drop chance of tropical fish and pufferfish by 25%", 1);
+        tree.put(bottomTrawling.getSkillName(), bottomTrawling);
+
+        Skill electrofishing = new Skill(ELECTROFISHING, "Increases double drop chance of raw cod and raw salmon by 25%", 1);
+        tree.put(electrofishing.getSkillName(), electrofishing);
+
+        Skill sustainableFishing = new Skill(SUSTAINABLE_FISHING, "Each point in this skill increases triple drop chance of all fish by 5%", 1);
+        tree.put(sustainableFishing.getSkillName(), sustainableFishing);
+
+        Skill cleanWaters = new Skill(CLEAN_WATERS, "Get experience for all items caught while fishing", 1);
+        tree.put(cleanWaters.getSkillName(), cleanWaters);
+
         //Add Children to skills
 
     }
