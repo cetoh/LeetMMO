@@ -39,7 +39,38 @@ public class NormalSkillEnums {
     }
 
     public enum FishingSkillNames {
-
+        BASIC_FISHING,
+        FISHING_BAIT,
+        FISHING_TECHNIQUE,
+        FISHERMAN_FOLK_STORIES,
+        ROD_CARE,
+        CURRENT_WATCHER,
+        GRIZZLY_INSTINCTS,
+        OCEANOGRAPHY,
+        DEADLIEST_CATCH,
+        FISHERMAN,
+        FISHERMAN_DIET,
+        PIRATE_LORE,
+        PIRATE_SUPERSTITION,
+        FISHERMAN_LUCK,
+        TROLLING,
+        NETS,
+        PROFICIENT_FISHERMAN,
+        SUSHI,
+        FISH_CLEANING,
+        PIRATE_MAPS,
+        SONAR,
+        FRESHWATER_BAITS,
+        OCEAN_BAITS,
+        MASTER_ANGLER,
+        SEAFARER_WISDOM,
+        AQUATIC_INSIGHT,
+        PIRATE_LEGENDS,
+        BOTTOM_TRAWLING,
+        ELECTROFISHING,
+        SHIPWRECK_DIVING,
+        SUSTAINABLE_FISHING,
+        CLEAN_WATERS
     }
 
     public enum HusbandrySkillNames {
