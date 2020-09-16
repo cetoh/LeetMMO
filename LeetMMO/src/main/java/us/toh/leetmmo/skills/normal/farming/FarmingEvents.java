@@ -32,11 +32,14 @@ public class FarmingEvents implements Listener {
     }
 
     /**
-     * Basic Agriculture Skill Event
+     * Player Interact Event Skill Event
      * @param event
      */
     @EventHandler
     public void onTillSoil(PlayerInteractEvent event) {
+        /*
+         * Basic Agriculture
+         */
         if(event.getAction() == Action.RIGHT_CLICK_BLOCK
             && (event.getPlayer().getInventory().getItemInMainHand().equals(Material.WOODEN_HOE)
                 || event.getPlayer().getInventory().getItemInMainHand().equals(Material.IRON_HOE)
@@ -52,14 +55,31 @@ public class FarmingEvents implements Listener {
                 event.setCancelled(true);
             }
         }
+
+        /*
+         * Fertilizer
+         */
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK
+            && event.getPlayer().getInventory().getItemInMainHand().equals(Material.BONE_MEAL)) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, FERTILIZER)) {
+                event.setCancelled(true);
+            }
+        }
     }
 
     /**
-     * Triticum Cultivation Skill Event
+     * Block Place Event Skill Event
      * @param event
      */
     @EventHandler
     public void onWheatPlant(BlockPlaceEvent event) {
+        /*
+         * Triticum Cultivation
+         */
         if (event.getBlockPlaced().equals(Material.WHEAT_SEEDS) || event.getBlockPlaced().equals(Material.WHEAT)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
@@ -69,14 +89,19 @@ public class FarmingEvents implements Listener {
                 event.setCancelled(true);
             }
         }
+
+        /*
+         * Daucus Cultivation
+         */
+        if (event.getBlockPlaced().equals(Material.CARROTS) || event.getBlockPlaced().equals(Material.CARROT)) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, DAUCUS_CULTIVATION)) {
+                event.setCancelled(true);
+            }
+        }
     }
 
-    /**
-     * Daucus Cultivation Skill Event
-     * @param event
-     */
-    @EventHandler
-    public void onCarrotPlant(BlockPlaceEvent event) {
-
-    }
 }
