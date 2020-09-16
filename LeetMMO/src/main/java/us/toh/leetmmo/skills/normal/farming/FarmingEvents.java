@@ -36,7 +36,7 @@ public class FarmingEvents implements Listener {
      * @param event
      */
     @EventHandler
-    public void onTillSoil(PlayerInteractEvent event) {
+    public void onPlayerFarmEvent(PlayerInteractEvent event) {
         /*
          * Basic Agriculture
          */
@@ -76,7 +76,7 @@ public class FarmingEvents implements Listener {
      * @param event
      */
     @EventHandler
-    public void onWheatPlant(BlockPlaceEvent event) {
+    public void onPlanting(BlockPlaceEvent event) {
         /*
          * Triticum Cultivation
          */
@@ -99,6 +99,97 @@ public class FarmingEvents implements Listener {
             PlayerProfile playerProfile = globalPlayers.get(uuid);
 
             if (!SkillUtils.playerHasSkill(plugin, playerProfile, DAUCUS_CULTIVATION)) {
+                event.setCancelled(true);
+            }
+        }
+
+        /*
+         * Cucurbita Cultivation
+         */
+        if (event.getBlockPlaced().equals(Material.PUMPKIN_SEEDS) || event.getBlockPlaced().equals(Material.PUMPKIN_STEM)) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, CUCURBITA_CULTIVATION)) {
+                event.setCancelled(true);
+            }
+        }
+
+        /*
+         * Tuberosem Cultivation
+         */
+        if (event.getBlockPlaced().equals(Material.POTATOES) || event.getBlockPlaced().equals(Material.POTATO)) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, TUBEROSEM_CULTIVATION)) {
+                event.setCancelled(true);
+            }
+        }
+
+        /*
+         * Saccharum Cultivation
+         */
+        if (event.getBlockPlaced().equals(Material.SUGAR_CANE)) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, SACCHARUM_CULTIVATION)) {
+                event.setCancelled(true);
+            }
+        }
+
+        /*
+         * Ianatus Cultivation
+         */
+        if (event.getBlockPlaced().equals(Material.MELON_SEEDS) || event.getBlockPlaced().equals(Material.MELON_STEM)) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, IANATUS_CULTIVATION)) {
+                event.setCancelled(true);
+            }
+        }
+
+        /*
+         * Cacao Cultivation
+         */
+        if (event.getBlockPlaced().equals(Material.COCOA_BEANS) || event.getBlockPlaced().equals(Material.COCOA)) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, CACAO_CULTIVATION)) {
+                event.setCancelled(true);
+            }
+        }
+
+        /*
+         * Vulgaris Cultivation
+         */
+        if (event.getBlockPlaced().equals(Material.BEETROOT) || event.getBlockPlaced().equals(Material.BEETROOTS)) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, VULGARUS_CULTIVATION)) {
+                event.setCancelled(true);
+            }
+        }
+
+        /*
+         * Fungal Farming
+         */
+        if (event.getBlockPlaced().equals(Material.BROWN_MUSHROOM) || event.getBlockPlaced().equals(Material.RED_MUSHROOM)) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, FUNGAL_FARMING)) {
                 event.setCancelled(true);
             }
         }
