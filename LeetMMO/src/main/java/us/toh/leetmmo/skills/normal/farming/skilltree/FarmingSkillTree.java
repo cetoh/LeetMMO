@@ -124,64 +124,64 @@ public class FarmingSkillTree {
         tree.put(improvedPhotosynthesis.getSkillName(), improvedPhotosynthesis);
 
         //Add Children to skills
-        basicAgriculture.getChildSkills().put(triticumCultivation, 1);
+        basicAgriculture.getChildSkills().put(triticumCultivation, triticumCultivation.getSkillPointRequirement());
 
-        triticumCultivation.getChildSkills().put(fertilizer, 3);
-        triticumCultivation.getChildSkills().put(daucusCultivation, 2);
-        triticumCultivation.getChildSkills().put(weedRemoval, 5);
+        triticumCultivation.getChildSkills().put(fertilizer, fertilizer.getSkillPointRequirement());
+        triticumCultivation.getChildSkills().put(daucusCultivation, daucusCultivation.getSkillPointRequirement());
+        triticumCultivation.getChildSkills().put(weedRemoval, weedRemoval.getSkillPointRequirement());
 
-        fertilizer.getChildSkills().put(fungalFarming, 1);
-        fertilizer.getChildSkills().put(cucurbitaCultivation, 2);
+        fertilizer.getChildSkills().put(fungalFarming, fungalFarming.getSkillPointRequirement());
+        fertilizer.getChildSkills().put(cucurbitaCultivation, cucurbitaCultivation.getSkillPointRequirement());
 
-        daucusCultivation.getChildSkills().put(cucurbitaCultivation, 2);
-        daucusCultivation.getChildSkills().put(tuberosemCultivation, 2);
+        daucusCultivation.getChildSkills().put(cucurbitaCultivation, cucurbitaCultivation.getSkillPointRequirement());
+        daucusCultivation.getChildSkills().put(tuberosemCultivation, tuberosemCultivation.getSkillPointRequirement());
 
-        weedRemoval.getChildSkills().put(mechanizedHarvesting, 5);
+        weedRemoval.getChildSkills().put(mechanizedHarvesting, mechanizedHarvesting.getSkillPointRequirement());
 
-        cucurbitaCultivation.getChildSkills().put(fungalFarming, 1);
-        cucurbitaCultivation.getChildSkills().put(ianatusCultivation, 2);
-        cucurbitaCultivation.getChildSkills().put(saccharumCultivation, 2);
+        cucurbitaCultivation.getChildSkills().put(fungalFarming, fungalFarming.getSkillPointRequirement());
+        cucurbitaCultivation.getChildSkills().put(ianatusCultivation, ianatusCultivation.getSkillPointRequirement());
+        cucurbitaCultivation.getChildSkills().put(saccharumCultivation, saccharumCultivation.getSkillPointRequirement());
 
-        fungalFarming.getChildSkills().put(indoorFungiculture, 4);
-        fungalFarming.getChildSkills().put(trellisGourdTechniques, 5);
+        fungalFarming.getChildSkills().put(indoorFungiculture, indoorFungiculture.getSkillPointRequirement());
+        fungalFarming.getChildSkills().put(trellisGourdTechniques, trellisGourdTechniques.getSkillPointRequirement());
 
-        ianatusCultivation.getChildSkills().put(trellisGourdTechniques, 5);
+        ianatusCultivation.getChildSkills().put(trellisGourdTechniques, trellisGourdTechniques.getSkillPointRequirement());
 
-        tuberosemCultivation.getChildSkills().put(saccharumCultivation, 2);
-        tuberosemCultivation.getChildSkills().put(vulgarisCultivation, 2);
+        tuberosemCultivation.getChildSkills().put(saccharumCultivation, saccharumCultivation.getSkillPointRequirement());
+        tuberosemCultivation.getChildSkills().put(vulgarisCultivation, vulgarisCultivation.getSkillPointRequirement());
 
-        saccharumCultivation.getChildSkills().put(plantations, 2);
-        saccharumCultivation.getChildSkills().put(cacaoCultivation, 2);
+        saccharumCultivation.getChildSkills().put(plantations, plantations.getSkillPointRequirement());
+        saccharumCultivation.getChildSkills().put(cacaoCultivation, cacaoCultivation.getSkillPointRequirement());
 
-        vulgarisCultivation.getChildSkills().put(cacaoCultivation, 2);
-        vulgarisCultivation.getChildSkills().put(cropRotation, 5);
-        vulgarisCultivation.getChildSkills().put(blightProtection, 5);
+        vulgarisCultivation.getChildSkills().put(cacaoCultivation, cacaoCultivation.getSkillPointRequirement());
+        vulgarisCultivation.getChildSkills().put(cropRotation, cropRotation.getSkillPointRequirement());
+        vulgarisCultivation.getChildSkills().put(blightProtection, blightProtection.getSkillPointRequirement());
 
-        cacaoCultivation.getChildSkills().put(plantations, 2);
-        cacaoCultivation.getChildSkills().put(blightProtection, 2);
+        cacaoCultivation.getChildSkills().put(plantations, plantations.getSkillPointRequirement());
+        cacaoCultivation.getChildSkills().put(blightProtection, blightProtection.getSkillPointRequirement());
 
-        mechanizedHarvesting.getChildSkills().put(cropRotation, 5);
+        mechanizedHarvesting.getChildSkills().put(cropRotation, cropRotation.getSkillPointRequirement());
 
-        cropRotation.getChildSkills().put(blightProtection, 5);
-        cropRotation.getChildSkills().put(hybridization, 5);
+        cropRotation.getChildSkills().put(blightProtection, blightProtection.getSkillPointRequirement());
+        cropRotation.getChildSkills().put(hybridization, hybridization.getSkillPointRequirement());
 
-        indoorFungiculture.getChildSkills().put(hybridization, 2);
+        indoorFungiculture.getChildSkills().put(hybridization, hybridization.getSkillPointRequirement());
 
-        trellisGourdTechniques.getChildSkills().put(hybridization, 2);
+        trellisGourdTechniques.getChildSkills().put(hybridization, hybridization.getSkillPointRequirement());
 
-        plantations.getChildSkills().put(hybridization, 2);
+        plantations.getChildSkills().put(hybridization, hybridization.getSkillPointRequirement());
 
-        blightProtection.getChildSkills().put(hybridization, 2);
+        blightProtection.getChildSkills().put(hybridization, hybridization.getSkillPointRequirement());
 
-        hybridization.getChildSkills().put(gmoCrops, 2);
-        hybridization.getChildSkills().put(chemicalPesticides, 5);
+        hybridization.getChildSkills().put(gmoCrops, gmoCrops.getSkillPointRequirement());
+        hybridization.getChildSkills().put(chemicalPesticides, chemicalPesticides.getSkillPointRequirement());
 
-        gmoCrops.getChildSkills().put(chemicalPesticides, 5);
-        gmoCrops.getChildSkills().put(farmingMastery, 1);
+        gmoCrops.getChildSkills().put(chemicalPesticides, chemicalPesticides.getSkillPointRequirement());
+        gmoCrops.getChildSkills().put(farmingMastery, farmingMastery.getSkillPointRequirement());
 
-        chemicalPesticides.getChildSkills().put(transenvironmentalCultivation, 5);
+        chemicalPesticides.getChildSkills().put(transenvironmentalCultivation, transenvironmentalCultivation.getSkillPointRequirement());
 
-        transenvironmentalCultivation.getChildSkills().put(improvedPhotosynthesis, 5);
+        transenvironmentalCultivation.getChildSkills().put(improvedPhotosynthesis, improvedPhotosynthesis.getSkillPointRequirement());
     }
 
     public HashMap<Enum, Skill> getTree() {

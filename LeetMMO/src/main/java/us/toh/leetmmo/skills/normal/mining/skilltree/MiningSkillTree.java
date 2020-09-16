@@ -142,53 +142,53 @@ public class MiningSkillTree {
         tree.put(miningMastery.getSkillName(), miningMastery);
 
         //Add Children to skills
-        basicMining.getChildSkills().put(miningExpertise, 10);
-        basicMining.getChildSkills().put(hewer, 2);
-        basicMining.getChildSkills().put(ligniteExtraction, 6);
-        basicMining.getChildSkills().put(thermoluminescenceDating, 4);
-        basicMining.getChildSkills().put(siliconeExtraction, 4);
+        basicMining.getChildSkills().put(miningExpertise, miningExpertise.getSkillPointRequirement());
+        basicMining.getChildSkills().put(hewer, hewer.getSkillPointRequirement());
+        basicMining.getChildSkills().put(ligniteExtraction, ligniteExtraction.getSkillPointRequirement());
+        basicMining.getChildSkills().put(thermoluminescenceDating, thermoluminescenceDating.getSkillPointRequirement());
+        basicMining.getChildSkills().put(siliconeExtraction, siliconeExtraction.getSkillPointRequirement());
 
-        ligniteExtraction.getChildSkills().put(bituminousExtraction, 4);
+        ligniteExtraction.getChildSkills().put(bituminousExtraction, bituminousExtraction.getSkillPointRequirement());
 
-        thermoluminescenceDating.getChildSkills().put(foolsGold, 4);
+        thermoluminescenceDating.getChildSkills().put(foolsGold, foolsGold.getSkillPointRequirement());
 
-        siliconeExtraction.getChildSkills().put(foolsGold, 4);
+        siliconeExtraction.getChildSkills().put(foolsGold, foolsGold.getSkillPointRequirement());
 
-        hewer.getChildSkills().put(tunnelDweller, 3);
-        hewer.getChildSkills().put(templeDesecrator, 3);
-        hewer.getChildSkills().put(blastMining, 3);
-        hewer.getChildSkills().put(prospector, 2);
-        hewer.getChildSkills().put(bituminousExtraction, 4);
-        hewer.getChildSkills().put(comminution, 6);
-        hewer.getChildSkills().put(lazuriteExtractionEfficiency, 4);
+        hewer.getChildSkills().put(tunnelDweller, tunnelDweller.getSkillPointRequirement());
+        hewer.getChildSkills().put(templeDesecrator, templeDesecrator.getSkillPointRequirement());
+        hewer.getChildSkills().put(blastMining, blastMining.getSkillPointRequirement());
+        hewer.getChildSkills().put(prospector, prospector.getSkillPointRequirement());
+        hewer.getChildSkills().put(bituminousExtraction, bituminousExtraction.getSkillPointRequirement());
+        hewer.getChildSkills().put(comminution, comminution.getSkillPointRequirement());
+        hewer.getChildSkills().put(lazuriteExtractionEfficiency, lazuriteExtractionEfficiency.getSkillPointRequirement());
 
-        bituminousExtraction.getChildSkills().put(anthraciteExtraction, 2);
+        bituminousExtraction.getChildSkills().put(anthraciteExtraction, anthraciteExtraction.getSkillPointRequirement());
 
-        comminution.getChildSkills().put(gravitySeparation, 4);
+        comminution.getChildSkills().put(gravitySeparation, gravitySeparation.getSkillPointRequirement());
 
-        prospector.getChildSkills().put(powerMining, 4);
-        prospector.getChildSkills().put(xrayFlourescence, 4);
-        prospector.getChildSkills().put(postlapidaryOiling, 4);
-        prospector.getChildSkills().put(geoengineer, 2);
-        prospector.getChildSkills().put(anthraciteExtraction, 2);
-        prospector.getChildSkills().put(gravitySeparation, 4);
-        prospector.getChildSkills().put(hydraulicMining, 3);
+        prospector.getChildSkills().put(powerMining, powerMining.getSkillPointRequirement());
+        prospector.getChildSkills().put(xrayFlourescence, xrayFlourescence.getSkillPointRequirement());
+        prospector.getChildSkills().put(postlapidaryOiling, postlapidaryOiling.getSkillPointRequirement());
+        prospector.getChildSkills().put(geoengineer, geoengineer.getSkillPointRequirement());
+        prospector.getChildSkills().put(anthraciteExtraction, anthraciteExtraction.getSkillPointRequirement());
+        prospector.getChildSkills().put(gravitySeparation, gravitySeparation.getSkillPointRequirement());
+        prospector.getChildSkills().put(hydraulicMining, hydraulicMining.getSkillPointRequirement());
 
-        powerMining.getChildSkills().put(electromagneticRadation, 2);
+        powerMining.getChildSkills().put(electromagneticRadation, electromagneticRadation.getSkillPointRequirement());
 
-        xrayFlourescence.getChildSkills().put(cuttingEfficiency, 2);
+        xrayFlourescence.getChildSkills().put(cuttingEfficiency, cuttingEfficiency.getSkillPointRequirement());
 
-        gravitySeparation.getChildSkills().put(magnetiteFrothFlotation, 2);
+        gravitySeparation.getChildSkills().put(magnetiteFrothFlotation, magnetiteFrothFlotation.getSkillPointRequirement());
 
-        hydraulicMining.getChildSkills().put(leaching, 2);
+        hydraulicMining.getChildSkills().put(leaching, leaching.getSkillPointRequirement());
 
-        geoengineer.getChildSkills().put(electromagneticRadation, 2);
-        geoengineer.getChildSkills().put(cuttingEfficiency, 2);
-        geoengineer.getChildSkills().put(wurtziteBoronNitrideDrill, 3);
-        geoengineer.getChildSkills().put(mantleDrilling, 4);
-        geoengineer.getChildSkills().put(magnetiteFrothFlotation, 2);
-        geoengineer.getChildSkills().put(leaching, 2);
-        geoengineer.getChildSkills().put(miningMastery, 1);
+        geoengineer.getChildSkills().put(electromagneticRadation, electromagneticRadation.getSkillPointRequirement());
+        geoengineer.getChildSkills().put(cuttingEfficiency, cuttingEfficiency.getSkillPointRequirement());
+        geoengineer.getChildSkills().put(wurtziteBoronNitrideDrill, wurtziteBoronNitrideDrill.getSkillPointRequirement());
+        geoengineer.getChildSkills().put(mantleDrilling, mantleDrilling.getSkillPointRequirement());
+        geoengineer.getChildSkills().put(magnetiteFrothFlotation, magnetiteFrothFlotation.getSkillPointRequirement());
+        geoengineer.getChildSkills().put(leaching, leaching.getSkillPointRequirement());
+        geoengineer.getChildSkills().put(miningMastery, miningMastery.getSkillPointRequirement());
     }
 
     public HashMap<Enum, Skill> getTree() {

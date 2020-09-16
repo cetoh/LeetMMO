@@ -384,7 +384,7 @@ public class Database {
                 pstmt.setInt(13, miningSkillTree.get(PROSPECTOR).getSkillPoints());
                 pstmt.setInt(14, miningSkillTree.get(BITUMINOUS_EXTRACTION).getSkillPoints());
                 pstmt.setInt(15, miningSkillTree.get(COMMINUTION).getSkillPoints());
-                pstmt.setInt(16, miningSkillTree.get(LAZURITE_EXTRACTION_EFFICIENCY).getSkillPoints());
+                pstmt.setInt(16, miningSkillTree.get(LAZURITE_EXTRACTION).getSkillPoints());
                 pstmt.setInt(17, miningSkillTree.get(POWER_MINING).getSkillPoints());
                 pstmt.setInt(18, miningSkillTree.get(XRAY_FLOURESCENCE).getSkillPoints());
                 pstmt.setInt(19, miningSkillTree.get(POSTLAPIDARY_OILING).getSkillPoints());
@@ -526,7 +526,7 @@ public class Database {
                 miningSkillTree.get(PROSPECTOR).setSkillPoints(rs.getInt("prospector"));
                 miningSkillTree.get(BITUMINOUS_EXTRACTION).setSkillPoints(rs.getInt("bituminousExtraction"));
                 miningSkillTree.get(COMMINUTION).setSkillPoints(rs.getInt("comminution"));
-                miningSkillTree.get(LAZURITE_EXTRACTION_EFFICIENCY).setSkillPoints(rs.getInt("lazuriteExtractionEfficiency"));
+                miningSkillTree.get(LAZURITE_EXTRACTION).setSkillPoints(rs.getInt("lazuriteExtractionEfficiency"));
                 miningSkillTree.get(POWER_MINING).setSkillPoints(rs.getInt("powerMining"));
                 miningSkillTree.get(XRAY_FLOURESCENCE).setSkillPoints(rs.getInt("xrayFlourescence"));
                 miningSkillTree.get(POSTLAPIDARY_OILING).setSkillPoints(rs.getInt("postlapidaryOiling"));
