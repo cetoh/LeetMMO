@@ -69,7 +69,7 @@ public class MiningSkillTree {
         comminution.getPrerequesiteSkills().put(hewer, hewer.getSkillPointRequirement());
         tree.put(comminution.getSkillName(), comminution);
 
-        Skill lazuriteExtractionEfficiency = new Skill(LAZURITE_EXTRACTION, "Each point increases lapis lazuli double drop chance by %25",4);
+        Skill lazuriteExtractionEfficiency = new Skill(LAZURITE_EXTRACTION_EFFICIENCY, "Each point increases lapis lazuli double drop chance by %25",4);
         lazuriteExtractionEfficiency.getPrerequesiteSkills().put(hewer, hewer.getSkillPointRequirement());
         tree.put(lazuriteExtractionEfficiency.getSkillName(), lazuriteExtractionEfficiency);
 

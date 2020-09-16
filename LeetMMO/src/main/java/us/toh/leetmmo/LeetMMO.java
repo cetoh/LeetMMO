@@ -62,8 +62,9 @@ public final class LeetMMO extends JavaPlugin {
         farmingEvents.setPlugin(this);
         getServer().getPluginManager().registerEvents(farmingEvents, plugin);
 
-        //Farming Events
+        //Mining Events
         miningEvents.setGlobalPlayers(globalPlayers);
+        miningEvents.setPlugin(this);
         getServer().getPluginManager().registerEvents(miningEvents, plugin);
 
         getServer().getPluginManager().registerEvents(normalSkillTreeGUI, plugin);
