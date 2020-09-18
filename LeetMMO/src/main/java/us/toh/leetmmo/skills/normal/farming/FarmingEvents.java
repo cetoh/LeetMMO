@@ -2,17 +2,21 @@ package us.toh.leetmmo.skills.normal.farming;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import us.toh.leetmmo.LeetMMO;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.skills.Skill;
 import us.toh.leetmmo.skills.SkillUtils;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -195,4 +199,65 @@ public class FarmingEvents implements Listener {
         }
     }
 
+    /**
+     * Player Interact Event Skill Event
+     * @param event
+     */
+    @EventHandler
+    public void onHarvesting(PlayerHarvestBlockEvent event) {
+        /*
+         * Weed Removal
+         * Mechanized Harvesting
+         */
+        if(event.getItemsHarvested().contains(Material.WHEAT)) {
+
+            //Check if player has skill
+            Player player = event.getPlayer();
+            UUID uuid = player.getUniqueId();
+
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            //Weed Removal
+            if (SkillUtils.playerHasSkill(plugin, playerProfile, WEED_REMOVAL)) {
+                if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(WEED_REMOVAL).getSkillPoints() * 5)) {
+                    ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.WHEAT));
+                    item.setAmount(item.getAmount() + 1);
+                }
+            }
+
+            //Mechanized Harvesting
+            if (SkillUtils.playerHasSkill(plugin, playerProfile, MECHANIZED_HARVESTING)) {
+                if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(MECHANIZED_HARVESTING).getSkillPoints() * 5)) {
+                    ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.WHEAT));
+                    item.setAmount(item.getAmount() + 1);
+                }
+            }
+        }
+
+        /*
+         * Indoor Fungiculture
+         */
+        if(event.getItemsHarvested().contains(Material.RED_MUSHROOM) || event.getItemsHarvested().contains(Material.BROWN_MUSHROOM)) {
+
+            //Check if player has skill
+            Player player = event.getPlayer();
+            UUID uuid = player.getUniqueId();
+
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (SkillUtils.playerHasSkill(plugin, playerProfile, INDOOR_FUNGICULTURE)) {
+                if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(INDOOR_FUNGICULTURE).getSkillPoints() * 25)) {
+                    if (event.getItemsHarvested().contains(Material.RED_MUSHROOM)) {
+                        ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.RED_MUSHROOM));
+                        item.setAmount(item.getAmount() + 1);
+                    }
+                    if (event.getItemsHarvested().contains(Material.BROWN_MUSHROOM)) {
+                        ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.BROWN_MUSHROOM));
+                        item.setAmount(item.getAmount() + 1);
+                    }
+                }
+            }
+
+        }
+    }
 }
