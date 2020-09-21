@@ -73,6 +73,7 @@ public class FarmingEvents implements Listener {
                 event.setCancelled(true);
             }
         }
+
     }
 
     /**
@@ -84,7 +85,7 @@ public class FarmingEvents implements Listener {
         /*
          * Triticum Cultivation
          */
-        if (event.getBlockPlaced().equals(Material.WHEAT_SEEDS) || event.getBlockPlaced().equals(Material.WHEAT)) {
+        if (event.getBlockPlaced().getType().equals(Material.WHEAT_SEEDS) || event.getBlockPlaced().getType().equals(Material.WHEAT)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
@@ -97,7 +98,7 @@ public class FarmingEvents implements Listener {
         /*
          * Daucus Cultivation
          */
-        if (event.getBlockPlaced().equals(Material.CARROTS) || event.getBlockPlaced().equals(Material.CARROT)) {
+        if (event.getBlockPlaced().getType().equals(Material.CARROTS) || event.getBlockPlaced().getType().equals(Material.CARROT)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
@@ -110,7 +111,7 @@ public class FarmingEvents implements Listener {
         /*
          * Cucurbita Cultivation
          */
-        if (event.getBlockPlaced().equals(Material.PUMPKIN_SEEDS) || event.getBlockPlaced().equals(Material.PUMPKIN_STEM)) {
+        if (event.getBlockPlaced().getType().equals(Material.PUMPKIN_SEEDS) || event.getBlockPlaced().getType().equals(Material.PUMPKIN_STEM)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
@@ -123,7 +124,7 @@ public class FarmingEvents implements Listener {
         /*
          * Tuberosem Cultivation
          */
-        if (event.getBlockPlaced().equals(Material.POTATOES) || event.getBlockPlaced().equals(Material.POTATO)) {
+        if (event.getBlockPlaced().getType().equals(Material.POTATOES) || event.getBlockPlaced().getType().equals(Material.POTATO)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
@@ -136,7 +137,7 @@ public class FarmingEvents implements Listener {
         /*
          * Saccharum Cultivation
          */
-        if (event.getBlockPlaced().equals(Material.SUGAR_CANE)) {
+        if (event.getBlockPlaced().getType().equals(Material.SUGAR_CANE)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
@@ -149,7 +150,7 @@ public class FarmingEvents implements Listener {
         /*
          * Ianatus Cultivation
          */
-        if (event.getBlockPlaced().equals(Material.MELON_SEEDS) || event.getBlockPlaced().equals(Material.MELON_STEM)) {
+        if (event.getBlockPlaced().getType().equals(Material.MELON_SEEDS) || event.getBlockPlaced().getType().equals(Material.MELON_STEM)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
@@ -162,7 +163,7 @@ public class FarmingEvents implements Listener {
         /*
          * Cacao Cultivation
          */
-        if (event.getBlockPlaced().equals(Material.COCOA_BEANS) || event.getBlockPlaced().equals(Material.COCOA)) {
+        if (event.getBlockPlaced().getType().equals(Material.COCOA_BEANS) || event.getBlockPlaced().getType().equals(Material.COCOA)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
@@ -175,7 +176,7 @@ public class FarmingEvents implements Listener {
         /*
          * Vulgaris Cultivation
          */
-        if (event.getBlockPlaced().equals(Material.BEETROOT) || event.getBlockPlaced().equals(Material.BEETROOTS)) {
+        if (event.getBlockPlaced().getType().equals(Material.BEETROOT) || event.getBlockPlaced().getType().equals(Material.BEETROOTS)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
@@ -188,12 +189,40 @@ public class FarmingEvents implements Listener {
         /*
          * Fungal Farming
          */
-        if (event.getBlockPlaced().equals(Material.BROWN_MUSHROOM) || event.getBlockPlaced().equals(Material.RED_MUSHROOM)) {
+        if (event.getBlockPlaced().getType().equals(Material.BROWN_MUSHROOM) || event.getBlockPlaced().getType().equals(Material.RED_MUSHROOM)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
 
             if (!SkillUtils.playerHasSkill(plugin, playerProfile, FUNGAL_FARMING)) {
+                event.setCancelled(true);
+            }
+        }
+
+        /*
+         * Hybridization
+         */
+        if (event.getBlockPlaced().getType().equals(Material.NETHER_WART)) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, HYBRIDIZATION)) {
+                event.setCancelled(true);
+            }
+        }
+
+        /*
+         * Hybridization
+         */
+        if (event.getBlockPlaced().getType().equals(Material.CHORUS_FRUIT)
+                || event.getBlockPlaced().getType().equals(Material.CHORUS_FLOWER)
+                || event.getBlockPlaced().getType().equals(Material.CHORUS_PLANT) ) {
+            //Check if player has skill
+            UUID uuid = event.getPlayer().getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, GMO_CROPS)) {
                 event.setCancelled(true);
             }
         }
@@ -205,59 +234,243 @@ public class FarmingEvents implements Listener {
      */
     @EventHandler
     public void onHarvesting(PlayerHarvestBlockEvent event) {
+        List<ItemStack> items = event.getItemsHarvested();
+
         /*
          * Weed Removal
          * Mechanized Harvesting
          */
-        if(event.getItemsHarvested().contains(Material.WHEAT)) {
+        for (ItemStack itemStack : items) {
+            if (itemStack.getType().equals(Material.WHEAT)) {
+                //Check if player has skill
+                Player player = event.getPlayer();
+                UUID uuid = player.getUniqueId();
 
-            //Check if player has skill
-            Player player = event.getPlayer();
-            UUID uuid = player.getUniqueId();
+                PlayerProfile playerProfile = globalPlayers.get(uuid);
 
-            PlayerProfile playerProfile = globalPlayers.get(uuid);
-
-            //Weed Removal
-            if (SkillUtils.playerHasSkill(plugin, playerProfile, WEED_REMOVAL)) {
-                if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(WEED_REMOVAL).getSkillPoints() * 5)) {
-                    ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.WHEAT));
-                    item.setAmount(item.getAmount() + 1);
+                //Weed Removal
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, WEED_REMOVAL)) {
+                    if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(WEED_REMOVAL).getSkillPoints() * 5)) {
+                        ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.WHEAT));
+                        assert item != null;
+                        item.setAmount(item.getAmount() + 1);
+                    }
                 }
-            }
 
-            //Mechanized Harvesting
-            if (SkillUtils.playerHasSkill(plugin, playerProfile, MECHANIZED_HARVESTING)) {
-                if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(MECHANIZED_HARVESTING).getSkillPoints() * 5)) {
-                    ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.WHEAT));
-                    item.setAmount(item.getAmount() + 1);
+                //Mechanized Harvesting
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, MECHANIZED_HARVESTING)) {
+                    if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(MECHANIZED_HARVESTING).getSkillPoints() * 5)) {
+                        ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.WHEAT));
+                        assert item != null;
+                        item.setAmount(item.getAmount() + 1);
+                    }
+                }
+                return;
+            }
+        }
+
+
+
+        /*
+         * Indoor Fungiculture
+         */
+        for (ItemStack itemStack : items) {
+            if (itemStack.getType().equals(Material.RED_MUSHROOM) || itemStack.getType().equals(Material.BROWN_MUSHROOM)) {
+
+                //Check if player has skill
+                Player player = event.getPlayer();
+                UUID uuid = player.getUniqueId();
+
+                PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, INDOOR_FUNGICULTURE)) {
+                    if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(INDOOR_FUNGICULTURE).getSkillPoints() * 25)) {
+                        if (itemStack.getType().equals(Material.RED_MUSHROOM)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.RED_MUSHROOM));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                        if (itemStack.getType().equals(Material.BROWN_MUSHROOM)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.BROWN_MUSHROOM));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                    }
                 }
             }
         }
 
         /*
-         * Indoor Fungiculture
+         * Trellis Gourd Techniques
          */
-        if(event.getItemsHarvested().contains(Material.RED_MUSHROOM) || event.getItemsHarvested().contains(Material.BROWN_MUSHROOM)) {
+        for (ItemStack itemStack : items) {
+            if (itemStack.getType().equals(Material.MELON_SLICE)) {
 
-            //Check if player has skill
-            Player player = event.getPlayer();
-            UUID uuid = player.getUniqueId();
+                //Check if player has skill
+                Player player = event.getPlayer();
+                UUID uuid = player.getUniqueId();
 
-            PlayerProfile playerProfile = globalPlayers.get(uuid);
+                PlayerProfile playerProfile = globalPlayers.get(uuid);
 
-            if (SkillUtils.playerHasSkill(plugin, playerProfile, INDOOR_FUNGICULTURE)) {
-                if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(INDOOR_FUNGICULTURE).getSkillPoints() * 25)) {
-                    if (event.getItemsHarvested().contains(Material.RED_MUSHROOM)) {
-                        ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.RED_MUSHROOM));
-                        item.setAmount(item.getAmount() + 1);
-                    }
-                    if (event.getItemsHarvested().contains(Material.BROWN_MUSHROOM)) {
-                        ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.BROWN_MUSHROOM));
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, TRELLIS_GOURD_TECHNIQUES)) {
+                    if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(TRELLIS_GOURD_TECHNIQUES).getSkillPoints() * 20)) {
+                        ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.MELON_SLICE));
+                        assert item != null;
                         item.setAmount(item.getAmount() + 1);
                     }
                 }
             }
+        }
 
+        /*
+         * Plantations
+         */
+        for (ItemStack itemStack : items) {
+            if (itemStack.getType().equals(Material.SUGAR_CANE) || itemStack.getType().equals(Material.COCOA_BEANS)) {
+
+                //Check if player has skill
+                Player player = event.getPlayer();
+                UUID uuid = player.getUniqueId();
+
+                PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, PLANTATIONS)) {
+                    if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(PLANTATIONS).getSkillPoints() * 25)) {
+                        if (itemStack.getType().equals(Material.SUGAR_CANE)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.SUGAR_CANE));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                        if (itemStack.getType().equals(Material.COCOA_BEANS)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.COCOA_BEANS));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
+         * Crop Rotation
+         * Blight Protection
+         */
+        for (ItemStack itemStack : items) {
+            if (itemStack.getType().equals(Material.WHEAT)
+                    || itemStack.getType().equals(Material.CARROT)
+                    || itemStack.getType().equals(Material.POTATO)
+                    || itemStack.getType().equals(Material.BEETROOT)) {
+
+                //Check if player has skill
+                Player player = event.getPlayer();
+                UUID uuid = player.getUniqueId();
+
+                PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, CROP_ROTATION)) {
+                    if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(CROP_ROTATION).getSkillPoints() * 10)) {
+                        if (itemStack.getType().equals(Material.WHEAT)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.WHEAT));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                        if (itemStack.getType().equals(Material.CARROT)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.CARROT));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                        if (itemStack.getType().equals(Material.POTATO)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.POTATO));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                        if (itemStack.getType().equals(Material.BEETROOT)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.BEETROOT));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                    }
+                }
+
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, BLIGHT_PROTECTION)) {
+                    if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(BLIGHT_PROTECTION).getSkillPoints() * 10)) {
+                        if (itemStack.getType().equals(Material.CARROT)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.CARROT));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                        if (itemStack.getType().equals(Material.POTATO)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.POTATO));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                        if (itemStack.getType().equals(Material.BEETROOT)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.BEETROOT));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
+         * Chemical Pesticides
+         */
+        for (ItemStack itemStack : items) {
+            if (itemStack.getType().equals(Material.NETHER_WART) || itemStack.getType().equals(Material.CHORUS_FRUIT)) {
+
+                //Check if player has skill
+                Player player = event.getPlayer();
+                UUID uuid = player.getUniqueId();
+
+                PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, CHEMICAL_PESTICIDES)) {
+                    if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(CHEMICAL_PESTICIDES).getSkillPoints() * 5)) {
+                        if (itemStack.getType().equals(Material.NETHER_WART)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.NETHER_WART));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                        if (itemStack.getType().equals(Material.CHORUS_FRUIT)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.CHORUS_FRUIT));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                    }
+                }
+
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, TRANSENVIRONMENTAL_CULTIVATION)) {
+                    if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(TRANSENVIRONMENTAL_CULTIVATION).getSkillPoints() * 10)) {
+                        if (itemStack.getType().equals(Material.NETHER_WART)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.NETHER_WART));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                        if (itemStack.getType().equals(Material.CHORUS_FRUIT)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.CHORUS_FRUIT));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                    }
+                }
+
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, IMPROVED_PHOTOSYNTHESIS)) {
+                    if (SkillUtils.chanceCheck(playerProfile.getFarmingSkillTree().getTree().get(IMPROVED_PHOTOSYNTHESIS).getSkillPoints() * 5)) {
+                        if (itemStack.getType().equals(Material.NETHER_WART)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.NETHER_WART));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                        if (itemStack.getType().equals(Material.CHORUS_FRUIT)) {
+                            ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.CHORUS_FRUIT));
+                            assert item != null;
+                            item.setAmount(item.getAmount() + 1);
+                        }
+                    }
+                }
+            }
         }
     }
 }
