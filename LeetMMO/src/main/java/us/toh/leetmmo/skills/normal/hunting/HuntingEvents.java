@@ -29,52 +29,6 @@ public class HuntingEvents implements Listener {
         this.plugin = plugin;
     }
 
-    /**
-     * Basic Agriculture Skill Event
-     * @param event
-     */
-    @EventHandler
-    public void onTillSoil(PlayerInteractEvent event) {
-        if(event.getAction() == Action.RIGHT_CLICK_BLOCK
-            && (event.getPlayer().getInventory().getItemInMainHand().equals(Material.WOODEN_HOE)
-                || event.getPlayer().getInventory().getItemInMainHand().equals(Material.IRON_HOE)
-                || event.getPlayer().getInventory().getItemInMainHand().equals(Material.STONE_HOE)
-                || event.getPlayer().getInventory().getItemInMainHand().equals(Material.DIAMOND_HOE)
-                || event.getPlayer().getInventory().getItemInMainHand().equals(Material.GOLDEN_HOE)
-                || event.getPlayer().getInventory().getItemInMainHand().equals(Material.NETHERITE_HOE))) {
-            //Check if player has skill
-            UUID uuid = event.getPlayer().getUniqueId();
-            PlayerProfile playerProfile = globalPlayers.get(uuid);
 
-            if (!SkillUtils.playerHasSkill(plugin, playerProfile, BASIC_AGRICULTURE)) {
-                event.setCancelled(true);
-            }
-        }
-    }
 
-    /**
-     * Triticum Cultivation Skill Event
-     * @param event
-     */
-    @EventHandler
-    public void onWheatPlant(BlockPlaceEvent event) {
-        if (event.getBlockPlaced().equals(Material.WHEAT_SEEDS) || event.getBlockPlaced().equals(Material.WHEAT)) {
-            //Check if player has skill
-            UUID uuid = event.getPlayer().getUniqueId();
-            PlayerProfile playerProfile = globalPlayers.get(uuid);
-
-            if (!SkillUtils.playerHasSkill(plugin, playerProfile, TRITICUM_CULTIVATION)) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
-    /**
-     * Daucus Cultivation Skill Event
-     * @param event
-     */
-    @EventHandler
-    public void onCarrotPlant(BlockPlaceEvent event) {
-
-    }
 }
