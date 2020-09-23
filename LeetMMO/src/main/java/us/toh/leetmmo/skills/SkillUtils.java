@@ -5,9 +5,6 @@ import us.toh.leetmmo.LeetMMO;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 
 import java.util.Random;
-import java.util.UUID;
-
-import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.BASIC_AGRICULTURE;
 
 public class SkillUtils {
 
