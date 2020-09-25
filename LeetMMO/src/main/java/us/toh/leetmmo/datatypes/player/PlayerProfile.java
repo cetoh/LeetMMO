@@ -158,9 +158,9 @@ public class PlayerProfile {
     }
 
     public String displayLevels () {
-        return ChatColor.BLUE + "Normal Level: " + ChatColor.GOLD + nLvl.getCurrentLevel() + ChatColor.BLUE + " Normal EXP: " + nEXPPool.getPoints() + "/" + nEXPPool.getPoolCap() + "\n"
+        return ChatColor.BLUE + "Normal Level: " + ChatColor.GOLD + nLvl.getCurrentLevel() + ChatColor.BLUE + " Normal EXP: " + Math.floor(nEXPPool.getPoints()) + "/" + Math.floor(nEXPPool.getPoolCap()) + "\n"
                 + ChatColor.AQUA + "Normal Skill Points: " + ChatColor.YELLOW + nSPPool.getNumPoints() + "\n"
-                + ChatColor.BLUE + "Class Level: " + ChatColor.GOLD + cLvl.getCurrentLevel() + ChatColor.BLUE + " Class EXP: " + cEXPPool.getPoints() + "/" + cEXPPool.getPoolCap() + "\n"
+                + ChatColor.BLUE + "Class Level: " + ChatColor.GOLD + cLvl.getCurrentLevel() + ChatColor.BLUE + " Class EXP: " + Math.floor(cEXPPool.getPoints()) + "/" + Math.floor(cEXPPool.getPoolCap()) + "\n"
                 + ChatColor.AQUA + "Class Skill Points: " + ChatColor.YELLOW + cSPPool.getNumPoints() + "\n";
     }
 
