@@ -1,19 +1,25 @@
 package us.toh.leetmmo.datatypes.experience;
 
+import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerFishEvent;
+import us.toh.leetmmo.LeetMMO;
 import us.toh.leetmmo.configuration.ExperienceConfigLoader;
 import us.toh.leetmmo.database.Database;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
+import us.toh.leetmmo.skills.SkillUtils;
 
 import java.util.Map;
 import java.util.UUID;
 
-import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.FARMING_MASTERY;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FishingSkillNames.*;
 
 public class ExperienceEvents implements Listener {
 
@@ -192,4 +198,55 @@ public class ExperienceEvents implements Listener {
         return expGain;
     }
 
+    @EventHandler
+    public void onFishCaught(PlayerFishEvent event) {
+        PlayerProfile profile = globalPlayers.get(event.getPlayer().getUniqueId());
+
+        double expGainBase = expConfigLoader.getCustomConfig().getDouble("expBaseGain");
+        double expGainModifier = 1;
+
+        if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
+            Item caught = (Item) event.getCaught();
+            Material itemType = caught.getItemStack().getType();
+
+            if (itemType.equals(Material.COD)) {
+                expGainBase = 75;
+            }
+            else if (itemType.equals(Material.SALMON)) {
+                expGainBase = 100;
+            }
+            else if (itemType.equals(Material.TROPICAL_FISH)) {
+                expGainBase = 125;
+            }
+            else if (itemType.equals(Material.PUFFERFISH)) {
+                expGainBase = 150;
+            }
+
+
+        }
+
+        //Calculate final exp gain
+        double expGain = expGainBase * expGainModifier;
+
+        //Add skill modifiers
+        expGain = addFarmingMasteryMultiplier(profile, expGain);
+
+        //Give player normal experience
+        profile.addExperience(expGain, PlayerProfile.expType.NORMAL);
+
+        //Give player class experience
+        profile.addExperience(Math.floor(expGain * expConfigLoader.getCustomConfig().getDouble("classExpGainModifier")), PlayerProfile.expType.CLASS );
+
+        globalPlayers.put(profile.getUuid(), profile);
+    }
+
+    //Fisherman Folk Stories (5% boost per fish caught event)
+    private double addFarmingMasteryMultiplier(PlayerProfile profile, double expGain) {
+        /* Fisherman Folk Stories */
+        if (SkillUtils.playerHasSkill(LeetMMO.plugin, profile, profile.getFishingSkillTree(), FISHERMAN_FOLK_STORIES)) {
+            expGain = expGain * 1.05;
+        }
+
+        return expGain;
+    }
 }
