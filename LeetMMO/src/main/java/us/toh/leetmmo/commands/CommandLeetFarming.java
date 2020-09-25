@@ -61,7 +61,7 @@ public class CommandLeetFarming implements CommandExecutor {
                             if (SkillUtils.hasPrerequesiteSkill(
                                     LeetMMO.plugin,
                                     profile,
-                                    profile.getMiningSkillTree(),
+                                    profile.getFarmingSkillTree(),
                                     NormalSkillEnums.isFarmingSkillEnum(args[0].toUpperCase().replace(' ', '_'))
                             )) {
                                 //Add point to skill
@@ -87,7 +87,7 @@ public class CommandLeetFarming implements CommandExecutor {
                             if (SkillUtils.playerHasSkill(
                                     LeetMMO.plugin,
                                     profile,
-                                    profile.getMiningSkillTree(),
+                                    profile.getFarmingSkillTree(),
                                     NormalSkillEnums.isFarmingSkillEnum(args[0].toUpperCase().replace(' ', '_'))
                             )) {
                                 //Remove point(s) from skill

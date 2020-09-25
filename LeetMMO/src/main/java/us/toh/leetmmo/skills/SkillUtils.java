@@ -42,16 +42,17 @@ public class SkillUtils {
     }
 
     public static boolean hasPrerequesiteSkill(LeetMMO plugin, PlayerProfile playerProfile, SkillTree skillTree, Enum skillEnum) {
-        boolean hasPrereq = false;
+        boolean hasPrereq = true;
         Skill currentSkill = skillTree.getTree().get(skillEnum);
 
         HashMap<Skill, Integer> prereqSkills = currentSkill.getPrerequesiteSkills();
 
         for (Skill skill : prereqSkills.keySet()) {
-            if (skill.getSkillPoints() == skill.getSkillPointRequirement()) {
-                hasPrereq = true;
-            } else {
-                hasPrereq = false;}
+            if (skill.getSkillPoints() < skill.getSkillPointRequirement()) {
+                plugin.getServer().getPlayer(playerProfile.getUuid()).sendMessage(
+                        "Missing Following Pre-requisite: " + skill.getSkillName().toString());
+                hasPrereq = false;
+            }
         }
 
         return hasPrereq;
