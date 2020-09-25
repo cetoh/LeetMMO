@@ -73,11 +73,11 @@ public class NormalSkillEnums {
         CLEAN_WATERS
     }
 
-    public enum HusbandrySkillNames {
+    public enum HuntingSkillNames {
 
     }
 
-    public enum HuntingSkillNames {
+    public enum HusbandrySkillNames {
 
     }
 

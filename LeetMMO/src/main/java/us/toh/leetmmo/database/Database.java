@@ -14,8 +14,16 @@ import java.io.File;
 import java.sql.*;
 import java.util.HashMap;
 
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.ConstructionSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.CraftingSkillNames.*;
 import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FishingSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.HuntingSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.HusbandrySkillNames.*;
 import static us.toh.leetmmo.skills.normal.NormalSkillEnums.MiningSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.WoodcuttingSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.SmeltingSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.SmithingSkillNames.*;
 
 public class Database {
 
@@ -115,6 +123,7 @@ public class Database {
     public void insertNewPlayerProfile(PlayerProfile playerProfile) {
         insertBasicInformation(playerProfile);
         insertFarmingSkillInformation(playerProfile);
+        insertFishingSkillInformation(playerProfile);
         insertMiningSkillInformation(playerProfile);
     }
 
@@ -179,6 +188,52 @@ public class Database {
         }
     }
 
+    private void insertFishingSkillInformation(PlayerProfile playerProfile) {
+        if(!checkIfPlayerExists(playerProfile, "fishing")) {
+            String farming = "INSERT INTO fishing(name,uuid,"+
+                    "basicFishing," +
+                    "fishingBait," +
+                    "fishingTechnique," +
+                    "fishermanFolkStories ," +
+                    "rodCare," +
+                    "currentWatcher," +
+                    "grizzlyInstincts," +
+                    "oceanography," +
+                    "deadliestCatch," +
+                    "fishermanDiet," +
+                    "fisherman," +
+                    "pirateLore," +
+                    "trolling," +
+                    "nets," +
+                    "fishermanLuck," +
+                    "fishCleaning," +
+                    "sushi," +
+                    "proficientFisherman," +
+                    "pirateMaps," +
+                    "sonar," +
+                    "freshwaterBaits," +
+                    "oceanBaits," +
+                    "aquaticInsight," +
+                    "seafarerWisdom," +
+                    "masterAngler," +
+                    "pirateLegends ," +
+                    "bottomTrawling," +
+                    "electrofishing," +
+                    "shipwreckDiving," +
+                    "sustainableFishing," +
+                    "cleanWaters)" +
+                    " VALUES(?,?,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
+                pstmt.setString(1, playerProfile.getPlayerName());
+                pstmt.setString(2, playerProfile.getUuid().toString());
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     private void insertMiningSkillInformation(PlayerProfile playerProfile) {
         if(!checkIfPlayerExists(playerProfile, "mining")) {
             String farming = "INSERT INTO mining(name,uuid," +
@@ -229,6 +284,7 @@ public class Database {
     public void updatePlayerProfile(PlayerProfile playerProfile) {
         updateBasicInformation(playerProfile);
         updatePlayerFarmingSkillInformation(playerProfile);
+        updatePlayerFishingSkillInformation(playerProfile);
         updatePlayerMiningSkillInformation(playerProfile);
     }
 
@@ -334,6 +390,87 @@ public class Database {
         }
     }
 
+    private void updatePlayerFishingSkillInformation(PlayerProfile playerProfile) {
+        if (checkIfPlayerExists(playerProfile, "fishing")) {
+            String farming = "UPDATE fishing SET name = ?, uuid = ?, " +
+                    "basicFishing = ?," +
+                    "fishingBait = ?," +
+                    "fishingTechnique = ?," +
+                    "fishermanFolkStories  = ?," +
+                    "rodCare = ?," +
+                    "currentWatcher = ?," +
+                    "grizzlyInstincts = ?," +
+                    "oceanography = ?," +
+                    "deadliestCatch = ?," +
+                    "fishermanDiet = ?," +
+                    "fisherman = ?," +
+                    "pirateLore = ?," +
+                    "trolling = ?," +
+                    "nets = ?," +
+                    "fishermanLuck = ?," +
+                    "fishCleaning = ?," +
+                    "sushi = ?," +
+                    "proficientFisherman = ?," +
+                    "pirateMaps = ?," +
+                    "sonar = ?," +
+                    "freshwaterBaits = ?," +
+                    "oceanBaits = ?," +
+                    "aquaticInsight = ?," +
+                    "seafarerWisdom = ?," +
+                    "masterAngler = ?," +
+                    "pirateLegends  = ?," +
+                    "bottomTrawling = ?," +
+                    "electrofishing = ?," +
+                    "shipwreckDiving = ?," +
+                    "sustainableFishing = ?," +
+                    "cleanWaters = ?," +
+                    " WHERE name = ? AND uuid = ?";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
+                HashMap<Enum, Skill> miningSkillTree = playerProfile.getMiningSkillTree().getTree();
+                pstmt.setString(1, playerProfile.getPlayerName());
+                pstmt.setString(2, playerProfile.getUuid().toString());
+                pstmt.setInt(3, miningSkillTree.get(BASIC_FISHING).getSkillPoints());
+                pstmt.setInt(4, miningSkillTree.get(FISHING_BAIT).getSkillPoints());
+                pstmt.setInt(5, miningSkillTree.get(FISHING_TECHNIQUE).getSkillPoints());
+                pstmt.setInt(6, miningSkillTree.get(FISHERMAN_FOLK_STORIES).getSkillPoints());
+                pstmt.setInt(7, miningSkillTree.get(ROD_CARE).getSkillPoints());
+                pstmt.setInt(8, miningSkillTree.get(CURRENT_WATCHER).getSkillPoints());
+                pstmt.setInt(9, miningSkillTree.get(GRIZZLY_INSTINCTS).getSkillPoints());
+                pstmt.setInt(10, miningSkillTree.get(OCEANOGRAPHY).getSkillPoints());
+                pstmt.setInt(11, miningSkillTree.get(DEADLIEST_CATCH).getSkillPoints());
+                pstmt.setInt(12, miningSkillTree.get(FISHERMAN_DIET).getSkillPoints());
+                pstmt.setInt(13, miningSkillTree.get(FISHERMAN).getSkillPoints());
+                pstmt.setInt(14, miningSkillTree.get(PIRATE_LORE).getSkillPoints());
+                pstmt.setInt(15, miningSkillTree.get(TROLLING).getSkillPoints());
+                pstmt.setInt(16, miningSkillTree.get(NETS).getSkillPoints());
+                pstmt.setInt(17, miningSkillTree.get(FISHERMAN_LUCK).getSkillPoints());
+                pstmt.setInt(18, miningSkillTree.get(FISH_CLEANING).getSkillPoints());
+                pstmt.setInt(19, miningSkillTree.get(SUSHI).getSkillPoints());
+                pstmt.setInt(20, miningSkillTree.get(PROFICIENT_FISHERMAN).getSkillPoints());
+                pstmt.setInt(21, miningSkillTree.get(PIRATE_MAPS).getSkillPoints());
+                pstmt.setInt(22, miningSkillTree.get(SONAR).getSkillPoints());
+                pstmt.setInt(23, miningSkillTree.get(FRESHWATER_BAITS).getSkillPoints());
+                pstmt.setInt(24, miningSkillTree.get(OCEAN_BAITS).getSkillPoints());
+                pstmt.setInt(25, miningSkillTree.get(AQUATIC_INSIGHT).getSkillPoints());
+                pstmt.setInt(26, miningSkillTree.get(SEAFARER_WISDOM).getSkillPoints());
+                pstmt.setInt(27, miningSkillTree.get(MASTER_ANGLER).getSkillPoints());
+                pstmt.setInt(28, miningSkillTree.get(PIRATE_LEGENDS).getSkillPoints());
+                pstmt.setInt(29, miningSkillTree.get(BOTTOM_TRAWLING).getSkillPoints());
+                pstmt.setInt(30, miningSkillTree.get(ELECTROFISHING).getSkillPoints());
+                pstmt.setInt(31, miningSkillTree.get(SHIPWRECK_DIVING).getSkillPoints());
+                pstmt.setInt(32, miningSkillTree.get(SUSTAINABLE_FISHING).getSkillPoints());
+                pstmt.setInt(33, miningSkillTree.get(CLEAN_WATERS).getSkillPoints());
+                pstmt.setString(34, playerProfile.getPlayerName());
+                pstmt.setString(35, playerProfile.getUuid().toString());
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
     private void updatePlayerMiningSkillInformation(PlayerProfile playerProfile) {
         if (checkIfPlayerExists(playerProfile, "mining")) {
             String farming = "UPDATE mining SET name = ?, uuid = ?, " +
@@ -417,6 +554,7 @@ public class Database {
 
         getBasicInformation(playerProfile);
         getFarmingSkillInformation(playerProfile);
+        getFishingSkillInformation(playerProfile);
         getMiningSkillInformation(playerProfile);
 
         return playerProfile;
@@ -500,6 +638,56 @@ public class Database {
         }
     }
 
+    private void getFishingSkillInformation(PlayerProfile playerProfile) {
+        if (checkIfPlayerExists(playerProfile, "fishing")) {
+            //Load Farming Skill Tree
+            String farming = "SELECT * FROM fishing WHERE name = ? AND uuid = ?";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
+                pstmt.setString(1, playerProfile.getPlayerName());
+                pstmt.setString(2, playerProfile.getUuid().toString());
+                ResultSet rs = pstmt.executeQuery();
+
+                //Get updates
+                HashMap<Enum, Skill> fishingSkillTree = playerProfile.getFishingSkillTree().getTree();
+
+                fishingSkillTree.get(BASIC_FISHING).setSkillPoints(rs.getInt("basicFishing"));
+                fishingSkillTree.get(FISHING_BAIT).setSkillPoints(rs.getInt("fishingBait"));
+                fishingSkillTree.get(FISHING_TECHNIQUE).setSkillPoints(rs.getInt("fishingTechnique"));
+                fishingSkillTree.get(FISHERMAN_FOLK_STORIES).setSkillPoints(rs.getInt("fishermanFolkStories"));
+                fishingSkillTree.get(ROD_CARE).setSkillPoints(rs.getInt("rodCare"));
+                fishingSkillTree.get(CURRENT_WATCHER).setSkillPoints(rs.getInt("currentWatcher"));
+                fishingSkillTree.get(GRIZZLY_INSTINCTS).setSkillPoints(rs.getInt("grizzlyInstincts"));
+                fishingSkillTree.get(OCEANOGRAPHY).setSkillPoints(rs.getInt("oceanography"));
+                fishingSkillTree.get(DEADLIEST_CATCH).setSkillPoints(rs.getInt("deadliestCatch "));
+                fishingSkillTree.get(FISHERMAN_DIET).setSkillPoints(rs.getInt("fishermanDiet"));
+                fishingSkillTree.get(FISHERMAN).setSkillPoints(rs.getInt("fisherman"));
+                fishingSkillTree.get(PIRATE_LORE).setSkillPoints(rs.getInt("pirateLore"));
+                fishingSkillTree.get(TROLLING).setSkillPoints(rs.getInt("trolling"));
+                fishingSkillTree.get(NETS).setSkillPoints(rs.getInt("nets"));
+                fishingSkillTree.get(FISHERMAN_LUCK).setSkillPoints(rs.getInt("fishermanLuck "));
+                fishingSkillTree.get(FISH_CLEANING).setSkillPoints(rs.getInt("fishCleaning"));
+                fishingSkillTree.get(SUSHI).setSkillPoints(rs.getInt("sushi"));
+                fishingSkillTree.get(PROFICIENT_FISHERMAN).setSkillPoints(rs.getInt("proficientFisherman"));
+                fishingSkillTree.get(PIRATE_MAPS).setSkillPoints(rs.getInt("pirateMaps"));
+                fishingSkillTree.get(SONAR).setSkillPoints(rs.getInt("sonar"));
+                fishingSkillTree.get(FRESHWATER_BAITS).setSkillPoints(rs.getInt("freshwaterBaits"));
+                fishingSkillTree.get(OCEAN_BAITS).setSkillPoints(rs.getInt("oceanBaits"));
+                fishingSkillTree.get(AQUATIC_INSIGHT).setSkillPoints(rs.getInt("aquaticInsight"));
+                fishingSkillTree.get(SEAFARER_WISDOM).setSkillPoints(rs.getInt("seafarerWisdom"));
+                fishingSkillTree.get(MASTER_ANGLER).setSkillPoints(rs.getInt("masterAngler"));
+                fishingSkillTree.get(PIRATE_LEGENDS).setSkillPoints(rs.getInt("pirateLegends"));
+                fishingSkillTree.get(SHIPWRECK_DIVING).setSkillPoints(rs.getInt("shipwreckDiving"));
+                fishingSkillTree.get(BOTTOM_TRAWLING).setSkillPoints(rs.getInt("bottomTrawling"));
+                fishingSkillTree.get(ELECTROFISHING).setSkillPoints(rs.getInt("electrofishing"));
+                fishingSkillTree.get(SUSTAINABLE_FISHING).setSkillPoints(rs.getInt("sustainableFishing"));
+                fishingSkillTree.get(CLEAN_WATERS).setSkillPoints(rs.getInt("cleanWaters"));
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     private void getMiningSkillInformation(PlayerProfile playerProfile) {
         if (checkIfPlayerExists(playerProfile, "mining")) {
             //Load Farming Skill Tree
@@ -554,6 +742,7 @@ public class Database {
     private void createSkillTables(Connection conn) {
 
         createFarmingTable(conn);
+        createFishingTable(conn);
         createMiningTable(conn);
 
     }
@@ -586,6 +775,49 @@ public class Database {
                 + "      transenvironmentalCultivation int,\n"
                 + "      improvedPhotosynthesis int,\n"
                 + "      farmingMastery int);";
+
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute(farming);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void createFishingTable(Connection conn) {
+        String farming = "CREATE TABLE IF NOT EXISTS fishing(\n"
+                + "      name varchar(40),\n"
+                + "      uuid varchar(36),\n"
+                + "      basicFishing int,\n"
+                + "      fishingBait int,\n"
+                + "      fishingTechnique int,\n"
+                + "      fishermanFolkStories  int,\n"
+                + "      rodCare int,\n"
+                + "      currentWatcher int,\n"
+                + "      grizzlyInstincts int,\n"
+                + "      oceanography int,\n"
+                + "      deadliestCatch int,\n"
+                + "      fishermanDiet int,\n"
+                + "      fisherman int,\n"
+                + "      pirateLore int,\n"
+                + "      trolling int,\n"
+                + "      nets int,\n"
+                + "      fishermanLuck int,\n"
+                + "      fishCleaning int,\n"
+                + "      sushi int,\n"
+                + "      proficientFisherman int,\n"
+                + "      pirateMaps int,\n"
+                + "      sonar int,\n"
+                + "      freshwaterBaits int,\n"
+                + "      oceanBaits int,\n"
+                + "      aquaticInsight int,\n"
+                + "      seafarerWisdom int,\n"
+                + "      masterAngler int,\n"
+                + "      pirateLegends  int,\n"
+                + "      bottomTrawling int,\n"
+                + "      electrofishing int,\n"
+                + "      shipwreckDiving int,\n"
+                + "      sustainableFishing int,\n"
+                + "      cleanWaters int);";
 
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(farming);

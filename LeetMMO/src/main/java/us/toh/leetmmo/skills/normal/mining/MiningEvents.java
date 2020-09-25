@@ -34,41 +34,32 @@ public class MiningEvents implements Listener {
     @EventHandler
     public void usePickaxe(BlockBreakEvent event) {
         Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        PlayerProfile playerProfile = globalPlayers.get(uuid);
+
         if (player.getInventory().getItemInMainHand().getType().equals(Material.WOODEN_PICKAXE)
                 || player.getInventory().getItemInMainHand().getType().equals(Material.GOLDEN_PICKAXE)) {
             //Check if player has skill
-            UUID uuid = player.getUniqueId();
-            PlayerProfile playerProfile = globalPlayers.get(uuid);
-
-            if (!SkillUtils.playerHasSkill(plugin, playerProfile, BASIC_MINING)) {
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getMiningSkillTree(), BASIC_MINING)) {
                 event.setCancelled(true);
             }
         }
         if (player.getInventory().getItemInMainHand().getType().equals(Material.STONE_PICKAXE)) {
             //Check if player has skill
-            UUID uuid = player.getUniqueId();
-            PlayerProfile playerProfile = globalPlayers.get(uuid);
-
-            if (!SkillUtils.playerHasSkill(plugin, playerProfile, HEWER)) {
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getMiningSkillTree(), HEWER)) {
                 event.setCancelled(true);
             }
         }
         if (player.getInventory().getItemInMainHand().getType().equals(Material.IRON_PICKAXE)) {
             //Check if player has skill
-            UUID uuid = player.getUniqueId();
-            PlayerProfile playerProfile = globalPlayers.get(uuid);
-
-            if (!SkillUtils.playerHasSkill(plugin, playerProfile, PROSPECTOR)) {
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getMiningSkillTree(), PROSPECTOR)) {
                 event.setCancelled(true);
             }
         }
         if (player.getInventory().getItemInMainHand().getType().equals(Material.DIAMOND_PICKAXE)
                 || player.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE)) {
             //Check if player has skill
-            UUID uuid = player.getUniqueId();
-            PlayerProfile playerProfile = globalPlayers.get(uuid);
-
-            if (!SkillUtils.playerHasSkill(plugin, playerProfile, GEOENGINEER)) {
+            if (!SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getMiningSkillTree(), GEOENGINEER)) {
                 event.setCancelled(true);
             }
         }

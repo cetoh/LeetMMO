@@ -13,6 +13,8 @@ import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import java.util.Map;
 import java.util.UUID;
 
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.FARMING_MASTERY;
+
 public class ExperienceEvents implements Listener {
 
     private Map<UUID,PlayerProfile> globalPlayers;
@@ -120,6 +122,9 @@ public class ExperienceEvents implements Listener {
         //Calculate final exp gain
         double expGain = expGainBase * expGainModifier;
 
+        //Add mastery based modifiers
+        expGain = addFarmingMasteryMultiplier(event, profile, expGain);
+
         //Give player normal experience
         profile.addExperience(expGain, PlayerProfile.expType.NORMAL);
 
@@ -160,5 +165,31 @@ public class ExperienceEvents implements Listener {
         }
     }
 
+    //Farming Mastery (50% boost per farming event)
+    private double addFarmingMasteryMultiplier(BlockBreakEvent event, PlayerProfile profile, double expGain) {
+        if (profile.getFarmingSkillTree().getTree().get(FARMING_MASTERY).getSkillPoints() ==
+                profile.getFarmingSkillTree().getTree().get(FARMING_MASTERY).getSkillPointRequirement()) {
+            switch (event.getBlock().getType()) {
+                case WHEAT:
+                case CARROT:
+                case CARROTS:
+                case BEETROOT:
+                case POTATO:
+                case POTATOES:
+                case MELON:
+                case PUMPKIN:
+                case SUGAR_CANE:
+                case COCOA_BEANS:
+                case BROWN_MUSHROOM:
+                case RED_MUSHROOM:
+                case NETHER_WART:
+                case CHORUS_FRUIT:
+                    expGain = expGain * 1.5;
+                    break;
+            }
+        }
+
+        return expGain;
+    }
 
 }
