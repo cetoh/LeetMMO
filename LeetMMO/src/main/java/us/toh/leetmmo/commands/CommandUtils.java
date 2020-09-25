@@ -18,13 +18,13 @@ public class CommandUtils {
             Skill skill = tree.get(skillEnum);
 
             //Add skill points but only to cap
+            int ptsToMax = skill.getSkillPointRequirement() - skill.getSkillPoints();
             int remainder = 0;
-            for (int i = 1; i < ptsToAdd + 1; i++) {
-                if (skill.getSkillPoints() < skill.getSkillPointRequirement()) {
-                    skill.addSkillPoint();
-                } else {
-                    remainder = ptsToAdd - i;
-                }
+            if (ptsToAdd > ptsToMax) {
+                remainder = ptsToAdd - ptsToMax;
+                skill.setSkillPoints(skill.getSkillPointRequirement());
+            } else {
+                skill.setSkillPoints(skill.getSkillPoints() + ptsToAdd);
             }
 
             //Update tree

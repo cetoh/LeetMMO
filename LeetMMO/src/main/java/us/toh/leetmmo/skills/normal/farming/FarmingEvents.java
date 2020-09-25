@@ -64,7 +64,7 @@ public class FarmingEvents implements Listener {
          * Fertilizer
          */
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK
-            && event.getPlayer().getInventory().getItemInMainHand().equals(Material.BONE_MEAL)) {
+            && event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.BONE_MEAL)) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
