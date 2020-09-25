@@ -423,7 +423,7 @@ public class Database {
                     "electrofishing = ?," +
                     "shipwreckDiving = ?," +
                     "sustainableFishing = ?," +
-                    "cleanWaters = ?," +
+                    "cleanWaters = ? " +
                     " WHERE name = ? AND uuid = ?";
 
             try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
