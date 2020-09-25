@@ -665,7 +665,7 @@ public class Database {
                 fishingSkillTree.get(PIRATE_LORE).setSkillPoints(rs.getInt("pirateLore"));
                 fishingSkillTree.get(TROLLING).setSkillPoints(rs.getInt("trolling"));
                 fishingSkillTree.get(NETS).setSkillPoints(rs.getInt("nets"));
-                fishingSkillTree.get(FISHERMAN_LUCK).setSkillPoints(rs.getInt("fishermanLuck "));
+                fishingSkillTree.get(FISHERMAN_LUCK).setSkillPoints(rs.getInt("fishermanLuck"));
                 fishingSkillTree.get(FISH_CLEANING).setSkillPoints(rs.getInt("fishCleaning"));
                 fishingSkillTree.get(SUSHI).setSkillPoints(rs.getInt("sushi"));
                 fishingSkillTree.get(PROFICIENT_FISHERMAN).setSkillPoints(rs.getInt("proficientFisherman"));
