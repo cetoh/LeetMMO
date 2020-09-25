@@ -48,7 +48,6 @@ public class CommandLeetFarming implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "Unrecognized Skill");
                 }
             }
-
             //Check if add skill point command was initiated
             else if (args.length == 3 && args[0] != null && !args[0].equals("")
                     && !args[1].isEmpty() && !args[2].isEmpty() ) {
@@ -64,7 +63,7 @@ public class CommandLeetFarming implements CommandExecutor {
                                     profile.getFarmingSkillTree(),
                                     NormalSkillEnums.isFarmingSkillEnum(args[0].toUpperCase().replace(' ', '_'))
                             )) {
-                                //Add point to skill
+                                //Add point(s) to skill
                                 CommandUtils.addSkillPointToSkill(player,
                                         profile,
                                         NormalSkillEnums.isFarmingSkillEnum(args[0].toUpperCase().replace(' ', '_')),
@@ -76,7 +75,6 @@ public class CommandLeetFarming implements CommandExecutor {
                             player.sendMessage(ChatColor.RED + "Must be a valid integer. (e.g. leet[skilltreename] [skillName] add INTEGER)");
                         }
                     }
-
                 }
                 else if (args[1].equals("remove")) {
                     if (!EnumUtilities.isInEnum(args[0], NormalSkillEnums.FarmingSkillNames.class)) {
