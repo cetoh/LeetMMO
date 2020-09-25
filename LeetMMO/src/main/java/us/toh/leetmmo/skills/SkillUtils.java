@@ -50,7 +50,7 @@ public class SkillUtils {
         for (Skill skill : prereqSkills.keySet()) {
             if (skill.getSkillPoints() < skill.getSkillPointRequirement()) {
                 plugin.getServer().getPlayer(playerProfile.getUuid()).sendMessage(
-                        "Missing Following Pre-requisite: " + skill.getSkillName().toString());
+                        ChatColor.RED + "Missing Following Pre-requisite: " + skill.getSkillName().toString());
                 hasPrereq = false;
             }
         }
