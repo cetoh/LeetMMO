@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import us.toh.leetmmo.LeetMMO;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class SkillUtils {
@@ -38,5 +39,21 @@ public class SkillUtils {
         if (rand <= percentage) isRolled = true;
 
         return isRolled;
+    }
+
+    public static boolean hasPrerequesiteSkill(LeetMMO plugin, PlayerProfile playerProfile, SkillTree skillTree, Enum skillEnum) {
+        boolean hasPrereq = false;
+        Skill currentSkill = skillTree.getTree().get(skillEnum);
+
+        HashMap<Skill, Integer> prereqSkills = currentSkill.getPrerequesiteSkills();
+
+        for (Skill skill : prereqSkills.keySet()) {
+            if (skill.getSkillPoints() == skill.getSkillPointRequirement()) {
+                hasPrereq = true;
+            } else {
+                hasPrereq = false;}
+        }
+
+        return hasPrereq;
     }
 }
