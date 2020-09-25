@@ -1,5 +1,8 @@
 package us.toh.leetmmo.skills.normal;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class NormalSkillEnums {
 
     public enum ConstructionSkillNames {
@@ -45,6 +48,26 @@ public class NormalSkillEnums {
         public String toString() {
             return skillName;
         }
+
+        //****** Reverse Lookup Implementation************//
+
+        //Lookup table
+        private static final Map<String, FarmingSkillNames> lookup = new HashMap<>();
+
+        //Populate the lookup table on loading time
+        static
+        {
+            for(FarmingSkillNames env : FarmingSkillNames.values())
+            {
+                lookup.put(env.toString(), env);
+            }
+        }
+
+        //This method can be used for reverse lookup purpose
+        public static FarmingSkillNames get(String url)
+        {
+            return lookup.get(url);
+        }
     }
 
     public enum FishingSkillNames {
@@ -89,6 +112,26 @@ public class NormalSkillEnums {
 
         public String toString() {
             return skillName;
+        }
+
+        //****** Reverse Lookup Implementation************//
+
+        //Lookup table
+        private static final Map<String, FishingSkillNames> lookup = new HashMap<>();
+
+        //Populate the lookup table on loading time
+        static
+        {
+            for(FishingSkillNames env : FishingSkillNames.values())
+            {
+                lookup.put(env.toString(), env);
+            }
+        }
+
+        //This method can be used for reverse lookup purpose
+        public static FishingSkillNames get(String url)
+        {
+            return lookup.get(url);
         }
     }
 
@@ -138,6 +181,26 @@ public class NormalSkillEnums {
 
         public String toString() {
             return skillName;
+        }
+
+        //****** Reverse Lookup Implementation************//
+
+        //Lookup table
+        private static final Map<String, MiningSkillNames> lookup = new HashMap<>();
+
+        //Populate the lookup table on loading time
+        static
+        {
+            for(MiningSkillNames env : MiningSkillNames.values())
+            {
+                lookup.put(env.toString(), env);
+            }
+        }
+
+        //This method can be used for reverse lookup purpose
+        public static MiningSkillNames get(String url)
+        {
+            return lookup.get(url);
         }
     }
 
