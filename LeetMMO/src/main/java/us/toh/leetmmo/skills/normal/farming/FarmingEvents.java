@@ -45,12 +45,12 @@ public class FarmingEvents implements Listener {
          * Basic Agriculture
          */
         if(event.getAction() == Action.RIGHT_CLICK_BLOCK
-            && (event.getPlayer().getInventory().getItemInMainHand().equals(Material.WOODEN_HOE)
-                || event.getPlayer().getInventory().getItemInMainHand().equals(Material.IRON_HOE)
-                || event.getPlayer().getInventory().getItemInMainHand().equals(Material.STONE_HOE)
-                || event.getPlayer().getInventory().getItemInMainHand().equals(Material.DIAMOND_HOE)
-                || event.getPlayer().getInventory().getItemInMainHand().equals(Material.GOLDEN_HOE)
-                || event.getPlayer().getInventory().getItemInMainHand().equals(Material.NETHERITE_HOE))) {
+            && (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.WOODEN_HOE)
+                || event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.IRON_HOE)
+                || event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STONE_HOE)
+                || event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.DIAMOND_HOE)
+                || event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.GOLDEN_HOE)
+                || event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_HOE))) {
             //Check if player has skill
             UUID uuid = event.getPlayer().getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
