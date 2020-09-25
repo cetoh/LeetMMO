@@ -6,8 +6,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import us.toh.leetmmo.LeetMMO;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.skills.Skill;
+import us.toh.leetmmo.skills.SkillUtils;
 import us.toh.leetmmo.skills.normal.NormalSkillEnums;
 import us.toh.leetmmo.utils.EnumUtilities;
 import us.toh.leetmmo.utils.StringUtilities;
@@ -49,20 +51,28 @@ public class CommandLeetMining implements CommandExecutor {
 
             //Check if add skill point command was initiated
             else if (args.length == 3 && args[0] != null && !args[0].equals("")
-                    && !args[1].isEmpty() && args[1] != null
-                    && !args[2].isEmpty() && args[2] != null) {
+                    && !args[1].isEmpty() && !args[2].isEmpty()) {
 
                 if (args[1].equals("add")) {
                     if (!EnumUtilities.isInEnum(args[0], NormalSkillEnums.MiningSkillNames.class)) {
                         player.sendMessage(ChatColor.RED + "Unrecognized Skill");
                     } else {
                         if (StringUtilities.isInteger(args[2])) {
-                            //Add point to skill
-                            CommandUtils.addSkillPointToSkill(player,
+
+                            if (SkillUtils.hasPrerequesiteSkill(
+                                    LeetMMO.plugin,
                                     profile,
-                                    NormalSkillEnums.isMiningSkillEnum(args[0].toUpperCase().replace(' ', '_')),
-                                    Integer.parseInt(args[2]),
-                                    skillTree);
+                                    profile.getMiningSkillTree(),
+                                    NormalSkillEnums.isMiningSkillEnum(args[0].toUpperCase().replace(' ', '_'))
+                            )) {
+                                //Add point to skill
+                                CommandUtils.addSkillPointToSkill(player,
+                                        profile,
+                                        NormalSkillEnums.isMiningSkillEnum(args[0].toUpperCase().replace(' ', '_')),
+                                        Integer.parseInt(args[2]),
+                                        skillTree);
+                            }
+
                         }
                         else {
                             player.sendMessage(ChatColor.RED + "Must be a valid integer. (e.g. leet[skilltreename] [skillName] add INTEGER)");
@@ -70,7 +80,7 @@ public class CommandLeetMining implements CommandExecutor {
                     }
 
                 } else {
-                    player.sendMessage(ChatColor.RED + "Invalid Command");
+                    player.sendMessage(ChatColor.RED + "Invalid Command (e.g. leet[skilltreename] [skillName] add INTEGER)");
                 }
             }
         }
