@@ -77,7 +77,36 @@ public class CommandLeetFarming implements CommandExecutor {
                         }
                     }
 
-                } else {
+                }
+                else if (args[1].equals("remove")) {
+                    if (!EnumUtilities.isInEnum(args[0], NormalSkillEnums.FarmingSkillNames.class)) {
+                        player.sendMessage(ChatColor.RED + "Unrecognized Skill");
+                    } else {
+                        if (StringUtilities.isInteger(args[2])) {
+
+                            if (SkillUtils.playerHasSkill(
+                                    LeetMMO.plugin,
+                                    profile,
+                                    profile.getMiningSkillTree(),
+                                    NormalSkillEnums.isFarmingSkillEnum(args[0].toUpperCase().replace(' ', '_'))
+                            )) {
+                                //Remove point(s) from skill
+                                CommandUtils.removeSkillPointToSkill(player,
+                                        profile,
+                                        NormalSkillEnums.isFarmingSkillEnum(args[0].toUpperCase().replace(' ', '_')),
+                                        Integer.parseInt(args[2]),
+                                        skillTree);
+                            } else {
+                                player.sendMessage(ChatColor.RED + "Player has no points in this skill!");
+                            }
+
+                        }
+                        else {
+                            player.sendMessage(ChatColor.RED + "Must be a valid integer. (e.g. leet[skilltreename] [skillName] remove INTEGER)");
+                        }
+                    }
+                }
+                else {
                     player.sendMessage(ChatColor.RED + "Invalid Command");
                 }
             }

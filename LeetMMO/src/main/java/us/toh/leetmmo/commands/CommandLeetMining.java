@@ -65,7 +65,7 @@ public class CommandLeetMining implements CommandExecutor {
                                     profile.getMiningSkillTree(),
                                     NormalSkillEnums.isMiningSkillEnum(args[0].toUpperCase().replace(' ', '_'))
                             )) {
-                                //Add point to skill
+                                //Add point(s) to skill
                                 CommandUtils.addSkillPointToSkill(player,
                                         profile,
                                         NormalSkillEnums.isMiningSkillEnum(args[0].toUpperCase().replace(' ', '_')),
@@ -79,7 +79,36 @@ public class CommandLeetMining implements CommandExecutor {
                         }
                     }
 
-                } else {
+                }
+                else if (args[1].equals("remove")) {
+                    if (!EnumUtilities.isInEnum(args[0], NormalSkillEnums.MiningSkillNames.class)) {
+                        player.sendMessage(ChatColor.RED + "Unrecognized Skill");
+                    } else {
+                        if (StringUtilities.isInteger(args[2])) {
+
+                            if (SkillUtils.playerHasSkill(
+                                    LeetMMO.plugin,
+                                    profile,
+                                    profile.getMiningSkillTree(),
+                                    NormalSkillEnums.isMiningSkillEnum(args[0].toUpperCase().replace(' ', '_'))
+                            )) {
+                                //Remove point(s) from skill
+                                CommandUtils.removeSkillPointToSkill(player,
+                                        profile,
+                                        NormalSkillEnums.isMiningSkillEnum(args[0].toUpperCase().replace(' ', '_')),
+                                        Integer.parseInt(args[2]),
+                                        skillTree);
+                            } else {
+                                player.sendMessage(ChatColor.RED + "Player has no points in this skill!");
+                            }
+
+                        }
+                        else {
+                            player.sendMessage(ChatColor.RED + "Must be a valid integer. (e.g. leet[skilltreename] [skillName] remove INTEGER)");
+                        }
+                    }
+                }
+                else {
                     player.sendMessage(ChatColor.RED + "Invalid Command (e.g. leet[skilltreename] [skillName] add INTEGER)");
                 }
             }

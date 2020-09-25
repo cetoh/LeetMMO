@@ -43,6 +43,37 @@ public class CommandUtils {
         }
     }
 
+    public static void removeSkillPointToSkill(Player player, PlayerProfile playerProfile, Enum skillEnum, int ptsToRemove, HashMap<Enum, Skill> tree) {
+
+        //Check that player has skill points available
+        Skill skill = tree.get(skillEnum);
+
+        //Remove skill points
+        int remainder = 0;
+        if (skill.getSkillPoints() > 0 ) {
+            if (skill.getSkillPoints() < ptsToRemove) {
+                remainder = ptsToRemove - skill.getSkillPoints();
+                skill.setSkillPoints(0);
+            } else {
+                skill.setSkillPoints(skill.getSkillPoints() - ptsToRemove);
+            }
+
+        }
+
+        //Update tree
+        tree.put(skillEnum, skill);
+
+        // Add points back to pool
+        playerProfile.getnSPPool().addNumPoints(ptsToRemove - remainder);
+
+        //Notify user of action
+        String notif = (ptsToRemove - remainder) + " points were removed from " + skillEnum.toString()
+                + ". These points have been added back to your Normal Skill Pool."
+                + remainder + " points could not be removed.";
+        player.sendMessage(ChatColor.YELLOW + notif);
+
+    }
+
     public static void sendSkillMessage(Player player, Skill skill) {
         Enum name = skill.getSkillName();
         String description = skill.getDescription();
