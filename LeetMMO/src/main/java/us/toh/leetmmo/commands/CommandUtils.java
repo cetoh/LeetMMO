@@ -95,7 +95,7 @@ public class CommandUtils {
         if (!skill.getPrerequesiteSkills().isEmpty()) {
             msg += ChatColor.YELLOW + "Prerequisite Skills: ";
             for (Map.Entry<Skill, Integer> prereq : skill.getPrerequesiteSkills().entrySet()) {
-                msg += ChatColor.AQUA + prereq.getKey().getSkillName().toString() + " | ";
+                msg += "\n" + ChatColor.AQUA + prereq.getKey().getSkillName().toString();
             }
             msg += "\n";
         }
