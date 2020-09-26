@@ -103,7 +103,7 @@ public class CommandUtils {
         //Check if children exist
         if (!skill.getChildSkills().isEmpty()) {
             msg += ChatColor.LIGHT_PURPLE + "Necessary to Unlock:\n";
-            for (Map.Entry<Skill, Integer> child : skill.getPrerequesiteSkills().entrySet()) {
+            for (Map.Entry<Skill, Integer> child : skill.getChildSkills().entrySet()) {
                 msg += ChatColor.DARK_PURPLE + "->" + ChatColor.DARK_PURPLE + child.getKey().getSkillName().toString() + "\n";
             }
         }
