@@ -423,7 +423,7 @@ public class Database {
                     "electrofishing = ?," +
                     "shipwreckDiving = ?," +
                     "sustainableFishing = ?," +
-                    "cleanWaters = ?," +
+                    "cleanWaters = ? " +
                     " WHERE name = ? AND uuid = ?";
 
             try (PreparedStatement pstmt = conn.prepareStatement(farming)) {
@@ -659,13 +659,13 @@ public class Database {
                 fishingSkillTree.get(CURRENT_WATCHER).setSkillPoints(rs.getInt("currentWatcher"));
                 fishingSkillTree.get(GRIZZLY_INSTINCTS).setSkillPoints(rs.getInt("grizzlyInstincts"));
                 fishingSkillTree.get(OCEANOGRAPHY).setSkillPoints(rs.getInt("oceanography"));
-                fishingSkillTree.get(DEADLIEST_CATCH).setSkillPoints(rs.getInt("deadliestCatch "));
+                fishingSkillTree.get(DEADLIEST_CATCH).setSkillPoints(rs.getInt("deadliestCatch"));
                 fishingSkillTree.get(FISHERMAN_DIET).setSkillPoints(rs.getInt("fishermanDiet"));
                 fishingSkillTree.get(FISHERMAN).setSkillPoints(rs.getInt("fisherman"));
                 fishingSkillTree.get(PIRATE_LORE).setSkillPoints(rs.getInt("pirateLore"));
                 fishingSkillTree.get(TROLLING).setSkillPoints(rs.getInt("trolling"));
                 fishingSkillTree.get(NETS).setSkillPoints(rs.getInt("nets"));
-                fishingSkillTree.get(FISHERMAN_LUCK).setSkillPoints(rs.getInt("fishermanLuck "));
+                fishingSkillTree.get(FISHERMAN_LUCK).setSkillPoints(rs.getInt("fishermanLuck"));
                 fishingSkillTree.get(FISH_CLEANING).setSkillPoints(rs.getInt("fishCleaning"));
                 fishingSkillTree.get(SUSHI).setSkillPoints(rs.getInt("sushi"));
                 fishingSkillTree.get(PROFICIENT_FISHERMAN).setSkillPoints(rs.getInt("proficientFisherman"));
