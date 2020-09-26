@@ -64,4 +64,14 @@ public class MiningEvents implements Listener {
             }
         }
     }
+
+    /**
+     * Basic Mining Skill Event
+     * @param event
+     */
+    @EventHandler
+    public void mineOre(BlockBreakEvent event) {
+        
+
+    }
 }
