@@ -78,7 +78,7 @@ public class MiningSkillTree extends SkillTree {
 
         // Prospector Pre-requisite
         Skill powerMining = new Skill(POWER_MINING, "Each point increases redstone double drop chance by %15",4);
-        hewer.getPrerequesiteSkills().put(prospector, prospector.getSkillPointRequirement());
+        powerMining.getPrerequesiteSkills().put(prospector, prospector.getSkillPointRequirement());
         getTree().put(powerMining.getSkillName(), powerMining);
 
         Skill xrayFlourescence = new Skill(XRAY_FLOURESCENCE, "Each point increases diamond double drop chance by %15",4);
