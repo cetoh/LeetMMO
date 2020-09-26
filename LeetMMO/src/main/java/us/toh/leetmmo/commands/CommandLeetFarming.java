@@ -14,10 +14,9 @@ import us.toh.leetmmo.skills.normal.NormalSkillEnums;
 import us.toh.leetmmo.utils.EnumUtilities;
 import us.toh.leetmmo.utils.StringUtilities;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CommandLeetFarming implements CommandExecutor {
 
@@ -113,6 +112,19 @@ public class CommandLeetFarming implements CommandExecutor {
     }
 
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (command.getName().equalsIgnoreCase("leetfarming")) { // checking if my command is the one i'm after
+
+
+            switch (args.length) {
+                case 1:
+                    //create a new string list for tab completion
+                    return Stream
+                            .of(NormalSkillEnums.FarmingSkillNames.values())
+                            .map(NormalSkillEnums.FarmingSkillNames::name).collect(Collectors.toList());
+            }
+
+        }
+
         return ImmutableList.of();
     }
 
