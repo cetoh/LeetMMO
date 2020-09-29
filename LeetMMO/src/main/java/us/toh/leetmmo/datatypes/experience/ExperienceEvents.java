@@ -20,6 +20,7 @@ import java.util.UUID;
 
 import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.*;
 import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FishingSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.MiningSkillNames.*;
 
 public class ExperienceEvents implements Listener {
 
@@ -198,6 +199,32 @@ public class ExperienceEvents implements Listener {
         return expGain;
     }
 
+    //Mining Mastery & Expertise (50% boost per mining event + 10% boost per skill point)
+    private double addMiningMasteryMultiplier(BlockBreakEvent event, PlayerProfile profile, double expGain) {
+        double boost = 1;
+
+        boost += profile.getMiningSkillTree().getTree().get(MINING_MASTERY).getSkillPoints() * 0.5;
+        boost += profile.getMiningSkillTree().getTree().get(MINING_EXPERTISE).getSkillPoints() * 0.1;
+
+        switch (event.getBlock().getType()) {
+            case CLAY:
+            case COAL_ORE:
+            case REDSTONE_ORE:
+            case IRON_ORE:
+            case GOLD_ORE:
+            case LAPIS_ORE:
+            case EMERALD_ORE:
+            case DIAMOND_ORE:
+            case NETHER_QUARTZ_ORE:
+            case NETHER_GOLD_ORE:
+            case ANCIENT_DEBRIS:
+                expGain = expGain * boost;
+                break;
+        }
+
+        return expGain;
+    }
+
     @EventHandler
     public void onFishCaught(PlayerFishEvent event) {
         PlayerProfile profile = globalPlayers.get(event.getPlayer().getUniqueId());
@@ -229,7 +256,7 @@ public class ExperienceEvents implements Listener {
         double expGain = expGainBase * expGainModifier;
 
         //Add skill modifiers
-        expGain = addFarmingMasteryMultiplier(profile, expGain);
+        expGain = addFishingMasteryMultiplier(profile, expGain);
 
         //Give player normal experience
         profile.addExperience(expGain, PlayerProfile.expType.NORMAL);
@@ -241,7 +268,7 @@ public class ExperienceEvents implements Listener {
     }
 
     //Fisherman Folk Stories (5% boost per fish caught event)
-    private double addFarmingMasteryMultiplier(PlayerProfile profile, double expGain) {
+    private double addFishingMasteryMultiplier(PlayerProfile profile, double expGain) {
         /* Fisherman Folk Stories */
         if (SkillUtils.playerHasSkill(LeetMMO.plugin, profile, profile.getFishingSkillTree(), FISHERMAN_FOLK_STORIES)) {
             expGain = expGain * 1.05;
@@ -249,4 +276,5 @@ public class ExperienceEvents implements Listener {
 
         return expGain;
     }
+
 }

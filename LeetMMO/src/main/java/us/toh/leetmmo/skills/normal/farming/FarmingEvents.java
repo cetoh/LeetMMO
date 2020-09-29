@@ -243,7 +243,7 @@ public class FarmingEvents implements Listener {
          * WHEAT, WHEAT_SEED double drop chances:
          *
          * - WEED_REMOVAL
-         * - MECHANIZED HARVESTING
+         * - MECHANIZED_HARVESTING
          * - CROP_ROTATION
          */
         if (blockType == Material.WHEAT) {
@@ -254,7 +254,7 @@ public class FarmingEvents implements Listener {
             int chance = 0;
             // WEED_REMOVAL
             chance += playerProfile.getFarmingSkillTree().getTree().get(WEED_REMOVAL).getSkillPoints() * 5;
-            // MECHANIZED HARVESTING
+            // MECHANIZED_HARVESTING
             chance +=  playerProfile.getFarmingSkillTree().getTree().get(MECHANIZED_HARVESTING).getSkillPoints() * 5;
             // CROP_ROTATION
             chance +=  playerProfile.getFarmingSkillTree().getTree().get(CROP_ROTATION).getSkillPoints() * 10;
