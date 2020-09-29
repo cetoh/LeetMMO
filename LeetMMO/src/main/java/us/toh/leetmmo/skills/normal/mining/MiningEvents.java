@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.inventory.ItemStack;
 import us.toh.leetmmo.LeetMMO;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
@@ -391,5 +392,15 @@ public class MiningEvents implements Listener {
             return;
         }
 
+    }
+
+    /**
+     * Blast Mining Skill Event
+     * @param event
+     */
+    @EventHandler
+    public void igniteTNT(ExplosionPrimeEvent event) {
+
+        return;
     }
 }
