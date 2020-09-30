@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 import us.toh.leetmmo.LeetMMO;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.skills.Skill;
@@ -112,17 +113,25 @@ public class CommandLeetFarming implements CommandExecutor {
     }
 
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (command.getName().equalsIgnoreCase("leetfarming")) { // checking if my command is the one i'm after
-
-
-            switch (args.length) {
-                case 1:
-                    //create a new string list for tab completion
-                    return Stream
-                            .of(NormalSkillEnums.FarmingSkillNames.values())
-                            .map(NormalSkillEnums.FarmingSkillNames::name).collect(Collectors.toList());
-            }
-
+        List<String> completions = new ArrayList<>();
+        switch(args.length) {
+            case 1:
+                //create a new string list for tab completion
+                completions.addAll(Stream
+                        .of(NormalSkillEnums.FarmingSkillNames.values())
+                        .map(NormalSkillEnums.FarmingSkillNames::name).collect(Collectors.toList()));
+                return StringUtil.copyPartialMatches(args[0], completions, new ArrayList<>());
+            case 2:
+                completions.add("add");
+                completions.add("remove");
+                return StringUtil.copyPartialMatches(args[1], completions, new ArrayList<>());
+            case 3:
+                completions.add("1");
+                completions.add("2");
+                completions.add("3");
+                completions.add("4");
+                completions.add("5");
+                return  StringUtil.copyPartialMatches(args[2], completions, new ArrayList<>());
         }
 
         return ImmutableList.of();

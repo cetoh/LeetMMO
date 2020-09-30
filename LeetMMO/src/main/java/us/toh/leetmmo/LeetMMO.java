@@ -9,6 +9,8 @@ import us.toh.leetmmo.events.Events;
 import us.toh.leetmmo.database.Database;
 import us.toh.leetmmo.gui.advancements.NormalSkillTreeGUI;
 import us.toh.leetmmo.skills.normal.farming.FarmingEvents;
+import us.toh.leetmmo.skills.normal.fishing.FishingEvents;
+import us.toh.leetmmo.skills.normal.hunting.HuntingEvents;
 import us.toh.leetmmo.skills.normal.mining.MiningEvents;
 
 import java.util.HashMap;
@@ -24,6 +26,8 @@ public final class LeetMMO extends JavaPlugin {
 
     private Events evt = new Events();
     private ExperienceEvents experienceEvents = new ExperienceEvents();
+    private HuntingEvents huntingEvents = new HuntingEvents();
+    private FishingEvents fishingEvents = new FishingEvents();
     private FarmingEvents farmingEvents = new FarmingEvents();
     private MiningEvents miningEvents = new MiningEvents();
 
@@ -42,34 +46,10 @@ public final class LeetMMO extends JavaPlugin {
         //Enable Player Commands
         setupPlayerCommands();
 
-        //Load Configurations
-        ExperienceConfigLoader expConfigLoader = new ExperienceConfigLoader(this);
-
         //Set-up Events
+        registerEvents();
 
-        //Core Startup Events
-        evt.setDb(db);
-        evt.setGlobalPlayers(globalPlayers);
-        getServer().getPluginManager().registerEvents(evt, plugin);
-
-        //Experience Events
-        experienceEvents.setGlobalPlayers(globalPlayers);
-        experienceEvents.setExpConfigManager(expConfigLoader);
-        getServer().getPluginManager().registerEvents(experienceEvents, plugin);
-
-        //Farming Events
-        farmingEvents.setGlobalPlayers(globalPlayers);
-        farmingEvents.setPlugin(this);
-        getServer().getPluginManager().registerEvents(farmingEvents, plugin);
-
-        //Mining Events
-        miningEvents.setGlobalPlayers(globalPlayers);
-        miningEvents.setPlugin(this);
-        getServer().getPluginManager().registerEvents(miningEvents, plugin);
-
-        getServer().getPluginManager().registerEvents(normalSkillTreeGUI, plugin);
-
-        System.out.println("LeetMMO Enabled");
+        System.out.println("[LeetMMO] Enabled");
 
 
     }
@@ -91,7 +71,7 @@ public final class LeetMMO extends JavaPlugin {
         }
 
 
-        System.out.println("LeetMMO Disabled");
+        System.out.println("[LeetMMO] Disabled");
     }
 
     private void setupPlayerCommands() {
@@ -119,6 +99,44 @@ public final class LeetMMO extends JavaPlugin {
         cmdMining.setGlobalPlayers(globalPlayers);
         plugin.getCommand("leetmining").setExecutor(cmdMining);
     }
+
+    private void registerEvents() {
+        //Load Configurations
+        ExperienceConfigLoader expConfigLoader = new ExperienceConfigLoader(this);
+
+        //Core Startup Events
+        evt.setDb(db);
+        evt.setGlobalPlayers(globalPlayers);
+        getServer().getPluginManager().registerEvents(evt, plugin);
+
+        //Experience Events
+        experienceEvents.setGlobalPlayers(globalPlayers);
+        experienceEvents.setExpConfigManager(expConfigLoader);
+        getServer().getPluginManager().registerEvents(experienceEvents, plugin);
+
+        //Hunting Events
+        huntingEvents.setGlobalPlayers(globalPlayers);
+        huntingEvents.setPlugin(this);
+        getServer().getPluginManager().registerEvents(huntingEvents, plugin);
+
+        //Fishing Events
+        fishingEvents.setGlobalPlayers(globalPlayers);
+        fishingEvents.setPlugin(this);
+        getServer().getPluginManager().registerEvents(fishingEvents, plugin);
+
+        //Farming Events
+        farmingEvents.setGlobalPlayers(globalPlayers);
+        farmingEvents.setPlugin(this);
+        getServer().getPluginManager().registerEvents(farmingEvents, plugin);
+
+        //Mining Events
+        miningEvents.setGlobalPlayers(globalPlayers);
+        miningEvents.setPlugin(this);
+        getServer().getPluginManager().registerEvents(miningEvents, plugin);
+
+        getServer().getPluginManager().registerEvents(normalSkillTreeGUI, plugin);
+    }
+
 
     public Map<UUID, PlayerProfile> getGlobalPlayers() {
         return globalPlayers;

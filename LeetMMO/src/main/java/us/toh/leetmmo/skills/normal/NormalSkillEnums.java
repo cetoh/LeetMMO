@@ -136,7 +136,60 @@ public class NormalSkillEnums {
     }
 
     public enum HuntingSkillNames {
+        BOSS_HUNTER("BOSS_HUNTER"),
+        CALLUSES("CALLUSES"),
+        CHICKEN_CATCHER("CHICKEN_CATCHER"),
+        DEFT_STRIKES("DEFT_STRIKES"),
+        EXPERT_MONSTER_HUNTER("EXPERT_MONSTER_HUNTER"),
+        EXPERT_SKINNING("EXPERT_SKINNING"),
+        FLEXIBILITY("FLEXIBILITY"),
+        GAME_CLEANING("GAME_CLEANING"),
+        GAME_HUNTER("GAME_HUNTER"),
+        HUNTER_INSIGHT("HUNTER_INSIGHT"),
+        INTERMEDIATE_MONSTER_HUNTER("INTERMEDIATE_MONSTER_HUNTER"),
+        MASTER_MONSTER_HUNTER("MASTER_MONSTER_HUNTER"),
+        MONSTER_LESSONS("MONSTER_LESSONS"),
+        MONSTER_LORE("MONSTER_LORE"),
+        NOVICE_MONSTER_HUNTING("NOVICE_MONSTER_HUNTING"),
+        PEST_CONTROL("PEST_CONTROL"),
+        SCAVENGER("SCAVENGER"),
+        SITUATIONAL_AWARENESS("SITUATIONAL_AWARENESS"),
+        SNARES("SNARES"),
+        UNDEAD_STALKER("UNDEAD_STALKER"),
+        WILDERNESS_DEFTNESS("WILDERNESS_DEFTNESS"),
+        WILDERNESS_REFLEXES("WILDERNESS_REFLEXES"),
+        WILDERNESS_RESOURCEFULNESS("WILDERNESS_RESOURCEFULNESS"),
+        WILDERNESS_TOUGHNESS("WILDERNESS_TOUGHNESS");
 
+        private String skillName;
+
+        HuntingSkillNames(String skillName) {
+            this.skillName = skillName;
+        }
+
+        public String toString() {
+            return skillName;
+        }
+
+        //****** Reverse Lookup Implementation************//
+
+        //Lookup table
+        private static final Map<String, HuntingSkillNames> lookup = new HashMap<>();
+
+        //Populate the lookup table on loading time
+        static
+        {
+            for(HuntingSkillNames env : HuntingSkillNames.values())
+            {
+                lookup.put(env.toString(), env);
+            }
+        }
+
+        //This method can be used for reverse lookup purpose
+        public static HuntingSkillNames get(String url)
+        {
+            return lookup.get(url);
+        }
     }
 
     public enum HusbandrySkillNames {
