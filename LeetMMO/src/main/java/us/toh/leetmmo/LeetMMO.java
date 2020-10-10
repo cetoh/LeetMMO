@@ -94,6 +94,16 @@ public final class LeetMMO extends JavaPlugin {
         cmdFarming.setGlobalPlayers(globalPlayers);
         plugin.getCommand("leetfarming").setExecutor(cmdFarming);
 
+        //LeetFishing Command
+        CommandLeetFishing cmdFishing =  new CommandLeetFishing();
+        cmdFishing.setGlobalPlayers(globalPlayers);
+        plugin.getCommand("leetfishing").setExecutor(cmdFishing);
+
+        //LeetHunting Command
+        CommandLeetHunting cmdHunting =  new CommandLeetHunting();
+        cmdHunting.setGlobalPlayers(globalPlayers);
+        plugin.getCommand("leethunting").setExecutor(cmdHunting);
+
         //LeetMining Command
         CommandLeetMining cmdMining =  new CommandLeetMining();
         cmdMining.setGlobalPlayers(globalPlayers);

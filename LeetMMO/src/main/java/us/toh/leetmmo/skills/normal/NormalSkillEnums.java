@@ -277,6 +277,22 @@ public class NormalSkillEnums {
         return null;
     }
 
+    public static NormalSkillEnums.FishingSkillNames isFishingSkillEnum(String str) {
+        for (FishingSkillNames me : FishingSkillNames.values()) {
+            if (me.name().equalsIgnoreCase(str))
+                return me;
+        }
+        return null;
+    }
+
+    public static NormalSkillEnums.HuntingSkillNames isHuntingSkillEnum(String str) {
+        for (HuntingSkillNames me : HuntingSkillNames.values()) {
+            if (me.name().equalsIgnoreCase(str))
+                return me;
+        }
+        return null;
+    }
+
     public static NormalSkillEnums.MiningSkillNames isMiningSkillEnum(String str) {
         for (MiningSkillNames me : MiningSkillNames.values()) {
             if (me.name().equalsIgnoreCase(str))
