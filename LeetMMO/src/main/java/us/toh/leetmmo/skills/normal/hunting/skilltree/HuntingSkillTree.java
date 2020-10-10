@@ -87,11 +87,11 @@ public class HuntingSkillTree extends SkillTree {
         wildernessDeftness.getPrerequesiteSkills().put(expertMonsterHunter, 5);
         getTree().put(wildernessDeftness.getSkillName(), wildernessDeftness);
 
-        Skill bossHunter = new Skill(BOSS_HUNTER, "Each point in this skill increases damage done to wither by 5%", 5);
+        Skill bossHunter = new Skill(BOSS_HUNTER, "Each point in this skill increases damage done to wither and Ender Dragon by 5%", 5);
         bossHunter.getPrerequesiteSkills().put(expertMonsterHunter, 5);
         getTree().put(bossHunter.getSkillName(), bossHunter);
 
-        Skill masterMonsterHunter = new Skill(MASTER_MONSTER_HUNTER, "Each point in this skill increases damage done to Ender Dragon by 5%", 5);
+        Skill masterMonsterHunter = new Skill(MASTER_MONSTER_HUNTER, "Each point in this skill increases damage done to Ender Dragon by 10%", 5);
         masterMonsterHunter.getPrerequesiteSkills().put(wildernessDeftness, 5);
         masterMonsterHunter.getPrerequesiteSkills().put(bossHunter, 5);
         getTree().put(masterMonsterHunter.getSkillName(), masterMonsterHunter);
