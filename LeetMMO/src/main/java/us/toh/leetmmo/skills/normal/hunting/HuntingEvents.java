@@ -1,17 +1,20 @@
 package us.toh.leetmmo.skills.normal.hunting;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import us.toh.leetmmo.LeetMMO;
 import us.toh.leetmmo.datatypes.player.PlayerProfile;
 import us.toh.leetmmo.skills.SkillUtils;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -37,6 +40,9 @@ public class HuntingEvents implements Listener {
             UUID uuid = player.getUniqueId();
             PlayerProfile playerProfile = globalPlayers.get(uuid);
 
+            //Get Entity
+            EntityType entityType = event.getEntity().getType();
+
             //Bone Drop Chances
             int boneDrop = 0;
             if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getHuntingSkillTree(), WILDERNESS_RESOURCEFULNESS)) {
@@ -47,7 +53,7 @@ public class HuntingEvents implements Listener {
             }
 
             //Chicken Drop Chances
-            if (event.getEntity().getType().equals(EntityType.CHICKEN)) {
+            if (entityType.equals(EntityType.CHICKEN)) {
 
                 int featherDrop = 0;
                 int chickenDrop = 0;
@@ -69,7 +75,7 @@ public class HuntingEvents implements Listener {
 
 
             //Cow Drops
-            if (event.getEntity().getType().equals(EntityType.COW)) {
+            if (entityType.equals(EntityType.COW)) {
 
                 int beefDrop = 0;
                 int leatherDrop = 0;
@@ -90,7 +96,7 @@ public class HuntingEvents implements Listener {
             }
 
             //Sheep Drops
-            if (event.getEntity().getType().equals(EntityType.SHEEP)) {
+            if (entityType.equals(EntityType.SHEEP)) {
 
                 int muttonDrop = 0;
                 int woolDrop = 0;
@@ -111,7 +117,7 @@ public class HuntingEvents implements Listener {
             }
 
             //Pork Drops
-            if (event.getEntity().getType().equals(EntityType.PIG)) {
+            if (entityType.equals(EntityType.PIG)) {
 
                 int porkDrop = 0;
 
@@ -125,7 +131,7 @@ public class HuntingEvents implements Listener {
             }
 
             //Rabbit Drops
-            if (event.getEntity().getType().equals(EntityType.RABBIT)) {
+            if (entityType.equals(EntityType.RABBIT)) {
 
                 int rabbitHideDrop = 0;
                 int rabbitDrop = 0;
@@ -147,6 +153,28 @@ public class HuntingEvents implements Listener {
                     event.getDrops().add(new ItemStack(Material.RABBIT_HIDE, 1));
                 }
             }
+
+            //Hostile Mob Drops
+            if (entityType.equals(EntityType.ZOMBIE) || entityType.equals(EntityType.ZOMBIE_VILLAGER)
+                || entityType.equals(EntityType.ZOMBIE_HORSE)
+                || entityType.equals(EntityType.SPIDER) || entityType.equals(EntityType.CAVE_SPIDER)
+                || entityType.equals(EntityType.SKELETON) || entityType.equals(EntityType.SKELETON_HORSE)
+                || entityType.equals(EntityType.ENDERMAN)
+                || entityType.equals(EntityType.WITHER) || entityType.equals(EntityType.WITHER_SKELETON)
+                || entityType.equals(EntityType.WITCH)
+                || entityType.equals(EntityType.ENDER_DRAGON)
+                || entityType.equals(EntityType.BLAZE)
+                || entityType.equals(EntityType.CREEPER)) {
+                int doubleDropChance = 0;
+                if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getHuntingSkillTree(), SCAVENGER)) {
+                    doubleDropChance += playerProfile.getHuntingSkillTree().getTree().get(SCAVENGER).getSkillPoints() * 5;
+                }
+
+                if (SkillUtils.chanceCheck(doubleDropChance)) {
+                    List<ItemStack> items = event.getDrops();
+                    event.getDrops().addAll(items);
+                }
+            }
         }
 
     }
@@ -160,6 +188,13 @@ public class HuntingEvents implements Listener {
 
             //Get Entity Type
             EntityType entityType = event.getEntityType();
+
+            //Calculate crit damage
+            int critChance = 0;
+            if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getHuntingSkillTree(), SITUATIONAL_AWARENESS)) {
+                critChance += playerProfile.getHuntingSkillTree().getTree().get(SITUATIONAL_AWARENESS).getSkillPoints() * 5;
+            }
+            int critMultiplier = calculateCritDamageMultiplier(critChance);
 
             //Zombie Damage
             if (entityType.equals(EntityType.ZOMBIE)
@@ -177,7 +212,7 @@ public class HuntingEvents implements Listener {
                     percentIncrease += playerProfile.getHuntingSkillTree().getTree().get(DEFT_STRIKES).getSkillPoints() * 0.05;
                 }
 
-                event.setDamage(originalDamage * (1 + percentIncrease));
+                event.setDamage(originalDamage * (1 + percentIncrease) * critMultiplier);
             }
 
             //Skeleton Damage
@@ -195,7 +230,7 @@ public class HuntingEvents implements Listener {
                     percentIncrease += playerProfile.getHuntingSkillTree().getTree().get(DEFT_STRIKES).getSkillPoints() * 0.05;
                 }
 
-                event.setDamage(originalDamage * (1 + percentIncrease));
+                event.setDamage(originalDamage * (1 + percentIncrease) * critMultiplier);
             }
 
             //Spider Damage
@@ -213,7 +248,7 @@ public class HuntingEvents implements Listener {
                     percentIncrease += playerProfile.getHuntingSkillTree().getTree().get(DEFT_STRIKES).getSkillPoints() * 0.05;
                 }
 
-                event.setDamage(originalDamage * (1 + percentIncrease));
+                event.setDamage(originalDamage * (1 + percentIncrease) * critMultiplier);
             }
 
             //Wither Damage
@@ -234,7 +269,7 @@ public class HuntingEvents implements Listener {
                     percentIncrease += playerProfile.getHuntingSkillTree().getTree().get(BOSS_HUNTER).getSkillPoints() * 0.05;
                 }
 
-                event.setDamage(originalDamage * (1 + percentIncrease));
+                event.setDamage(originalDamage * (1 + percentIncrease) * critMultiplier);
             }
 
             //Ender Dragon Damage
@@ -254,9 +289,59 @@ public class HuntingEvents implements Listener {
                     percentIncrease += playerProfile.getHuntingSkillTree().getTree().get(BOSS_HUNTER).getSkillPoints() * 0.05;
                 }
 
-                event.setDamage(originalDamage * (1 + percentIncrease));
+                event.setDamage(originalDamage * (1 + percentIncrease) * critMultiplier);
             }
         }
+        else if (event.getEntity() instanceof Player && event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
+            Player player = (Player) event.getEntity();
+            UUID uuid = player.getUniqueId();
+            PlayerProfile playerProfile = globalPlayers.get(uuid);
+
+            //Check for dodge chance
+            int dodgeChance = 0;
+            int dodgeMultiplier = 1;
+            if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getHuntingSkillTree(), FLEXIBILITY)) {
+                dodgeChance += playerProfile.getHuntingSkillTree().getTree().get(FLEXIBILITY).getSkillPoints() * 2;
+            }
+            if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getHuntingSkillTree(), WILDERNESS_DEFTNESS)) {
+                dodgeChance += playerProfile.getHuntingSkillTree().getTree().get(WILDERNESS_DEFTNESS).getSkillPoints() * 2;
+            }
+            if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getHuntingSkillTree(), WILDERNESS_REFLEXES)) {
+                dodgeChance += playerProfile.getHuntingSkillTree().getTree().get(WILDERNESS_REFLEXES).getSkillPoints() * 2;
+            }
+
+            if (checkIfDodged(dodgeChance)) {
+                dodgeMultiplier = 0;
+                player.sendMessage(ChatColor.GREEN + "Dodged attack!");
+            }
+
+            //Check for damage reduction
+            double percentDecrease = 0;
+            if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getHuntingSkillTree(), WILDERNESS_TOUGHNESS)) {
+                percentDecrease += playerProfile.getHuntingSkillTree().getTree().get(WILDERNESS_TOUGHNESS).getSkillPoints() * 0.05;
+            }
+            if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getHuntingSkillTree(), CALLUSES)) {
+                percentDecrease += playerProfile.getHuntingSkillTree().getTree().get(CALLUSES).getSkillPoints() * 0.05;
+            }
+
+            double originalDamage = event.getDamage();
+
+            event.setDamage(originalDamage * (1 - percentDecrease) * dodgeMultiplier);
+        }
+    }
+
+    private int calculateCritDamageMultiplier(int critChance) {
+        if (SkillUtils.chanceCheck(critChance)) {
+            return 2;
+        }
+        return 1;
+    }
+
+    private boolean checkIfDodged(int dodgeChance) {
+        if (SkillUtils.chanceCheck(dodgeChance)) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -20,6 +20,7 @@ import java.util.UUID;
 
 import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FarmingSkillNames.*;
 import static us.toh.leetmmo.skills.normal.NormalSkillEnums.FishingSkillNames.*;
+import static us.toh.leetmmo.skills.normal.NormalSkillEnums.HuntingSkillNames.*;
 import static us.toh.leetmmo.skills.normal.NormalSkillEnums.MiningSkillNames.*;
 
 public class ExperienceEvents implements Listener {
@@ -162,11 +163,23 @@ public class ExperienceEvents implements Listener {
         if (event.getDamager() instanceof Player) {
             PlayerProfile p = globalPlayers.get(event.getDamager().getUniqueId());
 
+            double expGain = 0.5;
+
+            if (SkillUtils.playerHasSkill(LeetMMO.plugin, p, p.getHuntingSkillTree(), HUNTER_INSIGHT)) {
+                expGain *= (1 + p.getHuntingSkillTree().getTree().get(HUNTER_INSIGHT).getSkillPoints() * 0.1) ;
+            }
+            if (SkillUtils.playerHasSkill(LeetMMO.plugin, p, p.getHuntingSkillTree(), MONSTER_LESSONS)) {
+                expGain *= (1 + p.getHuntingSkillTree().getTree().get(MONSTER_LESSONS).getSkillPoints() * 0.1) ;
+            }
+            if (SkillUtils.playerHasSkill(LeetMMO.plugin, p, p.getHuntingSkillTree(), MONSTER_LORE)) {
+                expGain *= (1 + p.getHuntingSkillTree().getTree().get(MONSTER_LORE).getSkillPoints() * 0.1) ;
+            }
+
             //Give player normal experience
-            p.addExperience(0.5, PlayerProfile.expType.NORMAL);
+            p.addExperience(expGain, PlayerProfile.expType.NORMAL);
 
             //Give player class experience
-            p.addExperience(0.5, PlayerProfile.expType.CLASS);
+            p.addExperience(expGain, PlayerProfile.expType.CLASS);
 
             globalPlayers.put(p.getUuid(), p);
         }
