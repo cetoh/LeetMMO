@@ -172,7 +172,7 @@ public class ExperienceEvents implements Listener {
                 expGain *= (1 + p.getHuntingSkillTree().getTree().get(MONSTER_LESSONS).getSkillPoints() * 0.1) ;
             }
             if (SkillUtils.playerHasSkill(LeetMMO.plugin, p, p.getHuntingSkillTree(), MONSTER_LORE)) {
-                expGain *= (1 + p.getHuntingSkillTree().getTree().get(MONSTER_LORE).getSkillPoints() * 0.1) ;
+                expGain *= (1 + p.getHuntingSkillTree().getTree().get(MONSTER_LORE ).getSkillPoints() * 0.1) ;
             }
 
             //Give player normal experience
