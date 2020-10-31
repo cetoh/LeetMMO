@@ -71,10 +71,23 @@ public class FishingEvents implements Listener {
             PlayerProfile playerProfile = globalPlayers.get(uuid);
 
             if (event.getRegainReason().equals(EntityRegainHealthEvent.RegainReason.EATING)){
-                if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getFishingSkillTree(), FISHERMAN_DIET)) {
-
-                    //TODO
+                double bonus = 0;
+                Material eatenItem = player.getInventory().getItemInMainHand().getType();
+                if (eatenItem.equals(Material.COOKED_SALMON) || eatenItem.equals(Material.COOKED_COD)) {
+                    if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getFishingSkillTree(), FISHERMAN_DIET)) {
+                        bonus += 0.1;
+                    }
+                    if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getFishingSkillTree(), FISH_CLEANING)) {
+                        bonus += 0.5;
+                    }
                 }
+                else if (eatenItem.equals(Material.SALMON) || eatenItem.equals(Material.COD)
+                    || eatenItem.equals(Material.TROPICAL_FISH) || eatenItem.equals(Material.PUFFERFISH)) {
+                    if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getFishingSkillTree(), SUSHI)) {
+                        bonus += 0.5;
+                    }
+                }
+                event.setAmount(event.getAmount() * (1 + bonus));
             }
         }
 
@@ -103,6 +116,10 @@ public class FishingEvents implements Listener {
 
             if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getFishingSkillTree(), FISHING_TECHNIQUE)) {
                 timeDecrease += 0.05;
+            }
+
+            if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getFishingSkillTree(), TROLLING)) {
+                timeDecrease += 0.2;
             }
 
             hook.setBiteChance(hook.getBiteChance() - timeDecrease);
@@ -187,7 +204,7 @@ public class FishingEvents implements Listener {
             }
 
             /*
-             * Pirate Lore
+             * Fisherman Luck
              */
             if (SkillUtils.playerHasSkill(plugin, playerProfile, playerProfile.getFishingSkillTree(), FISHERMAN_LUCK)) {
                 if (SkillUtils.chanceCheck(5)) {
