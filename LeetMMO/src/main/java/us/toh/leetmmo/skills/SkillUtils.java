@@ -9,17 +9,22 @@ import java.util.Random;
 
 public class SkillUtils {
 
-    public static boolean playerHasSkill(LeetMMO plugin, PlayerProfile playerProfile, SkillTree skillTree, Enum skillEnum) {
+    public static boolean playerHasSkill(LeetMMO plugin, PlayerProfile playerProfile, SkillTree skillTree, Enum skillEnum, boolean silent) {
         //Check if player has skill
         boolean hasSkill = true;
         Skill skill = skillTree.getTree().get(skillEnum);
 
         if (skill.getSkillPoints() != skill.getSkillPointRequirement()) {
-            plugin.getServer().getPlayer(playerProfile.getUuid()).sendMessage(ChatColor.RED + "You do not have the necessary skill: " + skillEnum);
+            if (!silent)
+                plugin.getServer().getPlayer(playerProfile.getUuid()).sendMessage(ChatColor.RED + "You do not have the necessary skill: " + skillEnum);
             hasSkill = false;
         }
 
         return hasSkill;
+    }
+
+    public static boolean playerHasSkill(LeetMMO plugin, PlayerProfile playerProfile, SkillTree skillTree, Enum skillEnum) {
+        return playerHasSkill(plugin, playerProfile, skillTree, skillEnum, true);
     }
 
     public static boolean chanceCheck(int percentage) {

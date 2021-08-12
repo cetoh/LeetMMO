@@ -5,6 +5,9 @@ import org.bukkit.entity.Player;
 import us.toh.leetmmo.datatypes.experience.*;
 import us.toh.leetmmo.datatypes.level.*;
 import us.toh.leetmmo.datatypes.skillpoint.*;
+import us.toh.leetmmo.skills.classes.ClassEnums;
+import us.toh.leetmmo.skills.classes.ClassSkillTree;
+import us.toh.leetmmo.skills.classes.rogue.RogueSkillTree;
 import us.toh.leetmmo.skills.normal.farming.skilltree.FarmingSkillTree;
 import us.toh.leetmmo.skills.normal.fishing.skilltree.FishingSkillTree;
 import us.toh.leetmmo.skills.normal.hunting.skilltree.HuntingSkillTree;
@@ -24,6 +27,10 @@ public class PlayerProfile {
     private ClassSkillPointPool cSPPool;
     private NormalLevel nLvl;
     private ClassLevel cLvl;
+
+    //Class
+    private ClassEnums.ClassType currentClass = ClassEnums.ClassType.NONE;
+    private ClassSkillTree classSkillTree = new ClassSkillTree();
 
     //Skill trees
     private HuntingSkillTree huntingSkillTree = new HuntingSkillTree();
@@ -106,6 +113,33 @@ public class PlayerProfile {
 
     public void setcLvl(ClassLevel cLvl) {
         this.cLvl = cLvl;
+    }
+
+    //Class related Getter and Setters
+    public ClassEnums.ClassType getCurrentClass() {
+        return currentClass;
+    }
+
+    public void setCurrentClass(ClassEnums.ClassType currentClass) {
+        this.currentClass = currentClass;
+
+        switch (currentClass) {
+            case CLERIC:
+                break;
+            case ROGUE:
+                this.classSkillTree = new RogueSkillTree();
+                break;
+            case PALADIN:
+                break;
+        }
+    }
+
+    public ClassSkillTree getClassSkillTree() {
+        return classSkillTree;
+    }
+
+    public void setClassSkillTree(ClassSkillTree classSkillTree) {
+        this.classSkillTree = classSkillTree;
     }
 
     //Skill Tree Getters and Setters

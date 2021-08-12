@@ -108,6 +108,10 @@ public final class LeetMMO extends JavaPlugin {
         CommandLeetMining cmdMining =  new CommandLeetMining();
         cmdMining.setGlobalPlayers(globalPlayers);
         plugin.getCommand("leetmining").setExecutor(cmdMining);
+
+        CommandLeetClass cmdClass = new CommandLeetClass();
+        cmdClass.setGlobalPlayers(globalPlayers);
+        plugin.getCommand("leetclass").setExecutor(cmdClass);
     }
 
     private void registerEvents() {

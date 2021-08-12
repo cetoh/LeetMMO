@@ -177,6 +177,8 @@ public class ExperienceEvents implements Listener {
                 expGain *= (1 + p.getHuntingSkillTree().getTree().get(MONSTER_LORE ).getSkillPoints() * 0.1) ;
             }
 
+            expGain = expGain * event.getDamage();
+
             //Give player normal experience
             p.addExperience(expGain, PlayerProfile.expType.NORMAL);
 

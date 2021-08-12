@@ -26,3 +26,6 @@ commands:
   leetmining:
     description: Mining skills
     usage: /<command>
+  leetclass:
+    description: Classes
+    usage: /<command>
