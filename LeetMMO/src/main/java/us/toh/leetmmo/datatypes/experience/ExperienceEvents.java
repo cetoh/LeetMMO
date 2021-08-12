@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import us.toh.leetmmo.LeetMMO;
 import us.toh.leetmmo.configuration.ExperienceConfigLoader;
@@ -160,6 +161,7 @@ public class ExperienceEvents implements Listener {
 
     @EventHandler
     public void onPlayerDealDamage(EntityDamageByEntityEvent event) {
+
         if (event.getDamager() instanceof Player) {
             PlayerProfile p = globalPlayers.get(event.getDamager().getUniqueId());
 
@@ -182,6 +184,21 @@ public class ExperienceEvents implements Listener {
             p.addExperience(expGain, PlayerProfile.expType.CLASS);
 
             globalPlayers.put(p.getUuid(), p);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerKillsPlayer(EntityDeathEvent event) {
+        if (event.getEntity() instanceof Player && event.getEntity().getKiller() instanceof Player) {
+            PlayerProfile dead = globalPlayers.get(event.getEntity().getUniqueId());
+            PlayerProfile killer = globalPlayers.get(event.getEntity().getKiller().getUniqueId());
+
+            //Dead player loses all class exp points.
+            double expStolen = dead.getcEXPPool().getPoints();
+            dead.getcEXPPool().setPoints(0);
+
+            //Award 50% to player who killed.
+            killer.getcEXPPool().addPoints(expStolen * 0.5);
         }
     }
 
